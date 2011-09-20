@@ -3,6 +3,7 @@ A simple command line script that generates XKCD-style multiword passwords
 See http://xkcd.com/936/
 
 For more memorable words, try `2of12.txt`, available from http://wordlist.sourceforge.net/
+
 **Configuration:** Change `word_list` variable in `generate_wordlist()` 
 
 **Requirements:** None
