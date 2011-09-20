@@ -1,0 +1,7 @@
+A simple command line script that generates XKCD-style multiword passwords
+
+See http://xkcd.com/936/
+
+**Configuration:** Change `word_list` variable in `generate_wordlist()` 
+
+**Requirements:** None
