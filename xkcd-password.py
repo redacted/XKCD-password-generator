@@ -20,20 +20,23 @@ def generate_wordlist(min_length=5, max_length=9):
                 if min_length <= len(line.strip()) <= max_length:
                     words.append(line.strip())
     except:
-        ## file not found
-            pass
-
+            print 'File not found.'
+            raise SystemExit
     return words
 
 if __name__ == '__main__':
     n_words = raw_input("Enter number of words (default 4): ")
     if not n_words: n_words = 4
-
+    else: n_words = int(n_words)
+    
     accepted = "n"
     wordlist = generate_wordlist()
 
     while accepted.lower() not in [ "y", "yes" ]:
-        passwd = " ".join(random.sample(wordlist, n_words))
+        try:
+            passwd = " ".join(random.SystemRandom().sample(wordlist, n_words))
+        except NotImplementedError:
+            print 'System does not support random number generator or Python version < 2.4.'
         print "Generated: ", passwd
         accepted = raw_input("Accept? [yN] ")
 
