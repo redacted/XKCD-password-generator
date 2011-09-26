@@ -7,3 +7,5 @@ For more memorable words, try `2of12.txt`, available from http://wordlist.source
 **Configuration:** Change `word_list` variable in `generate_wordlist()` 
 
 **Requirements:** Python 2.4+
+
+Licensed under the BSD license.
