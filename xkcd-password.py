@@ -30,19 +30,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import random
 import os
+import sys
 
-def generate_wordlist(min_length=5, max_length=9):
-    ## OS X
-    # word_list = "/usr/share/dict/words"
-    ## Linux
-    # word_list = "/usr/dict/words"
-    ## Downloaded || custom
-    word_list = os.path.expanduser("~/local/share/dict/common")
+def generate_wordlist(word_file="", min_length=5, max_length=9):
+    """
+    generate a word list from either a kwarg word_file, or a system default
+    """
+    if not word_file:
+        if "darwin" in sys.platform:
+            ## OS X
+            word_file = "/usr/share/dict/words"
+        elif "linux" in sys.platform:
+            ## Linux
+            word_file = "/usr/dict/words"
+
+    word_file = os.path.expanduser(word_file) # just to be sure
 
     words = []
 
     try:
-        with open(word_list) as wlf:
+        with open(word_file) as wlf:
             for line in wlf:
                 if min_length <= len(line.strip()) <= max_length:
                     words.append(line.strip())
@@ -57,6 +64,7 @@ if __name__ == '__main__':
     else: n_words = int(n_words)
     
     accepted = "n"
+    custom_wordfile = "~/local/share/dict/common"
     wordlist = generate_wordlist()
 
     while accepted.lower() not in [ "y", "yes" ]:
