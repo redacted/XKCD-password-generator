@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-"""
+__LICENSE__ = """
 Copyright (c) 2011, Steven Tobin.
 All rights reserved.
 
@@ -32,40 +32,55 @@ import random
 import os
 import sys
 
-def generate_wordlist(word_file="", min_length=5, max_length=9):
+def generate_wordlist(wordfile="", min_length=5, max_length=9):
     """
     generate a word list from either a kwarg word_file, or a system default
     """
-    if not word_file:
+
+    if not wordfile:
         if "darwin" in sys.platform:
             ## OS X
-            word_file = "/usr/share/dict/words"
+            wordfile = "/usr/share/dict/words"
         elif "linux" in sys.platform:
             ## Linux
-            word_file = "/usr/dict/words"
+            wordfile = "/usr/dict/words"
+        else:
+            # if we get here wordfile is not set, the try...except block below
+            # will catch it
+            print "No default word file found, please supply custom list"
 
-    word_file = os.path.expanduser(word_file) # just to be sure
+    wordfile = os.path.expanduser(wordfile) # just to be sure
 
     words = []
 
     try:
-        with open(word_file) as wlf:
+        with open(wordfile) as wlf:
             for line in wlf:
                 if min_length <= len(line.strip()) <= max_length:
                     words.append(line.strip())
     except:
-            print 'File not found.'
+            print "Word list not loaded"
             raise SystemExit
     return words
 
-if __name__ == '__main__':
-    n_words = raw_input("Enter number of words (default 4): ")
-    if not n_words: n_words = 4
-    else: n_words = int(n_words)
-    
+def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
+    """
+    generate an XKCD-style password from the words in wordlist
+    """
+
+    # useful if driving the logic from other code
+    if not interactive:
+        try:
+            # random.SystemRandom() should be cryptographically secure
+            return " ".join(random.SystemRandom().sample(wordlist, n_words))
+        except NotImplementedError:
+            print 'System does not support random number generator or Python version < 2.4.'      
+
+    # else, interactive session 
+    custom_n_words = raw_input("Enter number of words (default 4): ")
+    if custom_n_words: n_words = int(custom_n_words)
+            
     accepted = "n"
-    custom_wordfile = "~/local/share/dict/common"
-    wordlist = generate_wordlist()
 
     while accepted.lower() not in [ "y", "yes" ]:
         try:
@@ -73,6 +88,16 @@ if __name__ == '__main__':
         except NotImplementedError:
             print 'System does not support random number generator or Python version < 2.4.'
         print "Generated: ", passwd
-        accepted = raw_input("Accept? [yN] ")
+        accepted = raw_input("Accept? [yN] ")     
+
+    return passwd
+
+if __name__ == '__main__':
+
+    custom_wordfile = "~/local/share/dict/common"
+
+    my_wordlist = generate_wordlist(custom_wordfile) 
+    print generate_xkcdpassword(my_wordlist, interactive=True)
+
 
 
