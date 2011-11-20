@@ -43,11 +43,9 @@ def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'
     """
 
     if wordfile is None:
-        if "darwin" in sys.platform:
-            ## OS X
+        if os.path.exists("/usr/share/dict/words"):
             wordfile = "/usr/share/dict/words"
-        elif "linux" in sys.platform:
-            ## Linux
+        elif os.path.exists("/usr/dict/words"):
             wordfile = "/usr/dict/words"
         else:
             # if we get here wordfile is not set, the try...except block below
