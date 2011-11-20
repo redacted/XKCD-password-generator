@@ -32,8 +32,9 @@ import random
 import os
 import sys
 import optparse
+import re
 
-def generate_wordlist(wordfile=None, min_length=5, max_length=9):
+def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'):
     """
     generate a word list from either a kwarg word_file, or a system default
     """
@@ -53,12 +54,13 @@ def generate_wordlist(wordfile=None, min_length=5, max_length=9):
     wordfile = os.path.expanduser(wordfile) # just to be sure
 
     words = []
-
+    regexp=re.compile('^%s{%i,%i}$' % (valid_chars, min_length, max_length))
     try:
         with open(wordfile) as wlf:
             for line in wlf:
-                if min_length <= len(line.strip()) <= max_length:
-                    words.append(line.strip())
+                thisword=line.strip()
+                if regexp.match(thisword) is not None:
+                    words.append(thisword)
     except:
             print "Word list not loaded"
             raise SystemExit
@@ -113,6 +115,9 @@ if __name__ == '__main__':
     parser.add_option("-i", "--interactive", dest="interactive",
                       default=False, action="store_true",
                       help="Interactively select a password")
+    parser.add_option("-v", "--valid_chars", dest="valid_chars",
+                      default='.',
+                      help="Valid chars, using regexp style (e.g. '[a-z]'")
 
     (options, args) = parser.parse_args()
 
@@ -128,6 +133,7 @@ if __name__ == '__main__':
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile, 
                                     min_length=options.min_length, 
-                                    max_length=options.max_length) 
+                                    max_length=options.max_length,
+                                    valid_chars=options.valid_chars) 
     print generate_xkcdpassword(my_wordlist, interactive=options.interactive)
 
