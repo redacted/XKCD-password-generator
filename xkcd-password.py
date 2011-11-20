@@ -33,6 +33,7 @@ import os
 import sys
 import optparse
 import re
+import math
 
 def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'):
     """
@@ -65,6 +66,21 @@ def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'
             print "Word list not loaded"
             raise SystemExit
     return words
+
+def report_entropy(length, numwords):
+    """
+    Report number of words and bits of entropy
+    """
+    bits = math.log(length, 2)
+    if(int(bits)==bits):
+        print ("Your word list contains %i words, or 2^%i words. " % (length, bits))
+    else:
+        print ("Your word list contains %i words, or 2^%0.2f words. " % (length, bits))
+
+    print ("A %i word password from this list will have roughly %i (%0.2f * %i) bits of entropy," % 
+           (numwords, int(bits*numwords), bits, numwords)),
+    print "assuming truly random word selection."
+
 
 def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
     """
@@ -118,6 +134,9 @@ if __name__ == '__main__':
     parser.add_option("-v", "--valid_chars", dest="valid_chars",
                       default='.',
                       help="Valid chars, using regexp style (e.g. '[a-z]'")
+    parser.add_option("-e", "--entropy", dest="entropy",
+                      default=False, action="store_true",
+                      help="Report entropy for given option")
 
     (options, args) = parser.parse_args()
 
@@ -134,6 +153,9 @@ if __name__ == '__main__':
     my_wordlist = generate_wordlist(wordfile=options.wordfile, 
                                     min_length=options.min_length, 
                                     max_length=options.max_length,
-                                    valid_chars=options.valid_chars) 
-    print generate_xkcdpassword(my_wordlist, interactive=options.interactive)
+                                    valid_chars=options.valid_chars)
+    if options.entropy:
+        report_entropy(length=len(my_wordlist), numwords=options.numwords)
+    print generate_xkcdpassword(my_wordlist, interactive=options.interactive,
+        n_words=options.numwords)
 
