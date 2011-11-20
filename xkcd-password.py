@@ -2,8 +2,10 @@
 # encoding: utf-8
 
 __LICENSE__ = """
-Copyright (c) 2011, Steven Tobin.
+Copyright (c) 2011, Steven Tobin and Contributors.
 All rights reserved.
+
+Contributors: Steven Tobin, Rob Lanphier
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
