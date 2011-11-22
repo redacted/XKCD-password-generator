@@ -2,7 +2,7 @@ A simple command line script that generates XKCD-style multiword passwords
 
 See http://xkcd.com/936/
 
-For more memorable words, try `2of12.txt`, available from http://wordlist.sourceforge.net/
+For more memorable words, try `2of12.txt` (included here for convenience), available from http://wordlist.sourceforge.net/
 
 **Configuration:** Run `xkcd-password.py -h` to see usage and configuration details.
 
