@@ -49,12 +49,10 @@ except AttributeError:
 
     rng = random.Random
 
-def generate_wordlist(wordfile=None,
-                      min_length=5,
-                      max_length=9,
-                      valid_chars='.'):
+def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'):
     """
     generate a word list from either a kwarg word_file, or a system default
+    valid_chars is a regular expression match condition (default - all chars)
     """
 
     if wordfile is None:
@@ -90,11 +88,9 @@ def report_entropy(length, numwords):
     """
     bits = math.log(length, 2)
     if (int(bits) == bits):
-        print("Your word list contains %i words, or 2^%i words. " %
-             (length, bits))
+        print("Your word list contains %i words, or 2^%i words. " % (length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words. " %
-             (length, bits))
+        print("Your word list contains %i words, or 2^%0.2f words. " % (length, bits))
 
     print("A %i word password from this list will have roughly"
            "%i (%0.2f * %i) bits of entropy," %
