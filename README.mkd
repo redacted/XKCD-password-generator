@@ -6,6 +6,6 @@ For more memorable words, try `2of12.txt` or `3esl.txt` (both included here for 
 
 **Configuration:** Run `xkcd-password.py -h` to see usage and configuration details.
 
-**Requirements:** Python 2.4+
+**Requirements:** Python 2.4+ (Python 3 compatible)
 
 Licensed under the BSD license.
