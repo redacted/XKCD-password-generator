@@ -7,7 +7,8 @@ All rights reserved.
 
 Contributors: Steven Tobin,
               Rob Lanphier,
-              Mithrandir <mithrandiragain@lavabit.com>
+              Mithrandir <mithrandiragain@lavabit.com>,
+              Daniel Beecham
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
