@@ -8,7 +8,7 @@ All rights reserved.
 Contributors: Steven Tobin,
               Rob Lanphier,
               Mithrandir <mithrandiragain@lavabit.com>,
-              Daniel Beecham
+              Daniel Beecham <daniel@lunix.se>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,7 @@ import optparse
 import re
 import math
 
+
 # random.SystemRandom() should be cryptographically secure 
 try:
     rng = random.SystemRandom
@@ -49,7 +50,11 @@ except AttributeError:
 
     rng = random.Random
 
-def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'):
+
+def generate_wordlist(wordfile=None, 
+        min_length=5,
+        max_length=9,
+        valid_chars='.'):
     """
     generate a word list from either a kwarg word_file, or a system default
     valid_chars is a regular expression match condition (default - all chars)
@@ -88,9 +93,11 @@ def report_entropy(length, numwords):
     """
     bits = math.log(length, 2)
     if (int(bits) == bits):
-        print("Your word list contains %i words, or 2^%i words. " % (length, bits))
+        print("Your word list contains %i words, or 2^%i words. " 
+                % (length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words. " % (length, bits))
+        print("Your word list contains %i words, or 2^%0.2f words. " 
+                % (length, bits))
 
     print("A %i word password from this list will have roughly"
            "%i (%0.2f * %i) bits of entropy," %
@@ -121,6 +128,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
         accepted = raw_input("Accept? [yN] ")
 
     return passwd
+
 
 if __name__ == '__main__':
 
