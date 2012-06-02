@@ -5,7 +5,9 @@ __LICENSE__ = """
 Copyright (c) 2011, Steven Tobin and Contributors.
 All rights reserved.
 
-Contributors: Steven Tobin, Rob Lanphier, Mithrandir <mithrandiragain@lavabit.com>
+Contributors: Steven Tobin,
+              Rob Lanphier,
+              Mithrandir <mithrandiragain@lavabit.com>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -37,7 +39,11 @@ import optparse
 import re
 import math
 
-def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'):
+
+def generate_wordlist(wordfile=None,
+                      min_length=5,
+                      max_length=9,
+                      valid_chars='.'):
     """
     generate a word list from either a kwarg word_file, or a system default
     """
@@ -50,36 +56,40 @@ def generate_wordlist(wordfile=None, min_length=5, max_length=9, valid_chars='.'
         else:
             # if we get here wordfile is not set, the try...except block below
             # will catch it
-            print "No default word file found, please supply custom list"
+            print("No default word file found, please supply custom list")
 
-    wordfile = os.path.expanduser(wordfile) # just to be sure
+    wordfile = os.path.expanduser(wordfile)  # just to be sure
 
     words = []
-    regexp=re.compile('^%s{%i,%i}$' % (valid_chars, min_length, max_length))
+    regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
     try:
         with open(wordfile) as wlf:
             for line in wlf:
-                thisword=line.strip()
+                thisword = line.strip()
                 if regexp.match(thisword) is not None:
                     words.append(thisword)
     except:
-            print "Word list not loaded"
+            print("Word list not loaded")
             raise SystemExit
     return words
+
 
 def report_entropy(length, numwords):
     """
     Report number of words and bits of entropy
     """
     bits = math.log(length, 2)
-    if(int(bits)==bits):
-        print ("Your word list contains %i words, or 2^%i words. " % (length, bits))
+    if (int(bits) == bits):
+        print("Your word list contains %i words, or 2^%i words. " %
+             (length, bits))
     else:
-        print ("Your word list contains %i words, or 2^%0.2f words. " % (length, bits))
+        print("Your word list contains %i words, or 2^%0.2f words. " %
+             (length, bits))
 
-    print ("A %i word password from this list will have roughly %i (%0.2f * %i) bits of entropy," % 
-           (numwords, int(bits*numwords), bits, numwords)),
-    print "assuming truly random word selection."
+    print("A %i word password from this list will have roughly"
+           "%i (%0.2f * %i) bits of entropy," %
+           (numwords, int(bits * numwords), bits, numwords)),
+    print("assuming truly random word selection.")
 
 
 def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
@@ -93,21 +103,25 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
             # random.SystemRandom() should be cryptographically secure
             return " ".join(random.SystemRandom().sample(wordlist, n_words))
         except NotImplementedError:
-            print 'System does not support random number generator or Python version < 2.4.'      
+            print("System does not support random number generator or Python"
+                   "version < 2.4.")
 
-    # else, interactive session 
+    # else, interactive session
     custom_n_words = raw_input("Enter number of words (default 4): ")
-    if custom_n_words: n_words = int(custom_n_words)
-            
+
+    if custom_n_words:
+        n_words = int(custom_n_words)
+
     accepted = "n"
 
-    while accepted.lower() not in [ "y", "yes" ]:
+    while accepted.lower() not in ["y", "yes"]:
         try:
             passwd = " ".join(random.SystemRandom().sample(wordlist, n_words))
         except NotImplementedError:
-            print 'System does not support random number generator or Python version < 2.4.'
-        print "Generated: ", passwd
-        accepted = raw_input("Accept? [yN] ")     
+            print("System does not support random number generator or Python"
+                   "version < 2.4.")
+        print("Generated: ", passwd)
+        accepted = raw_input("Accept? [yN] ")
 
     return passwd
 
@@ -147,15 +161,14 @@ if __name__ == '__main__':
         if options.wordfile is None:
             options.wordfile = args[0]
         else:
-            parser.error("Conflicting values for wordlist: " + args[0] + 
+            parser.error("Conflicting values for wordlist: " + args[0] +
                          " and " + options.wordfile)
 
-    my_wordlist = generate_wordlist(wordfile=options.wordfile, 
-                                    min_length=options.min_length, 
+    my_wordlist = generate_wordlist(wordfile=options.wordfile,
+                                    min_length=options.min_length,
                                     max_length=options.max_length,
                                     valid_chars=options.valid_chars)
     if options.entropy:
         report_entropy(length=len(my_wordlist), numwords=options.numwords)
-    print generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-        n_words=options.numwords)
-
+    print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
+        n_words=options.numwords))
