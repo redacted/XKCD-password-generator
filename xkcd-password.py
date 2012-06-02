@@ -72,11 +72,12 @@ def generate_wordlist(wordfile=None,
     words = []
     regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
     try:
-        with open(wordfile) as wlf:
-            for line in wlf:
-                thisword = line.strip()
-                if regexp.match(thisword) is not None:
-                    words.append(thisword)
+        wlf = open(wordfile)
+        for line in wlf:
+            thisword = line.strip()
+            if regexp.match(thisword) is not None:
+                words.append(thisword)
+        wlf.close()
     except:
             print("Word list not loaded")
             raise SystemExit
