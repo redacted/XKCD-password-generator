@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 __LICENSE__ = """
-Copyright (c) 2011, Steven Tobin and Contributors.
+Copyright (c) 2011, 2012, Steven Tobin and Contributors.
 All rights reserved.
 
 Contributors: Steven Tobin,
