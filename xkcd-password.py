@@ -35,11 +35,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import random
 import os
-import sys
 import optparse
 import re
 import math
 
+# random.SystemRandom() should be cryptographically secure 
+try:
+    rng = random.SystemRandom
+except AttributeError:
+    print("WARNING: System does not support cryptographically secure random " 
+            "number generator or you are using Python version < 2.4. " 
+            "Continuing with less-secure generator.\n") 
+
+    rng = random.Random
 
 def generate_wordlist(wordfile=None,
                       min_length=5,
@@ -100,12 +108,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
 
     # useful if driving the logic from other code
     if not interactive:
-        try:
-            # random.SystemRandom() should be cryptographically secure
-            return " ".join(random.SystemRandom().sample(wordlist, n_words))
-        except NotImplementedError:
-            print("System does not support random number generator or Python"
-                   "version < 2.4.")
+        return " ".join(rng().sample(wordlist, n_words))
 
     # else, interactive session
     custom_n_words = raw_input("Enter number of words (default 4): ")
@@ -116,11 +119,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
     accepted = "n"
 
     while accepted.lower() not in ["y", "yes"]:
-        try:
-            passwd = " ".join(random.SystemRandom().sample(wordlist, n_words))
-        except NotImplementedError:
-            print("System does not support random number generator or Python"
-                   "version < 2.4.")
+        passwd = " ".join(rng().sample(wordlist, n_words))
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
