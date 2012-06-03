@@ -6,7 +6,7 @@ Copyright (c) 2011, 2012, Steven Tobin and Contributors.
 All rights reserved.
 
 Contributors: Steven Tobin,
-              Rob Lanphier,
+              Rob Lanphier <robla@robla.net>,
               Mithrandir <mithrandiragain@lavabit.com>,
               Daniel Beecham <daniel@lunix.se>
 
