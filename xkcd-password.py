@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import with_statement, print_function
+import random
+import os
+import optparse
+import re
+import math
+import sys
+
 __LICENSE__ = """
 Copyright (c) 2011, 2012, Steven Tobin and Contributors.
 All rights reserved.
@@ -33,57 +41,52 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import random
-import os
-import optparse
-import re
-import math
-
-
-# random.SystemRandom() should be cryptographically secure 
+# random.SystemRandom() should be cryptographically secure
 try:
     rng = random.SystemRandom
 except AttributeError:
-    print("WARNING: System does not support cryptographically secure random " 
-            "number generator or you are using Python version < 2.4. " 
-            "Continuing with less-secure generator.\n") 
-
+    print("WARNING: System does not support cryptographically secure random "
+            "number generator or you are using Python version < 2.4. "
+            "Continuing with less-secure generator.\n", file=sys.stderr)
     rng = random.Random
 
+if sys.version[0] == "3":
+    raw_input = input
 
-def generate_wordlist(wordfile=None, 
+
+def generate_wordlist(wordfile=None,
         min_length=5,
         max_length=9,
         valid_chars='.'):
     """
-    generate a word list from either a kwarg word_file, or a system default
+    generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
 
     if wordfile is None:
-        if os.path.exists("/usr/share/dict/words"):
-            wordfile = "/usr/share/dict/words"
-        elif os.path.exists("/usr/dict/words"):
-            wordfile = "/usr/dict/words"
-        else:
-            # if we get here wordfile is not set, the try...except block below
-            # will catch it
-            print("No default word file found, please supply custom list")
+        common_word_files = ["/usr/share/dict/words",
+                             "/usr/dict/words"]
+        for wfile in common_word_files:
+            if os.path.exists(wfile):
+                wordfile = wfile
+                break
+
+    # TODO: This check is done twice in some cases. Fix.
+    if not os.path.exists(wordfile):
+        print("Could not find a word file, or word file did not exist.",
+             file=sys.stderr)
+        sys.exit(1)
 
     wordfile = os.path.expanduser(wordfile)  # just to be sure
-
     words = []
     regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
-    try:
-        wlf = open(wordfile)
+
+    with open(wordfile) as wlf:
         for line in wlf:
             thisword = line.strip()
             if regexp.match(thisword) is not None:
                 words.append(thisword)
-        wlf.close()
-    except:
-            print("Word list not loaded")
-            raise SystemExit
+
     return words
 
 
@@ -93,10 +96,10 @@ def report_entropy(length, numwords):
     """
     bits = math.log(length, 2)
     if (int(bits) == bits):
-        print("Your word list contains %i words, or 2^%i words. " 
+        print("Your word list contains %i words, or 2^%i words. "
                 % (length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words. " 
+        print("Your word list contains %i words, or 2^%0.2f words. "
                 % (length, bits))
 
     print("A %i word password from this list will have roughly"
@@ -109,6 +112,11 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
     """
     generate an XKCD-style password from the words in wordlist
     """
+
+    if len(wordlist) < n_words:
+        print("Could not get enough words with the required settings.",
+             file=sys.stderr)
+        sys.exit(1)
 
     # useful if driving the logic from other code
     if not interactive:
@@ -173,6 +181,7 @@ if __name__ == '__main__':
                                     min_length=options.min_length,
                                     max_length=options.max_length,
                                     valid_chars=options.valid_chars)
+
     if options.entropy:
         report_entropy(length=len(my_wordlist), numwords=options.numwords)
     print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
