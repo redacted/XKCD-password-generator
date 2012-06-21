@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 try:
     rng = random.SystemRandom
 except AttributeError:
-    sys.stderr.write("WARNING: System does not support cryptographically" 
+    sys.stderr.write("WARNING: System does not support cryptographically"
             "secure random number generator or you are using Python version"
             "< 2.4. Continuing with less-secure generator.\n")
     rng = random.Random
@@ -77,7 +77,7 @@ def generate_wordlist(wordfile=None,
         sys.stderr.write("Could not find a word file, or word file does"
         " not exist.\n")
         sys.exit(1)
-    
+
     wordfile = os.path.expanduser(wordfile)  # just to be sure
 
     words = []
