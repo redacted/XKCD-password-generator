@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-from __future__ import with_statement, print_function
 import random
 import os
 import optparse
@@ -45,11 +44,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 try:
     rng = random.SystemRandom
 except AttributeError:
-    print("WARNING: System does not support cryptographically secure random "
-            "number generator or you are using Python version < 2.4. "
-            "Continuing with less-secure generator.\n", file=sys.stderr)
+    sys.stderr.write("WARNING: System does not support cryptographically" 
+            "secure random number generator or you are using Python version"
+            "< 2.4. Continuing with less-secure generator.\n")
     rng = random.Random
 
+# Python 3 compatibility
 if sys.version[0] == "3":
     raw_input = input
 
@@ -63,29 +63,34 @@ def generate_wordlist(wordfile=None,
     valid_chars is a regular expression match condition (default - all chars)
     """
 
+    common_word_files = ["/usr/share/dict/words",
+            "/usr/dict/words"]
+
     if wordfile is None:
-        common_word_files = ["/usr/share/dict/words",
-                             "/usr/dict/words"]
         for wfile in common_word_files:
             if os.path.exists(wfile):
                 wordfile = wfile
                 break
 
-    # TODO: This check is done twice in some cases. Fix.
-    if not os.path.exists(wordfile):
-        print("Could not find a word file, or word file did not exist.",
-             file=sys.stderr)
+    # if we were not able to find a wordfile, print an error and exit
+    if wordfile is None:
+        sys.stderr.write("Could not find a word file, or word file does"
+        " not exist.\n")
         sys.exit(1)
-
+    
     wordfile = os.path.expanduser(wordfile)  # just to be sure
+
     words = []
     regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
 
-    with open(wordfile) as wlf:
-        for line in wlf:
-            thisword = line.strip()
-            if regexp.match(thisword) is not None:
-                words.append(thisword)
+    wlf = open(wordfile)
+
+    for line in wlf:
+        thisword = line.strip()
+        if regexp.match(thisword) is not None:
+            words.append(thisword)
+
+    wlf.close()
 
     return words
 
@@ -114,8 +119,8 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
     """
 
     if len(wordlist) < n_words:
-        print("Could not get enough words with the required settings.",
-             file=sys.stderr)
+        sys.stderr.write("Could not get enough words with the"
+        "required settings.")
         sys.exit(1)
 
     # useful if driving the logic from other code
