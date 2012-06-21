@@ -59,7 +59,7 @@ def generate_wordlist(wordfile=None,
         max_length=9,
         valid_chars='.'):
     """
-    generate a word list from either a kwarg wordfile, or a system default
+    Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
 
@@ -81,9 +81,21 @@ def generate_wordlist(wordfile=None,
     wordfile = os.path.expanduser(wordfile)  # just to be sure
 
     words = []
+
+    # Maybe these kinds of checks should get their own function.
+    if max_length < min_length:
+        sys.stderr.write("The maximum length of a word can not be "
+                         "lesser then minimum length.\n"
+                         "Check the specified settings.\n")
+        sys.exit(1)
+
     regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
 
-    wlf = open(wordfile)
+    if os.path.exists(os.path.abspath(wordfile)):
+        wlf = open(wordfile)
+    else:
+        sys.stderr.write("Could not open the specified word file.\n")
+        sys.exit(1)
 
     for line in wlf:
         thisword = line.strip()
@@ -97,30 +109,31 @@ def generate_wordlist(wordfile=None,
 
 def report_entropy(length, numwords):
     """
-    Report number of words and bits of entropy
+    Report number of words and bits of entropy.
     """
     bits = math.log(length, 2)
     if (int(bits) == bits):
-        print("Your word list contains %i words, or 2^%i words. "
+        print("Your word list contains %i words, or 2^%i words."
                 % (length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words. "
+        print("Your word list contains %i words, or 2^%0.2f words."
                 % (length, bits))
 
-    print("A %i word password from this list will have roughly"
-           "%i (%0.2f * %i) bits of entropy," %
+    print("A %i word password from this list will have roughly "
+           "%i (%0.2f * %i) bits of entropy, " %
            (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
 
 def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
     """
-    generate an XKCD-style password from the words in wordlist
+    Generate an XKCD-style password from the words in wordlist.
     """
 
     if len(wordlist) < n_words:
-        sys.stderr.write("Could not get enough words with the"
-        "required settings.")
+        sys.stderr.write("Could not get enough words!\n"
+                         "This could be a result of either your wordfile\n"
+                         "being too small, or your settings too strict.\n")
         sys.exit(1)
 
     # useful if driving the logic from other code
