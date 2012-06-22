@@ -44,9 +44,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 try:
     rng = random.SystemRandom
 except AttributeError:
-    sys.stderr.write("WARNING: System does not support cryptographically"
-            "secure random number generator or you are using Python version"
-            "< 2.4. Continuing with less-secure generator.\n")
+    sys.stderr.write("WARNING: System does not support cryptographically "
+                     "secure random number generator or you are using Python "
+                     "version < 2.4.\n"
+                     "Continuing with less-secure generator.\n")
     rng = random.Random
 
 # Python 3 compatibility
@@ -63,25 +64,25 @@ def validate_options(options):
         sys.stderr.write("The maximum length of a word can not be "
                          "lesser then minimum length.\n"
                          "Check the specified settings.\n")
-        sys.exit(1)  
+        sys.exit(1)
 
     if options.wordfile is not None:
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
-            sys.exit(1)     
+            sys.exit(1)
 
 
 def generate_wordlist(wordfile=None,
-        min_length=5,
-        max_length=9,
-        valid_chars='.'):
+                      min_length=5,
+                      max_length=9,
+                      valid_chars='.'):
     """
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
 
     common_word_files = ["/usr/share/dict/words",
-            "/usr/dict/words"]
+                         "/usr/dict/words"]
 
     # if the user provides no wordfile, check some default locations
     if wordfile is None:
@@ -92,8 +93,8 @@ def generate_wordlist(wordfile=None,
 
     # if we were not able to find a wordfile, print an error and exit
     if wordfile is None:
-        sys.stderr.write("Could not find a word file, or word file does"
-        " not exist.\n")
+        sys.stderr.write("Could not find a word file, or word file does "
+                         "not exist.\n")
         sys.exit(1)
 
     words = []
@@ -121,14 +122,14 @@ def report_entropy(length, numwords):
     bits = math.log(length, 2)
     if (int(bits) == bits):
         print("Your word list contains %i words, or 2^%i words."
-                % (length, bits))
+              % (length, bits))
     else:
         print("Your word list contains %i words, or 2^%0.2f words."
-                % (length, bits))
+              % (length, bits))
 
     print("A %i word password from this list will have roughly "
-           "%i (%0.2f * %i) bits of entropy, " %
-           (numwords, int(bits * numwords), bits, numwords)),
+          "%i (%0.2f * %i) bits of entropy, " %
+          (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
 
@@ -209,8 +210,7 @@ if __name__ == '__main__':
                                     max_length=options.max_length,
                                     valid_chars=options.valid_chars)
 
-
     if options.entropy:
         report_entropy(length=len(my_wordlist), numwords=options.numwords)
     print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-        n_words=options.numwords))
+                                n_words=options.numwords))
