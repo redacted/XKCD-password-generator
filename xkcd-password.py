@@ -54,6 +54,23 @@ if sys.version[0] == "3":
     raw_input = input
 
 
+def validate_options(options):
+    """
+    Given a set of command line options, performs various validation checks
+    """
+
+    if options.max_length < options.min_length:
+        sys.stderr.write("The maximum length of a word can not be "
+                         "lesser then minimum length.\n"
+                         "Check the specified settings.\n")
+        sys.exit(1)  
+
+    if options.wordfile is not None:
+        if not os.path.exists(os.path.abspath(options.wordfile)):
+            sys.stderr.write("Could not open the specified word file.\n")
+            sys.exit(1)     
+
+
 def generate_wordlist(wordfile=None,
         min_length=5,
         max_length=9,
@@ -66,6 +83,7 @@ def generate_wordlist(wordfile=None,
     common_word_files = ["/usr/share/dict/words",
             "/usr/dict/words"]
 
+    # if the user provides no wordfile, check some default locations
     if wordfile is None:
         for wfile in common_word_files:
             if os.path.exists(wfile):
@@ -78,24 +96,13 @@ def generate_wordlist(wordfile=None,
         " not exist.\n")
         sys.exit(1)
 
-    wordfile = os.path.expanduser(wordfile)  # just to be sure
-
     words = []
-
-    # Maybe these kinds of checks should get their own function.
-    if max_length < min_length:
-        sys.stderr.write("The maximum length of a word can not be "
-                         "lesser then minimum length.\n"
-                         "Check the specified settings.\n")
-        sys.exit(1)
 
     regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
 
-    if os.path.exists(os.path.abspath(wordfile)):
-        wlf = open(wordfile)
-    else:
-        sys.stderr.write("Could not open the specified word file.\n")
-        sys.exit(1)
+    # At this point wordfile is set
+    wordfile = os.path.expanduser(wordfile)  # just to be sure
+    wlf = open(wordfile)
 
     for line in wlf:
         thisword = line.strip()
@@ -185,6 +192,8 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
 
+    validate_options(options)
+
     if len(args) > 1:
         parser.error("Too many arguments.")
     if len(args) == 1:
@@ -199,6 +208,7 @@ if __name__ == '__main__':
                                     min_length=options.min_length,
                                     max_length=options.max_length,
                                     valid_chars=options.valid_chars)
+
 
     if options.entropy:
         report_entropy(length=len(my_wordlist), numwords=options.numwords)
