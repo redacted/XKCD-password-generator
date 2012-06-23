@@ -125,11 +125,17 @@ def generate_wordlist(wordfile=None,
     return words
 
 
-def report_entropy(length, numwords):
+def verbose_reports(length, options):
     """
-    Report number of words and bits of entropy.
+    Report entropy metrics based on word list and requested password size"
     """
+
+    numwords = options.numwords
     bits = math.log(length, 2)
+
+    print("The supplied word list is located at %s."
+          % os.path.abspath(options.wordfile))
+
     if (int(bits) == bits):
         print("Your word list contains %i words, or 2^%i words."
               % (length, bits))
@@ -197,9 +203,9 @@ if __name__ == '__main__':
     parser.add_option("-v", "--valid_chars", dest="valid_chars",
                       default='.',
                       help="Valid chars, using regexp style (e.g. '[a-z]'")
-    parser.add_option("-e", "--entropy", dest="entropy",
+    parser.add_option("-V", "--verbose", dest="verbose",
                       default=False, action="store_true",
-                      help="Report entropy for given option")
+                      help="Report various metrics for given options")
 
     (options, args) = parser.parse_args()
     validate_options(options, args)
@@ -209,7 +215,8 @@ if __name__ == '__main__':
                                     max_length=options.max_length,
                                     valid_chars=options.valid_chars)
 
-    if options.entropy:
-        report_entropy(length=len(my_wordlist), numwords=options.numwords)
+    if options.verbose:
+        verbose_reports(len(my_wordlist), options)
+
     print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
                                 n_words=options.numwords))
