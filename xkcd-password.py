@@ -55,7 +55,7 @@ if sys.version[0] == "3":
     raw_input = input
 
 
-def validate_options(options):
+def validate_options(options, args):
     """
     Given a set of command line options, performs various validation checks
     """
@@ -66,9 +66,35 @@ def validate_options(options):
                          "Check the specified settings.\n")
         sys.exit(1)
 
+    if len(args) > 1:
+        parser.error("Too many arguments.")
+
+    if len(args) == 1:
+        # supporting either -w or args[0] for wordlist, but not both
+        if options.wordfile is None:
+            options.wordfile = args[0]
+        elif options.wordfile == args[0]:
+            pass
+        else:
+            parser.error("Conflicting values for wordlist: " + args[0] +
+                         " and " + options.wordfile)
+
     if options.wordfile is not None:
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
+            sys.exit(1)
+    else:
+        common_word_files = ["/usr/share/dict/words",
+                             "/usr/dict/words"]
+
+        for wfile in common_word_files:
+            if os.path.exists(wfile):
+                options.wordfile = wfile
+                break
+
+        if options.wordfile is None:
+            sys.stderr.write("Could not find a word file, or word file does "
+                             "not exist.\n")
             sys.exit(1)
 
 
@@ -80,22 +106,6 @@ def generate_wordlist(wordfile=None,
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
-
-    common_word_files = ["/usr/share/dict/words",
-                         "/usr/dict/words"]
-
-    # if the user provides no wordfile, check some default locations
-    if wordfile is None:
-        for wfile in common_word_files:
-            if os.path.exists(wfile):
-                wordfile = wfile
-                break
-
-    # if we were not able to find a wordfile, print an error and exit
-    if wordfile is None:
-        sys.stderr.write("Could not find a word file, or word file does "
-                         "not exist.\n")
-        sys.exit(1)
 
     words = []
 
@@ -192,18 +202,7 @@ if __name__ == '__main__':
                       help="Report entropy for given option")
 
     (options, args) = parser.parse_args()
-
-    validate_options(options)
-
-    if len(args) > 1:
-        parser.error("Too many arguments.")
-    if len(args) == 1:
-        # supporting either -w or args[0] for wordlist, but not both
-        if options.wordfile is None:
-            options.wordfile = args[0]
-        else:
-            parser.error("Conflicting values for wordlist: " + args[0] +
-                         " and " + options.wordfile)
+    validate_options(options, args)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
                                     min_length=options.min_length,
