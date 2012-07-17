@@ -1,11 +1,26 @@
-A simple command line script that generates XKCD-style multiword passwords
+A simple command line script that generates XKCD-style multiword passwords.
+Licensed under the BSD license.
 
 See http://xkcd.com/936/
 
 For more memorable words, try `2of12.txt` or `3esl.txt` (both included here for convenience), available from http://wordlist.sourceforge.net/
 
-**Configuration:** Run `xkcd-password.py -h` to see usage and configuration details.
-
 **Requirements:** Python 2.4+ (Python 3 compatible)
 
-Licensed under the BSD license.
+**Usage:**
+xkcd-password.py [options]
+
+* `-w WORDFILE, --wordfile=WORDFILE` List of valid words for password
+
+* `--min=MIN_LENGTH` Minimum length of words to make password
+
+* `--max=MAX_LENGTH` Maximum length of words to make password
+
+* `-n NUMWORDS, --numwords=NUMWORDS` Number of words to make password
+
+* `-i, --interactive` Interactively select a password
+
+* `-v VALID_CHARS, --valid_chars=VALID_CHARS` Valid chars, using regexp style (e.g. '[a-z]'
+
+* `-V, --verbose` Report various metrics for given options
+
