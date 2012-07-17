@@ -202,7 +202,7 @@ if __name__ == '__main__':
                       help="Interactively select a password")
     parser.add_option("-v", "--valid_chars", dest="valid_chars",
                       default='.',
-                      help="Valid chars, using regexp style (e.g. '[a-z]'")
+                      help="Valid chars, using regexp style (e.g. '[a-z]')")
     parser.add_option("-V", "--verbose", dest="verbose",
                       default=False, action="store_true",
                       help="Report various metrics for given options")
