@@ -148,8 +148,7 @@ def verbose_reports(length, options):
           (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
-
-def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
+def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -162,18 +161,50 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
 
     # useful if driving the logic from other code
     if not interactive:
-        return " ".join(rng().sample(wordlist, n_words))
+        if not acrostic:
+	    return " ".join(rng().sample(wordlist, n_words))
+        else:
+            """
+            # slower but more elegant
+            while 1:
+                words = " ".join(rng().sample(wordlist, n_words))
+                if acrostic.lower() == "".join(item[0].lower() for item in words.split()):
+                    return words
+                    break
+            """
+
+            # faster but less elegant
+            words = ""
+            for letter in acrostic:
+                while 1:
+                    word = rng().choice(wordlist)
+                    if word[0] == letter:
+                        words += word + " "
+                        break
+            return words
 
     # else, interactive session
-    custom_n_words = raw_input("Enter number of words (default 4): ")
+    if not acrostic:
+        custom_n_words = raw_input("Enter number of words (default 4): ")
 
-    if custom_n_words:
-        n_words = int(custom_n_words)
+        if custom_n_words:
+            n_words = int(custom_n_words)
+    else:
+        n_words = len(acrostic)
 
     accepted = "n"
 
     while accepted.lower() not in ["y", "yes"]:
-        passwd = " ".join(rng().sample(wordlist, n_words))
+        if not acrostic:
+            passwd = " ".join(rng().sample(wordlist, n_words))
+        else:
+            passwd = ""
+            for letter in acrostic:
+                while 1:
+                    word = rng().choice(wordlist)
+                    if word[0] == letter:
+                        passwd += word + " "
+                        break
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
@@ -206,7 +237,9 @@ if __name__ == '__main__':
     parser.add_option("-V", "--verbose", dest="verbose",
                       default=False, action="store_true",
                       help="Report various metrics for given options")
-
+    parser.add_option("-a", "--acrostic", dest="acrostic",
+                      default=False,
+                      help="Acrostic to constrain word choices")
     (options, args) = parser.parse_args()
     validate_options(options, args)
 
@@ -219,4 +252,4 @@ if __name__ == '__main__':
         verbose_reports(len(my_wordlist), options)
 
     print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-                                n_words=options.numwords))
+                                n_words=options.numwords, acrostic=options.acrostic))

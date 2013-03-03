@@ -24,3 +24,4 @@ xkcd-password.py [options]
 
 * `-V, --verbose` Report various metrics for given options
 
+* `-a ACROSTIC, --acrostic=ACROSTIC` Constrain word choices to those starting with the letters in a given word  
