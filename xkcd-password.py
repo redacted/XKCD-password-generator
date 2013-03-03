@@ -213,6 +213,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False
 
 if __name__ == '__main__':
 
+    count = 1
     usage = "usage: %prog [options]"
     parser = optparse.OptionParser(usage)
 
@@ -240,6 +241,9 @@ if __name__ == '__main__':
     parser.add_option("-a", "--acrostic", dest="acrostic",
                       default=False,
                       help="Acrostic to constrain word choices")
+    parser.add_option("-c", "--count", dest="count",
+                      default=1, type="int",
+                      help="number of passwords to generate")
     (options, args) = parser.parse_args()
     validate_options(options, args)
 
@@ -251,5 +255,8 @@ if __name__ == '__main__':
     if options.verbose:
         verbose_reports(len(my_wordlist), options)
 
-    print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-                                n_words=options.numwords, acrostic=options.acrostic))
+    count = options.count
+    while count > 0:
+        print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
+                                    n_words=options.numwords, acrostic=options.acrostic))
+        count -= 1
