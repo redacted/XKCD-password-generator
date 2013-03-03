@@ -165,15 +165,15 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False
 	    return " ".join(rng().sample(wordlist, n_words))
         else:
             """
-            # slower but more elegant
+            # slower but more elegant. "pythonic"
             while 1:
                 words = " ".join(rng().sample(wordlist, n_words))
-                if acrostic.lower() == "".join(item[0].lower() for item in words.split()):
+                if acrostic.lower() == "".join(item[0] for item in words.split()).lower():
                     return words
                     break
             """
 
-            # faster but less elegant
+            # faster but less elegant. practical.
             words = ""
             for letter in acrostic:
                 while 1:
