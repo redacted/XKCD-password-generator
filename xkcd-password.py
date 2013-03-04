@@ -15,7 +15,8 @@ All rights reserved.
 Contributors: Steven Tobin,
               Rob Lanphier <robla@robla.net>,
               Mithrandir <mithrandiragain@lavabit.com>,
-              Daniel Beecham <daniel@lunix.se>
+              Daniel Beecham <daniel@lunix.se>,
+              Kim Slawson <kimslawson@gmail.com>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
