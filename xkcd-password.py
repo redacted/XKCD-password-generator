@@ -149,29 +149,22 @@ def verbose_reports(length, options):
           (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
+
 def find_acrostic(acrostic, wordlist):
     """
-    Constrain choice of words to those beginning with the letters of the given word (acrostic)
+    Constrain choice of words to those beginning with the letters of the
+    given word (acrostic).
     """
 
-    """
-    # slower but more elegant. "pythonic"
-    while 1:
-	words = " ".join(rng().sample(wordlist, n_words))
-	if acrostic.lower() == "".join(item[0] for item in words.split()).lower():
-	    return words
-	    break
-    """
-
-    # faster but less elegant. practical.
     words = ""
     for letter in acrostic:
-	while 1:
-	    word = rng().choice(wordlist)
-	    if word[0] == letter:
-		words += word + " "
-		break
+        while 1:
+            word = rng().choice(wordlist)
+            if word[0] == letter:
+                words += word + " "
+                break
     return words
+
 
 def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False):
     """
@@ -187,7 +180,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-	    return " ".join(rng().sample(wordlist, n_words))
+            return " ".join(rng().sample(wordlist, n_words))
         else:
             return find_acrostic(acrostic, wordlist)
 
@@ -259,6 +252,8 @@ if __name__ == '__main__':
 
     count = options.count
     while count > 0:
-        print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-                                    n_words=options.numwords, acrostic=options.acrostic))
+        print(generate_xkcdpassword(my_wordlist,
+                                    interactive=options.interactive,
+                                    n_words=options.numwords,
+                                    acrostic=options.acrostic))
         count -= 1
