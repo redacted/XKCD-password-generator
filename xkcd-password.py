@@ -148,8 +148,31 @@ def verbose_reports(length, options):
           (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
+def find_acrostic(acrostic, wordlist):
+    """
+    Constrain choice of words to those beginning with the letters of the given word (acrostic)
+    """
 
-def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
+    """
+    # slower but more elegant. "pythonic"
+    while 1:
+	words = " ".join(rng().sample(wordlist, n_words))
+	if acrostic.lower() == "".join(item[0] for item in words.split()).lower():
+	    return words
+	    break
+    """
+
+    # faster but less elegant. practical.
+    words = ""
+    for letter in acrostic:
+	while 1:
+	    word = rng().choice(wordlist)
+	    if word[0] == letter:
+		words += word + " "
+		break
+    return words
+
+def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -162,18 +185,27 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
 
     # useful if driving the logic from other code
     if not interactive:
-        return " ".join(rng().sample(wordlist, n_words))
+        if not acrostic:
+	    return " ".join(rng().sample(wordlist, n_words))
+        else:
+            return find_acrostic(acrostic, wordlist)
 
     # else, interactive session
-    custom_n_words = raw_input("Enter number of words (default 4): ")
+    if not acrostic:
+        custom_n_words = raw_input("Enter number of words (default 4): ")
 
-    if custom_n_words:
-        n_words = int(custom_n_words)
+        if custom_n_words:
+            n_words = int(custom_n_words)
+    else:
+        n_words = len(acrostic)
 
     accepted = "n"
 
     while accepted.lower() not in ["y", "yes"]:
-        passwd = " ".join(rng().sample(wordlist, n_words))
+        if not acrostic:
+            passwd = " ".join(rng().sample(wordlist, n_words))
+        else:
+            passwd = find_acrostic(acrostic, wordlist)
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
@@ -182,6 +214,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False):
 
 if __name__ == '__main__':
 
+    count = 1
     usage = "usage: %prog [options]"
     parser = optparse.OptionParser(usage)
 
@@ -206,7 +239,12 @@ if __name__ == '__main__':
     parser.add_option("-V", "--verbose", dest="verbose",
                       default=False, action="store_true",
                       help="Report various metrics for given options")
-
+    parser.add_option("-a", "--acrostic", dest="acrostic",
+                      default=False,
+                      help="Acrostic to constrain word choices")
+    parser.add_option("-c", "--count", dest="count",
+                      default=1, type="int",
+                      help="number of passwords to generate")
     (options, args) = parser.parse_args()
     validate_options(options, args)
 
@@ -218,5 +256,8 @@ if __name__ == '__main__':
     if options.verbose:
         verbose_reports(len(my_wordlist), options)
 
-    print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
-                                n_words=options.numwords))
+    count = options.count
+    while count > 0:
+        print(generate_xkcdpassword(my_wordlist, interactive=options.interactive,
+                                    n_words=options.numwords, acrostic=options.acrostic))
+        count -= 1
