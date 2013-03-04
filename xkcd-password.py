@@ -148,6 +148,30 @@ def verbose_reports(length, options):
           (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
+def find_acrostic(acrostic, wordlist):
+    """
+    Constrain choice of words to those beginning with the letters of the given word (acrostic)
+    """
+
+    """
+    # slower but more elegant. "pythonic"
+    while 1:
+	words = " ".join(rng().sample(wordlist, n_words))
+	if acrostic.lower() == "".join(item[0] for item in words.split()).lower():
+	    return words
+	    break
+    """
+
+    # faster but less elegant. practical.
+    words = ""
+    for letter in acrostic:
+	while 1:
+	    word = rng().choice(wordlist)
+	    if word[0] == letter:
+		words += word + " "
+		break
+    return words
+
 def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -164,24 +188,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False
         if not acrostic:
 	    return " ".join(rng().sample(wordlist, n_words))
         else:
-            """
-            # slower but more elegant. "pythonic"
-            while 1:
-                words = " ".join(rng().sample(wordlist, n_words))
-                if acrostic.lower() == "".join(item[0] for item in words.split()).lower():
-                    return words
-                    break
-            """
-
-            # faster but less elegant. practical.
-            words = ""
-            for letter in acrostic:
-                while 1:
-                    word = rng().choice(wordlist)
-                    if word[0] == letter:
-                        words += word + " "
-                        break
-            return words
+            return find_acrostic(acrostic, wordlist)
 
     # else, interactive session
     if not acrostic:
@@ -198,13 +205,7 @@ def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False
         if not acrostic:
             passwd = " ".join(rng().sample(wordlist, n_words))
         else:
-            passwd = ""
-            for letter in acrostic:
-                while 1:
-                    word = rng().choice(wordlist)
-                    if word[0] == letter:
-                        passwd += word + " "
-                        break
+            passwd = find_acrostic(acrostic, wordlist)
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
