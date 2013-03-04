@@ -166,7 +166,10 @@ def find_acrostic(acrostic, wordlist):
     return words
 
 
-def generate_xkcdpassword(wordlist, n_words=4, interactive=False, acrostic=False):
+def generate_xkcdpassword(wordlist,
+                          n_words=4,
+                          interactive=False,
+                          acrostic=False):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
