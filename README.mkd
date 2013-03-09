@@ -1,4 +1,4 @@
-A simple command line script that generates XKCD-style multiword passwords.
+A simple command line script that generates XKCD-style multiword passwords/passphrases.
 Licensed under the BSD license.
 
 See http://xkcd.com/936/
