@@ -126,16 +126,15 @@ def generate_wordlist(wordfile=None,
     return words
 
 
-def verbose_reports(length, options):
+def verbose_reports(length, numwords, wordfile):
     """
     Report entropy metrics based on word list and requested password size"
     """
 
-    numwords = options.numwords
     bits = math.log(length, 2)
 
     print("The supplied word list is located at %s."
-          % os.path.abspath(options.wordfile))
+          % os.path.abspath(wordfile))
 
     if (int(bits) == bits):
         print("Your word list contains %i words, or 2^%i words."
@@ -145,7 +144,7 @@ def verbose_reports(length, options):
               % (length, bits))
 
     print("A %i word password from this list will have roughly "
-          "%i (%0.2f * %i) bits of entropy, " %
+          "%i (%0.2f * %i) bits of entropy," %
           (numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
@@ -251,7 +250,9 @@ if __name__ == '__main__':
                                     valid_chars=options.valid_chars)
 
     if options.verbose:
-        verbose_reports(len(my_wordlist), options)
+        verbose_reports(len(my_wordlist),
+                        options.numwords,
+                        options.wordfile)
 
     count = options.count
     while count > 0:
