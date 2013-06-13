@@ -10,7 +10,7 @@ class XkcdPasswordTests(unittest.TestCase):
             min_length=5,
             max_length=8,)
         self.wordlist_small = xkcd_password.generate_wordlist(
-            wordfile='test_list.txt',
+            wordfile='tests/test_list.txt',
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
@@ -31,6 +31,7 @@ class XkcdPasswordTests(unittest.TestCase):
         result = subprocess.check_output(
             ["python", "xkcd_password.py", "-w", "3esl.txt", "-c", str(count)])
         self.assertTrue(result.count("\n"), count)
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(XkcdPasswordTests)
