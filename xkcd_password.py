@@ -137,7 +137,7 @@ def verbose_reports(length, numwords, wordfile):
     print("The supplied word list is located at %s."
           % os.path.abspath(wordfile))
 
-    if (int(bits) == bits):
+    if int(bits) == bits:
         print("Your word list contains %i words, or 2^%i words."
               % (length, bits))
     else:
@@ -175,6 +175,8 @@ def generate_xkcdpassword(wordlist,
     Generate an XKCD-style password from the words in wordlist.
     """
 
+    passwd = False
+
     if len(wordlist) < n_words:
         sys.stderr.write("Could not get enough words!\n"
                          "This could be a result of either your wordfile\n"
@@ -184,9 +186,11 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            return delim.join(rng().sample(wordlist, n_words))
+            passwd = delim.join(rng().sample(wordlist, n_words))
         else:
-            return delim.join(find_acrostic(acrostic, wordlist))
+            passwd = delim.join(find_acrostic(acrostic, wordlist))
+
+        return passwd
 
     # else, interactive session
     if not acrostic:
