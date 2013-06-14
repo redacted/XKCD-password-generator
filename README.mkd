@@ -26,7 +26,8 @@ xkcd-password.py [options]
 
 * `-V, --verbose` Report various metrics for given options
 
-* `-a ACROSTIC, --acrostic=ACROSTIC` Constrain word choices to those starting with the letters in a given word  
+* `-a ACROSTIC, --acrostic=ACROSTIC` Constrain word choices to those starting with the letters in a given word
 
 * `-c COUNT, --count=COUNT` Number of passwords to generate
 
+* `-d DELIMITER, --delimiter` separator character between words
