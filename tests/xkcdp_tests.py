@@ -32,6 +32,16 @@ class XkcdPasswordTests(unittest.TestCase):
             ["python", "xkcd_password.py", "-w", "3esl.txt", "-c", str(count)])
         self.assertTrue(result.count("\n"), count)
 
+    def test_delim(self):
+        tdelim = "_"
+        target = tdelim.join(["factual", "amazing", "captain", "exactly"])
+        # use an acrostic for simpler target check
+        result = xkcd_password.generate_xkcdpassword(
+            self.wordlist_small,
+            acrostic="face",
+            delim=tdelim)
+        self.assertEquals(result, target)
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(XkcdPasswordTests)

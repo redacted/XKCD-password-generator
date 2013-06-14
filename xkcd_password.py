@@ -97,7 +97,7 @@ def validate_options(options, args):
             sys.stderr.write("Could not find a word file, or word file does "
                              "not exist.\n")
             sys.exit(1)
-		 
+
 
 def generate_wordlist(wordfile=None,
                       min_length=5,
@@ -155,12 +155,12 @@ def find_acrostic(acrostic, wordlist):
     given word (acrostic).
     """
 
-    words = ""
+    words = []
     for letter in acrostic:
         while 1:
             word = rng().choice(wordlist)
             if word[0] == letter:
-                words += word + options.delim
+                words.append(word)
                 break
     return words
 
@@ -168,7 +168,8 @@ def find_acrostic(acrostic, wordlist):
 def generate_xkcdpassword(wordlist,
                           n_words=4,
                           interactive=False,
-                          acrostic=False):
+                          acrostic=False,
+                          delim=" "):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -182,9 +183,9 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            return options.delim.join(rng().sample(wordlist, n_words))
+            return delim.join(rng().sample(wordlist, n_words))
         else:
-            return find_acrostic(acrostic, wordlist)
+            return delim.join(find_acrostic(acrostic, wordlist))
 
     # else, interactive session
     if not acrostic:
@@ -199,9 +200,9 @@ def generate_xkcdpassword(wordlist,
 
     while accepted.lower() not in ["y", "yes"]:
         if not acrostic:
-            passwd = options.delim.join(rng().sample(wordlist, n_words))
+            passwd = delim.join(rng().sample(wordlist, n_words))
         else:
-            passwd = find_acrostic(acrostic, wordlist)
+            passwd = delim.join(find_acrostic(acrostic, wordlist))
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
@@ -242,7 +243,9 @@ if __name__ == '__main__':
                       default=1, type="int",
                       help="number of passwords to generate")
     parser.add_option("-d", "--delimiter", dest="delim",
-					  default=" ", help="separator character between words")
+                      default=" ",
+                      help="separator character between words")
+
     (options, args) = parser.parse_args()
     validate_options(options, args)
 
@@ -261,5 +264,6 @@ if __name__ == '__main__':
         print(generate_xkcdpassword(my_wordlist,
                                     interactive=options.interactive,
                                     n_words=options.numwords,
-                                    acrostic=options.acrostic))
+                                    acrostic=options.acrostic,
+                                    delim=options.delim))
         count -= 1
