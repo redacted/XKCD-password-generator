@@ -30,4 +30,4 @@ xkcd-password.py [options]
 
 * `-c COUNT, --count=COUNT` Number of passwords to generate
 
-* `-d DELIMITER, --delimiter` separator character between words
+* `-d DELIMITER, --delimiter=DELIMITER` separator character between words
