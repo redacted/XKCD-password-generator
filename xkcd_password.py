@@ -97,7 +97,7 @@ def validate_options(options, args):
             sys.stderr.write("Could not find a word file, or word file does "
                              "not exist.\n")
             sys.exit(1)
-
+		 
 
 def generate_wordlist(wordfile=None,
                       min_length=5,
@@ -160,7 +160,7 @@ def find_acrostic(acrostic, wordlist):
         while 1:
             word = rng().choice(wordlist)
             if word[0] == letter:
-                words += word + " "
+                words += word + options.delim
                 break
     return words
 
@@ -182,7 +182,7 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            return " ".join(rng().sample(wordlist, n_words))
+            return options.delim.join(rng().sample(wordlist, n_words))
         else:
             return find_acrostic(acrostic, wordlist)
 
@@ -199,7 +199,7 @@ def generate_xkcdpassword(wordlist,
 
     while accepted.lower() not in ["y", "yes"]:
         if not acrostic:
-            passwd = " ".join(rng().sample(wordlist, n_words))
+            passwd = options.delim.join(rng().sample(wordlist, n_words))
         else:
             passwd = find_acrostic(acrostic, wordlist)
         print("Generated: ", passwd)
@@ -241,6 +241,8 @@ if __name__ == '__main__':
     parser.add_option("-c", "--count", dest="count",
                       default=1, type="int",
                       help="number of passwords to generate")
+    parser.add_option("-d", "--delimiter", dest="delim",
+					  default=" ", help="separator character between words")
     (options, args) = parser.parse_args()
     validate_options(options, args)
 
