@@ -1,7 +1,8 @@
 A simple command line script that generates XKCD-style multiword passwords/passphrases.
+Inspired by http://xkcd.com/936/
 Licensed under the BSD license.
 
-See http://xkcd.com/936/
+![XKCD password strength](http://imgs.xkcd.com/comics/password_strength.png)
 
 For more memorable words, try `2of12.txt` or `3esl.txt` (both included here for convenience), available from http://wordlist.sourceforge.net/
 
