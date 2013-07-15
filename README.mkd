@@ -1,6 +1,6 @@
 A simple command line script that generates XKCD-style multiword passwords/passphrases.
 Inspired by http://xkcd.com/936/
-Licensed under the BSD license.
+
 
 ![XKCD password strength](http://imgs.xkcd.com/comics/password_strength.png)
 
@@ -32,3 +32,6 @@ xkcd-password.py [options]
 * `-c COUNT, --count=COUNT` Number of passwords to generate
 
 * `-d DELIMITER, --delimiter=DELIMITER` separator character between words
+
+
+Licensed under the BSD license.
