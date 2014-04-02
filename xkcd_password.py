@@ -167,7 +167,7 @@ def find_acrostic(acrostic, wordlist):
 
 
 def generate_xkcdpassword(wordlist,
-                          n_words=4,
+                          n_words=6,
                           interactive=False,
                           acrostic=False,
                           delim=" "):
@@ -194,7 +194,7 @@ def generate_xkcdpassword(wordlist,
 
     # else, interactive session
     if not acrostic:
-        custom_n_words = raw_input("Enter number of words (default 4): ")
+        custom_n_words = raw_input("Enter number of words (default 6): ")
 
         if custom_n_words:
             n_words = int(custom_n_words)
@@ -230,7 +230,7 @@ if __name__ == '__main__':
                       default=9, type="int",
                       help="Maximum length of words to make password")
     parser.add_option("-n", "--numwords", dest="numwords",
-                      default=4, type="int",
+                      default=6, type="int",
                       help="Number of words to make password")
     parser.add_option("-i", "--interactive", dest="interactive",
                       default=False, action="store_true",
