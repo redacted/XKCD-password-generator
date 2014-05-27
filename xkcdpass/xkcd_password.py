@@ -87,7 +87,8 @@ def validate_options(parser, options, args):
             sys.exit(1)
     else:
         common_word_files = ["/usr/share/dict/words",
-                             "/usr/dict/words"]
+                             "/usr/dict/words",
+                             "/usr/share/cracklib/cracklib-small"]
 
         for wfile in common_word_files:
             if os.path.exists(wfile):
