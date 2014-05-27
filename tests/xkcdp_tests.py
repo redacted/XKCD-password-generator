@@ -1,12 +1,14 @@
 import unittest
 import subprocess
-import xkcd_password
+from xkcdpass import xkcd_password
+
+WORDFILE = 'xkcdpass/static/3esl.txt'
 
 
 class XkcdPasswordTests(unittest.TestCase):
     def setUp(self):
         self.wordlist_full = xkcd_password.generate_wordlist(
-            wordfile='3esl.txt',
+            wordfile=WORDFILE,
             min_length=5,
             max_length=8,)
         self.wordlist_small = xkcd_password.generate_wordlist(
@@ -29,7 +31,8 @@ class XkcdPasswordTests(unittest.TestCase):
     def test_commandlineCount(self):
         count = 5
         result = subprocess.check_output(
-            ["python", "xkcd_password.py", "-w", "3esl.txt", "-c", str(count)])
+            ["python", "xkcdpass/xkcd_password.py", "-w", WORDFILE,
+             "-c", str(count)])
         self.assertTrue(result.count("\n"), count)
 
     def test_delim(self):
