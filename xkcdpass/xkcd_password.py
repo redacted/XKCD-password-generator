@@ -57,7 +57,7 @@ if sys.version[0] == "3":
     raw_input = input
 
 
-def validate_options(options, args):
+def validate_options(parser, options, args):
     """
     Given a set of command line options, performs various validation checks
     """
@@ -214,8 +214,7 @@ def generate_xkcdpassword(wordlist,
     return passwd
 
 
-if __name__ == '__main__':
-
+def main():
     count = 1
     usage = "usage: %prog [options]"
     parser = optparse.OptionParser(usage)
@@ -252,7 +251,7 @@ if __name__ == '__main__':
                       help="separator character between words")
 
     (options, args) = parser.parse_args()
-    validate_options(options, args)
+    validate_options(parser, options, args)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
                                     min_length=options.min_length,
@@ -272,3 +271,7 @@ if __name__ == '__main__':
                                     acrostic=options.acrostic,
                                     delim=options.delim))
         count -= 1
+
+
+if __name__ == '__main__':
+    main()
