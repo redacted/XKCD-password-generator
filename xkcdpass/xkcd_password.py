@@ -18,6 +18,7 @@ Contributors: Steven Tobin,
               Daniel Beecham <daniel@lunix.se>,
               Kim Slawson <kimslawson@gmail.com>,
               Stanislav Bytsko <zbstof@gmail.com>
+              Lowe Thiderman <lowe.thiderman@gmail.com>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
