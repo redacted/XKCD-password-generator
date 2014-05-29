@@ -82,6 +82,11 @@ def validate_options(parser, options, args):
                          " and " + options.wordfile)
 
     if options.wordfile is not None:
+        static_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                   'static',
+                                   '%s.txt' % options.wordfile)
+        if os.path.exists(static_file):
+            options.wordfile = static_file
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
