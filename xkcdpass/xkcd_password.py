@@ -86,9 +86,9 @@ def validate_options(parser, options, args):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
-        common_word_files = ["/usr/share/dict/words",
+        common_word_files = ["/usr/share/cracklib/cracklib-small",
                              "/usr/dict/words",
-                             "/usr/share/cracklib/cracklib-small"]
+                             "/usr/share/dict/words"]
 
         for wfile in common_word_files:
             if os.path.exists(wfile):
