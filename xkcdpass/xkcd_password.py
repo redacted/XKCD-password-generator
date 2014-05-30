@@ -81,18 +81,17 @@ def validate_options(parser, options, args):
         else:
             parser.error("Conflicting values for wordlist: " + args[0] +
                          " and " + options.wordfile)
-
     if options.wordfile is not None:
-        static_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                   'static',
-                                   '%s.txt' % options.wordfile)
-        if os.path.exists(static_file):
-            options.wordfile = static_file
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
+        static_default = os.path.join(
+          os.path.dirname(os.path.abspath(__file__)),
+          'static',
+          'default.txt')
         common_word_files = ["/usr/share/cracklib/cracklib-small",
+                             static_default,
                              "/usr/dict/words",
                              "/usr/share/dict/words"]
 
