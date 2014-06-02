@@ -4,14 +4,14 @@ Inspired by http://xkcd.com/936/
 
 ![XKCD password strength](http://imgs.xkcd.com/comics/password_strength.png)
 
-For more memorable words, try `2of12.txt` or `3esl.txt` (both included here for convenience), available from http://wordlist.sourceforge.net/
+For more memorable words, we provide a word list (`static/default.txt`), reproduced with permission from http://wordlist.sourceforge.net/
 
 A simple example of how the script may be used via `import` is also provided.
 
 **Requirements:** Python 2.4+ (Python 3 compatible)
 
 **Usage:**
-xkcd-password.py [options]
+xkcdpass [options]
 
 * `-w WORDFILE, --wordfile=WORDFILE` List of valid words for password
 
