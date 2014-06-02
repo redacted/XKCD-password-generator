@@ -1,15 +1,15 @@
-| A simple command line script that generates XKCD-style multiword
-passwords/passphrases.
-| Inspired by http://xkcd.com/936/
+| A simple command line script that generates XKCD-style multiword passwords/passphrases. Inspired by http://xkcd.com/936/
 
 |XKCD password strength|
 
-For more memorable words, we provide a word list
-(``static/default.txt``), reproduced with permission from
-http://wordlist.sourceforge.net/
+| Install via pip:
 
-A simple example of how the script may be used via ``import`` is also
-provided.
+``pip install xkcdpass``
+
+
+For more memorable words, we provide a word list (``static/default.txt``), reproduced with permission from http://wordlist.sourceforge.net/
+
+A simple example of how the script may be used via ``import`` is also provided.
 
 **Requirements:** Python 2.4+ (Python 3 compatible)
 
