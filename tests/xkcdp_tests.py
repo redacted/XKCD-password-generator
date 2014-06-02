@@ -2,7 +2,7 @@ import unittest
 import subprocess
 from xkcdpass import xkcd_password
 
-WORDFILE = 'xkcdpass/static/3esl.txt'
+WORDFILE = 'xkcdpass/static/default.txt'
 
 
 class XkcdPasswordTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class XkcdPasswordTests(unittest.TestCase):
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
-        self.assertEquals(len(self.wordlist_full), 10730)
+        self.assertEquals(len(self.wordlist_full), 19493)
 
     def test_regex(self):
         self.assertNotIn("__$$$__", self.wordlist_small)
