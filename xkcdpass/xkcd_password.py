@@ -87,9 +87,9 @@ def validate_options(parser, options, args):
             sys.exit(1)
     else:
         static_default = os.path.join(
-          os.path.dirname(os.path.abspath(__file__)),
-          'static',
-          'default.txt')
+            os.path.dirname(os.path.abspath(__file__)),
+            'static',
+            'default.txt')
         common_word_files = ["/usr/share/cracklib/cracklib-small",
                              static_default,
                              "/usr/dict/words",
