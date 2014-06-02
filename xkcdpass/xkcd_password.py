@@ -18,6 +18,7 @@ Contributors: Steven Tobin,
               Daniel Beecham <daniel@lunix.se>,
               Kim Slawson <kimslawson@gmail.com>,
               Stanislav Bytsko <zbstof@gmail.com>
+              Lowe Thiderman <lowe.thiderman@gmail.com>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -57,7 +58,7 @@ if sys.version[0] == "3":
     raw_input = input
 
 
-def validate_options(options, args):
+def validate_options(parser, options, args):
     """
     Given a set of command line options, performs various validation checks
     """
@@ -80,14 +81,19 @@ def validate_options(options, args):
         else:
             parser.error("Conflicting values for wordlist: " + args[0] +
                          " and " + options.wordfile)
-
     if options.wordfile is not None:
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
-        common_word_files = ["/usr/share/dict/words",
-                             "/usr/dict/words"]
+        static_default = os.path.join(
+          os.path.dirname(os.path.abspath(__file__)),
+          'static',
+          'default.txt')
+        common_word_files = ["/usr/share/cracklib/cracklib-small",
+                             static_default,
+                             "/usr/dict/words",
+                             "/usr/share/dict/words"]
 
         for wfile in common_word_files:
             if os.path.exists(wfile):
@@ -214,8 +220,7 @@ def generate_xkcdpassword(wordlist,
     return passwd
 
 
-if __name__ == '__main__':
-
+def main():
     count = 1
     usage = "usage: %prog [options]"
     parser = optparse.OptionParser(usage)
@@ -252,7 +257,7 @@ if __name__ == '__main__':
                       help="separator character between words")
 
     (options, args) = parser.parse_args()
-    validate_options(options, args)
+    validate_options(parser, options, args)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
                                     min_length=options.min_length,
@@ -272,3 +277,7 @@ if __name__ == '__main__':
                                     acrostic=options.acrostic,
                                     delim=options.delim))
         count -= 1
+
+
+if __name__ == '__main__':
+    main()
