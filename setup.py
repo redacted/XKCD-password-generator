@@ -8,7 +8,7 @@ setup(
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',
     description='Generate secure multiword passwords/passphrases, inspired by XKCD',
-    long_description=open('README.mkd').read(),
+    long_description=open('README.rst').read(),
     packages=['xkcdpass'],
     zip_safe=False,
     license='BSD',
