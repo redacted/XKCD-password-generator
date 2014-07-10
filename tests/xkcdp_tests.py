@@ -34,7 +34,7 @@ class XkcdPasswordTests(unittest.TestCase):
         result = subprocess.check_output(
             ["python", "xkcdpass/xkcd_password.py", "-w", WORDFILE,
              "-c", str(count)])
-        self.assertTrue(result.count("\n"), count)
+        self.assertTrue(result.count(b"\n"), count)
 
     def test_delim(self):
         tdelim = "_"
