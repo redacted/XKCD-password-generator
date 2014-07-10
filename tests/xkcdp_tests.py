@@ -1,5 +1,6 @@
 import unittest
 import subprocess
+import re
 from xkcdpass import xkcd_password
 
 WORDFILE = 'xkcdpass/static/default.txt'
@@ -37,13 +38,10 @@ class XkcdPasswordTests(unittest.TestCase):
 
     def test_delim(self):
         tdelim = "_"
-        target = tdelim.join(["factual", "amazing", "captain", "exactly"])
-        # use an acrostic for simpler target check
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
-            acrostic="face",
             delim=tdelim)
-        self.assertEquals(result, target)
+        self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
 
 
 if __name__ == '__main__':
