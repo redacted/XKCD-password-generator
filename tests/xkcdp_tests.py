@@ -22,11 +22,11 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertNotIn("__$$$__", self.wordlist_small)
 
     def test_acrostic(self):
-        target = ["factual", "amazing", "captain", "exactly"]
+        word = "face"
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
-            acrostic="face")
-        self.assertEquals(result.split(), target)
+            acrostic=word)
+        self.assertEquals("".join(map(lambda x: x[0], result.split())), word)
 
     def test_commandlineCount(self):
         count = 5
