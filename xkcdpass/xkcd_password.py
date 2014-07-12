@@ -17,8 +17,9 @@ Contributors: Steven Tobin,
               Mithrandir <mithrandiragain@lavabit.com>,
               Daniel Beecham <daniel@lunix.se>,
               Kim Slawson <kimslawson@gmail.com>,
-              Stanislav Bytsko <zbstof@gmail.com>
-              Lowe Thiderman <lowe.thiderman@gmail.com>
+              Stanislav Bytsko <zbstof@gmail.com>,
+              Lowe Thiderman <lowe.thiderman@gmail.com>,
+              Daniil Baturin <daniil@baturin.org>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
