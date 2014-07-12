@@ -1,5 +1,6 @@
 import unittest
 import subprocess
+import re
 from xkcdpass import xkcd_password
 
 WORDFILE = 'xkcdpass/static/default.txt'
@@ -22,28 +23,25 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertNotIn("__$$$__", self.wordlist_small)
 
     def test_acrostic(self):
-        target = ["factual", "amazing", "captain", "exactly"]
+        word = "face"
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
-            acrostic="face")
-        self.assertEquals(result.split(), target)
+            acrostic=word)
+        self.assertEquals("".join(map(lambda x: x[0], result.split())), word)
 
     def test_commandlineCount(self):
         count = 5
         result = subprocess.check_output(
             ["python", "xkcdpass/xkcd_password.py", "-w", WORDFILE,
              "-c", str(count)])
-        self.assertTrue(result.count("\n"), count)
+        self.assertTrue(result.count(b"\n"), count)
 
     def test_delim(self):
         tdelim = "_"
-        target = tdelim.join(["factual", "amazing", "captain", "exactly"])
-        # use an acrostic for simpler target check
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
-            acrostic="face",
             delim=tdelim)
-        self.assertEquals(result, target)
+        self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
 
 
 if __name__ == '__main__':
