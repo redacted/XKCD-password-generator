@@ -134,6 +134,24 @@ def generate_wordlist(wordfile=None,
     return words
 
 
+def wordlist_to_worddict(wordlist):
+    """
+    Takes a wordlist and returns a dictionary keyed by the first letter of
+    the words. Used for acrsotic pass phrase generation
+    """
+
+    worddict = {}
+
+    # Maybe should be a defaultdict, but this reduces dependencies
+    for word in wordlist:
+        try:
+            worddict[word[0]].append(word)
+        except KeyError:
+            worddict[word[0]] = [word, ]
+
+    return worddict
+
+
 def verbose_reports(length, numwords, wordfile):
     """
     Report entropy metrics based on word list and requested password size"
@@ -157,19 +175,21 @@ def verbose_reports(length, numwords, wordfile):
     print("assuming truly random word selection.")
 
 
-def find_acrostic(acrostic, wordlist):
+def find_acrostic(acrostic, worddict):
     """
     Constrain choice of words to those beginning with the letters of the
     given word (acrostic).
+    Second argument is a dictionary (output of wordlist_to_worddict)
     """
 
     words = []
+
     for letter in acrostic:
-        while 1:
-            word = rng().choice(wordlist)
-            if word[0] == letter:
-                words.append(word)
-                break
+        try:
+            words.append(rng().choice(worddict[letter]))
+        except KeyError:
+            sys.stderr.write("No words found starting with " + letter + "\n")
+            sys.exit(1)
     return words
 
 
@@ -190,12 +210,16 @@ def generate_xkcdpassword(wordlist,
                          "being too small, or your settings too strict.\n")
         sys.exit(1)
 
+    # generate the worddict if we are looking for acrostics
+    if acrostic:
+        worddict = wordlist_to_worddict(wordlist)
+
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
             passwd = delim.join(rng().sample(wordlist, n_words))
         else:
-            passwd = delim.join(find_acrostic(acrostic, wordlist))
+            passwd = delim.join(find_acrostic(acrostic, worddict))
 
         return passwd
 
@@ -214,7 +238,7 @@ def generate_xkcdpassword(wordlist,
         if not acrostic:
             passwd = delim.join(rng().sample(wordlist, n_words))
         else:
-            passwd = delim.join(find_acrostic(acrostic, wordlist))
+            passwd = delim.join(find_acrostic(acrostic, worddict))
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
