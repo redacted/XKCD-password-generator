@@ -137,7 +137,7 @@ def generate_wordlist(wordfile=None,
 def wordlist_to_worddict(wordlist):
     """
     Takes a wordlist and returns a dictionary keyed by the first letter of
-    the words. Used for acrsotic pass phrase generation
+    the words. Used for acrostic pass phrase generation
     """
 
     worddict = {}
