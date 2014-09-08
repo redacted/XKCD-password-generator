@@ -87,24 +87,27 @@ def validate_options(parser, options, args):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
-        static_default = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            'static',
-            'default.txt')
-        common_word_files = ["/usr/share/cracklib/cracklib-small",
-                             static_default,
-                             "/usr/dict/words",
-                             "/usr/share/dict/words"]
+        options.wordfile = locate_wordfile()
 
-        for wfile in common_word_files:
-            if os.path.exists(wfile):
-                options.wordfile = wfile
-                break
-
-        if options.wordfile is None:
+        if not options.wordfile:
             sys.stderr.write("Could not find a word file, or word file does "
                              "not exist.\n")
             sys.exit(1)
+
+
+def locate_wordfile():
+    static_default = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'static',
+        'default.txt')
+    common_word_files = ["/usr/share/cracklib/cracklib-small",
+                         static_default,
+                         "/usr/dict/words",
+                         "/usr/share/dict/words"]
+
+    for wfile in common_word_files:
+        if os.path.exists(wfile):
+            return wfile
 
 
 def generate_wordlist(wordfile=None,
