@@ -1,11 +1,6 @@
 import xkcdpass.xkcd_password as xp
 import random
 
-## create a wordlist
-#mywords = generate_wordlist(wordfile='3esl.txt', min_length=5, max_length=8,)
-
-## create a password with the acrostic 'face'
-#print(generate_xkcdpassword(mywords, acrostic="face"))
 
 def random_capitalisation(s, chance):
     new_str = []
