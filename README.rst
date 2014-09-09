@@ -97,7 +97,25 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
 
 A large wordlist is provided (courtesy of `12Dicts <http://wordlist.aspell.net/12dicts/>`_) for convenience, but the generator can be used with any word file of the correct format: a file containing one 'word' per line. The default word file can be found in ``xkcdpass/static/default.txt``.
 
-The main script can also be imported into other python code, and an example of this usage is provided in the package (``xkcdpass/example_import.py``).
+
+
+Advanced Usage
+==============
+
+The built-in functionality of ``xkcdpass`` can be extended by importing the module into custom python scripts.
+An example of this usage is provided in `example_import.py <https://github.com/redacted/XKCD-password-generator/blob/master/xkcdpass/example_import.py>`_, which randomly capitalises the letters in a generated password. 
+
+A simple use of import:: 
+
+    import xkcdpass.xkcd_password as xp
+
+    ## create a wordlist from the default wordfile
+    ## use words between 5 and 8 letters long
+    wordfile = xp.locate_wordfile()
+    mywords = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8) 
+
+    ## create a password with the acrostic "face"
+    print(xp.generate_xkcdpassword(mywords, acrostic="face")) 
 
 
 
