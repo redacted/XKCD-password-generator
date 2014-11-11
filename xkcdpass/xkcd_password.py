@@ -94,7 +94,6 @@ def validate_options(parser, options, args):
                              "not exist.\n")
             sys.exit(1)
 
-
 def locate_wordfile():
     static_default = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),

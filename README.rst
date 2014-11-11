@@ -121,4 +121,5 @@ A simple use of import::
 
 License
 =======
-The BSD License (BSD)
+This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license. 
+See the file ``LICENSE.BSD`` for details. 
