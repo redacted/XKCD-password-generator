@@ -9,7 +9,7 @@ import math
 import sys
 
 __LICENSE__ = """
-Copyright (c) 2011 - 2014, Steven Tobin and Contributors.
+Copyright (c) 2011 - 2015, Steven Tobin and Contributors.
 All rights reserved.
 
 Contributors: Steven Tobin,
@@ -19,7 +19,8 @@ Contributors: Steven Tobin,
               Kim Slawson <kimslawson@gmail.com>,
               Stanislav Bytsko <zbstof@gmail.com>,
               Lowe Thiderman <lowe.thiderman@gmail.com>,
-              Daniil Baturin <daniil@baturin.org>
+              Daniil Baturin <daniil@baturin.org>,
+              Ben Finney <ben@benfinney.id.au>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
