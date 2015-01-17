@@ -56,7 +56,7 @@ except AttributeError:
     rng = random.Random
 
 # Python 3 compatibility
-if sys.version[0] == "3":
+if sys.version_info[0] >= 3:
     raw_input = input
 
 
