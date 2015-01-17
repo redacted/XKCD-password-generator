@@ -20,7 +20,8 @@ Contributors: Steven Tobin,
               Stanislav Bytsko <zbstof@gmail.com>,
               Lowe Thiderman <lowe.thiderman@gmail.com>,
               Daniil Baturin <daniil@baturin.org>,
-              Ben Finney <ben@benfinney.id.au>
+              Ben Finney <ben@benfinney.id.au>,
+              Simeon Visser <simeon87@gmail.com>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
