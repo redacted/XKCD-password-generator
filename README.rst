@@ -95,7 +95,18 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     separator character between words
 
 
-A large wordlist is provided (courtesy of `12Dicts <http://wordlist.aspell.net/12dicts/>`_) for convenience, but the generator can be used with any word file of the correct format: a file containing one 'word' per line. The default word file can be found in ``xkcdpass/static/default.txt``.
+A large wordlist is provided for convenience, but the generator can be used with any word file of the correct format: a file containing one 'word' per line. The default word file can be found in ``xkcdpass/static/default.txt``.
+
+The default word list is derived mechanically from `12Dicts <http://wordlist.aspell.net/12dicts/>`_ by Alan Beale. It is the understanding of the author of ``xkcdpass`` that purely mechanical transformation does not imbue copyright in the resulting work. The documentation for the 12Dicts project at 
+http://wordlist.aspell.net/12dicts/ contains the following dedication:
+
+..
+    
+    The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use. 
+
+             
+
+
 
 
 
@@ -123,3 +134,4 @@ License
 =======
 This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license. 
 See the file ``LICENSE.BSD`` for details. 
+- 
