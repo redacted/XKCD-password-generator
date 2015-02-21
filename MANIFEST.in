@@ -1,0 +1,3 @@
+include xkcdpass/static/*
+include LICENSE.BSD
+include xkcdpass.1
