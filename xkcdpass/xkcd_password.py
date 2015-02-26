@@ -202,7 +202,9 @@ def generate_xkcdpassword(wordlist,
                           n_words=6,
                           interactive=False,
                           acrostic=False,
-                          delim=" "):
+                          delim=" ",
+                          numbers=0,
+                          specials=0):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -226,6 +228,12 @@ def generate_xkcdpassword(wordlist,
         else:
             passwd = delim.join(find_acrostic(acrostic, worddict))
 
+        if numbers > 0:
+            passwd = '{0}{1}'.format(passwd, getnumbers(numbers))
+
+        if specials > 0:
+            passwd = '{0}{1}'.format(passwd, getspecials(specials))
+
         return passwd
 
     # else, interactive session
@@ -244,11 +252,34 @@ def generate_xkcdpassword(wordlist,
             passwd = delim.join(rng().sample(wordlist, n_words))
         else:
             passwd = delim.join(find_acrostic(acrostic, worddict))
+
+        if numbers > 0:
+            passwd = '{0}{1}'.format(passwd, getnumbers(numbers))
+
+        if specials > 0:
+            passwd = '{0}{1}'.format(passwd, getspecials(specials))
+
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
     return passwd
 
+def getnumbers(count):
+
+    out = []
+    while count > 0:
+        out.append(str(rng().randint(0, 9)))
+        count -= 1
+    return ''.join(out)
+
+def getspecials(count):
+
+    chars = ['!', '@', '#', '$', '%', '^', '*', '(', ')']
+    out = []
+    while count > 0:
+        out.append(rng().choice(chars))
+        count -= 1
+    return ''.join(out)
 
 def main():
     count = 1
@@ -298,6 +329,14 @@ def main():
         dest="count", type="int", default=1, metavar="COUNT",
         help="Generate COUNT passphrases.")
     parser.add_option(
+        "-N", "--add-numbers",
+        dest="numbers", type="int", default=0, metavar="NUMBERS",
+        help="Append numbers to passphrase.")
+    parser.add_option(
+        "-S", "--add-special",
+        dest="specials", type="int", default=0, metavar="SPECIAL",
+        help="Append special characters to passphrase")
+    parser.add_option(
         "-d", "--delimiter",
         dest="delim", default=" ", metavar="DELIM",
         help="Separate words within a passphrase with DELIM.")
@@ -321,7 +360,9 @@ def main():
                                     interactive=options.interactive,
                                     n_words=options.numwords,
                                     acrostic=options.acrostic,
-                                    delim=options.delim))
+                                    delim=options.delim,
+                                    numbers=options.numbers,
+                                    specials=options.specials))
         count -= 1
 
 
