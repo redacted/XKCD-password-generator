@@ -199,17 +199,17 @@ def find_acrostic(acrostic, worddict):
 
 
 def generate_xkcdpassword(wordlist,
-                          n_words=6,
+                          numwords=6,
                           interactive=False,
                           acrostic=False,
-                          delim=" "):
+                          delimiter=" "):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
 
     passwd = False
 
-    if len(wordlist) < n_words:
+    if len(wordlist) < numwords:
         sys.stderr.write("Could not get enough words!\n"
                          "This could be a result of either your wordfile\n"
                          "being too small, or your settings too strict.\n")
@@ -222,9 +222,9 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            passwd = delim.join(rng().sample(wordlist, n_words))
+            passwd = delimiter.join(rng().sample(wordlist, numwords))
         else:
-            passwd = delim.join(find_acrostic(acrostic, worddict))
+            passwd = delimiter.join(find_acrostic(acrostic, worddict))
 
         return passwd
 
@@ -233,17 +233,17 @@ def generate_xkcdpassword(wordlist,
         custom_n_words = raw_input("Enter number of words (default 6): ")
 
         if custom_n_words:
-            n_words = int(custom_n_words)
+            numwords = int(custom_n_words)
     else:
-        n_words = len(acrostic)
+        numwords = len(acrostic)
 
     accepted = "n"
 
     while accepted.lower() not in ["y", "yes"]:
         if not acrostic:
-            passwd = delim.join(rng().sample(wordlist, n_words))
+            passwd = delimiter.join(rng().sample(wordlist, numwords))
         else:
-            passwd = delim.join(find_acrostic(acrostic, worddict))
+            passwd = delimiter.join(find_acrostic(acrostic, worddict))
         print("Generated: ", passwd)
         accepted = raw_input("Accept? [yN] ")
 
@@ -299,7 +299,7 @@ def main():
         help="Generate COUNT passphrases.")
     parser.add_option(
         "-d", "--delimiter",
-        dest="delim", default=" ", metavar="DELIM",
+        dest="delimiter", default=" ", metavar="DELIM",
         help="Separate words within a passphrase with DELIM.")
 
     (options, args) = parser.parse_args()
@@ -319,9 +319,9 @@ def main():
     while count > 0:
         print(generate_xkcdpassword(my_wordlist,
                                     interactive=options.interactive,
-                                    n_words=options.numwords,
+                                    numwords=options.numwords,
                                     acrostic=options.acrostic,
-                                    delim=options.delim))
+                                    delimiter=options.delimiter))
         count -= 1
 
 
