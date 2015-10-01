@@ -101,41 +101,48 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
 
 A large wordlist is provided for convenience, but the generator can be used with any word file of the correct format: a file containing one 'word' per line. The default word file can be found in ``xkcdpass/static/default.txt``.
 
-The default word list is derived mechanically from `12Dicts <http://wordlist.aspell.net/12dicts/>`_ by Alan Beale. It is the understanding of the author of ``xkcdpass`` that purely mechanical transformation does not imbue copyright in the resulting work. The documentation for the 12Dicts project at 
+The default word list is derived mechanically from `12Dicts <http://wordlist.aspell.net/12dicts/>`_ by Alan Beale. It is the understanding of the author of ``xkcdpass`` that purely mechanical transformation does not imbue copyright in the resulting work. The documentation for the 12Dicts project at
 http://wordlist.aspell.net/12dicts/ contains the following dedication:
 
 ..
-    
-    The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use. 
 
-             
+    The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use.
 
 
-
-
-
-Advanced Usage
+Using xkcdpass as an imported module
 ==============
 
-The built-in functionality of ``xkcdpass`` can be extended by importing the module into custom python scripts.
-An example of this usage is provided in `example_import.py <https://github.com/redacted/XKCD-password-generator/blob/master/xkcdpass/example_import.py>`_, which randomly capitalises the letters in a generated password. 
+The built-in functionality of ``xkcdpass`` can be extended by importing the module into python scripts. An example of this usage is provided in `example_import.py <https://github.com/redacted/XKCD-password-generator/blob/master/xkcdpass/example_import.py>`_, which randomly capitalises the letters in a generated password. `example_json.py` demonstrates integration of xkcdpass into a Django project, generating password suggestions as JSON to be consumed by a Javascript front-end.
 
-A simple use of import:: 
+A simple use of import::
 
-    import xkcdpass.xkcd_password as xp
+    from xkcdpass import xkcd_password as xp
 
-    ## create a wordlist from the default wordfile
-    ## use words between 5 and 8 letters long
+    # create a wordlist from the default wordfile
+    # use words between 5 and 8 letters long
     wordfile = xp.locate_wordfile()
-    mywords = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8) 
+    mywords = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8)
 
-    ## create a password with the acrostic "face"
-    print(xp.generate_xkcdpassword(mywords, acrostic="face")) 
+    # create a password with the acrostic "face"
+    print(xp.generate_xkcdpassword(mywords, acrostic="face"))
 
+When used as an imported module, `generate_wordlist()` takes the following args (defaults shown)::
 
+    wordfile=None,
+    min_length=5,
+    max_length=9,
+    valid_chars='.'
+
+While `generate_xkcdpassword()` takes::
+
+    wordlist,
+    numwords=6,
+    interactive=False,
+    acrostic=False,
+    delimiter=" "
 
 License
 =======
-This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license. 
-See the file ``LICENSE.BSD`` for details. 
-- 
+This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license.
+See the file ``LICENSE.BSD`` for details.
+-
