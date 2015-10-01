@@ -17,7 +17,7 @@ class XkcdPasswordTests(unittest.TestCase):
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
-        self.assertEquals(len(self.wordlist_full), 19493)
+        self.assertEquals(len(self.wordlist_full), 29612)
 
     def test_regex(self):
         self.assertNotIn("__$$$__", self.wordlist_small)
@@ -40,7 +40,7 @@ class XkcdPasswordTests(unittest.TestCase):
         tdelim = "_"
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
-            delim=tdelim)
+            delimiter=tdelim)
         self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
 
 
