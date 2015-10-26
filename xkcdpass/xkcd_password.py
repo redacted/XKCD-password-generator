@@ -60,6 +60,7 @@ except AttributeError:
 # Python 3 compatibility
 if sys.version_info[0] >= 3:
     raw_input = input
+    xrange = range
 
 
 def validate_options(parser, options, args):
@@ -199,6 +200,12 @@ def find_acrostic(acrostic, worddict):
     return words
 
 
+def choose_words(wordlist, numwords):
+    s = []
+    for i in xrange(numwords):
+        s.append(rng().choice(wordlist))
+    return s
+
 def generate_xkcdpassword(wordlist,
                           numwords=6,
                           interactive=False,
@@ -210,12 +217,6 @@ def generate_xkcdpassword(wordlist,
 
     passwd = False
 
-    if len(wordlist) < numwords:
-        sys.stderr.write("Could not get enough words!\n"
-                         "This could be a result of either your wordfile\n"
-                         "being too small, or your settings too strict.\n")
-        sys.exit(1)
-
     # generate the worddict if we are looking for acrostics
     if acrostic:
         worddict = wordlist_to_worddict(wordlist)
@@ -223,7 +224,7 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            passwd = delimiter.join(rng().sample(wordlist, numwords))
+            passwd = delimiter.join(choose_words(wordlist, numwords))
         else:
             passwd = delimiter.join(find_acrostic(acrostic, worddict))
 
@@ -242,7 +243,7 @@ def generate_xkcdpassword(wordlist,
 
     while accepted.lower() not in ["y", "yes"]:
         if not acrostic:
-            passwd = delimiter.join(rng().sample(wordlist, numwords))
+            passwd = delimiter.join(choose_words(wordlist, numwords))
         else:
             passwd = delimiter.join(find_acrostic(acrostic, worddict))
         print("Generated: ", passwd)
