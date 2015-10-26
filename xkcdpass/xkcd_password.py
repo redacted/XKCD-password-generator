@@ -21,8 +21,9 @@ Contributors: Steven Tobin,
               Lowe Thiderman <lowe.thiderman@gmail.com>,
               Daniil Baturin <daniil@baturin.org>,
               Ben Finney <ben@benfinney.id.au>,
-              Simeon Visser <simeon87@gmail.com>
-              Scot Hacker <shacker@birdhouse.org>
+              Simeon Visser <simeon87@gmail.com>,
+              Scot Hacker <shacker@birdhouse.org>,
+              Lars Noschinski <lars@public.noschinski.de>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
