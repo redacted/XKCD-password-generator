@@ -110,7 +110,7 @@ http://wordlist.aspell.net/12dicts/ contains the following dedication:
 
 
 Using xkcdpass as an imported module
-==============
+====================================
 
 The built-in functionality of ``xkcdpass`` can be extended by importing the module into python scripts. An example of this usage is provided in `example_import.py <https://github.com/redacted/XKCD-password-generator/blob/master/xkcdpass/example_import.py>`_, which randomly capitalises the letters in a generated password. `example_json.py` demonstrates integration of xkcdpass into a Django project, generating password suggestions as JSON to be consumed by a Javascript front-end.
 
@@ -140,6 +140,14 @@ While `generate_xkcdpassword()` takes::
     interactive=False,
     acrostic=False,
     delimiter=" "
+
+
+Filtered word list
+===================
+While we recommend the standard word list for most purposes, we note that this list is uncensored and, as such, generated passwords could offend. For this reason, `a filtered word list can be found in the github repo <https://github.com/redacted/XKCD-password-generator/tree/master/contrib/office-safe.txt>`_ (filtered by Twig Nyugen and included here with permission).
+
+An important caveat: due to the significant reduction in the size of the filtered word list when compared to the default, the strength of the corresponding passwords is also reduced. Users should expect approximately an *order of magnitude* reduction in the strength of a five word passphrase. This can be mitigated by increasing the length of generated passphrases.
+
 
 License
 =======
