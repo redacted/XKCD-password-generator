@@ -1,3 +1,4 @@
 include xkcdpass/static/*
+include tests/*
 include LICENSE.BSD
 include xkcdpass.1
