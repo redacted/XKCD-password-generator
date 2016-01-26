@@ -90,7 +90,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -v VALID_CHARS, --valid_chars=VALID_CHARS
                                     Valid chars, using regexp style (e.g. '[a-z]')
         -V, --verbose
-                                    Report various metrics for given options
+                                    Report various metrics for given options, including word list entropy
         -a ACROSTIC, --acrostic=ACROSTIC
                                     Acrostic to constrain word choices
         -c COUNT, --count=COUNT
