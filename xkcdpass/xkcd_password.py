@@ -4,7 +4,7 @@
 import random
 import os
 import os.path
-import optparse
+import argparse
 import re
 import math
 import sys
@@ -65,9 +65,9 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
-def validate_options(parser, options, args):
+def validate_options(parser, options):
     """
-    Given a set of command line options, performs various validation checks
+    Given a parsed collection of options, performs various validation checks.
     """
 
     if options.max_length < options.min_length:
@@ -76,18 +76,6 @@ def validate_options(parser, options, args):
                          "Check the specified settings.\n")
         sys.exit(1)
 
-    if len(args) > 1:
-        parser.error("Too many arguments.")
-
-    if len(args) == 1:
-        # supporting either -w or args[0] for wordlist, but not both
-        if options.wordfile is None:
-            options.wordfile = args[0]
-        elif options.wordfile == args[0]:
-            pass
-        else:
-            parser.error("Conflicting values for wordlist: " + args[0] +
-                         " and " + options.wordfile)
     if options.wordfile is not None:
         if not os.path.exists(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
@@ -254,64 +242,69 @@ def generate_xkcdpassword(wordlist,
     return passwd
 
 
-class XkcdPassOptionParser(optparse.OptionParser, object):
+class XkcdPassArgumentParser(argparse.ArgumentParser):
     """ Command-line argument parser for this program. """
 
     def __init__(self, *args, **kwargs):
-        super(XkcdPassOptionParser, self).__init__(*args, **kwargs)
+        super(XkcdPassArgumentParser, self).__init__(*args, **kwargs)
 
-        self.usage = "%prog [options]"
+        self._add_arguments()
 
-        self._add_options()
-
-    def _add_options(self):
-        """ Add the options needed for this program. """
-        self.add_option(
+    def _add_arguments(self):
+        """ Add the arguments needed for this program. """
+        self.add_argument(
             "-w", "--wordfile",
             dest="wordfile", default=None, metavar="WORDFILE",
             help=(
                 "Specify that the file WORDFILE contains the list"
                 " of valid words from which to generate passphrases."))
-        self.add_option(
+        self.add_argument(
             "--min",
-            dest="min_length", type="int", default=5, metavar="MIN_LENGTH",
+            dest="min_length", type=int, default=5, metavar="MIN_LENGTH",
             help="Generate passphrases containing at least MIN_LENGTH words.")
-        self.add_option(
+        self.add_argument(
             "--max",
-            dest="max_length", type="int", default=9, metavar="MAX_LENGTH",
+            dest="max_length", type=int, default=9, metavar="MAX_LENGTH",
             help="Generate passphrases containing at most MAX_LENGTH words.")
-        self.add_option(
+        self.add_argument(
             "-n", "--numwords",
-            dest="numwords", type="int", default=6, metavar="NUM_WORDS",
+            dest="numwords", type=int, default=6, metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.")
-        self.add_option(
+        self.add_argument(
             "-i", "--interactive",
             action="store_true", dest="interactive", default=False,
             help=(
                 "Generate and output a passphrase, query the user to accept it,"
                 " and loop until one is accepted."))
-        self.add_option(
+        self.add_argument(
             "-v", "--valid_chars",
             dest="valid_chars", default=".", metavar="VALID_CHARS",
             help=(
                 "Limit passphrases to only include words matching the regex"
                 " pattern VALID_CHARS (e.g. '[a-z]')."))
-        self.add_option(
+        self.add_argument(
             "-V", "--verbose",
             action="store_true", dest="verbose", default=False,
             help="Report various metrics for given options.")
-        self.add_option(
+        self.add_argument(
             "-a", "--acrostic",
             dest="acrostic", default=False,
             help="Generate passphrases with an acrostic matching ACROSTIC.")
-        self.add_option(
+        self.add_argument(
             "-c", "--count",
-            dest="count", type="int", default=1, metavar="COUNT",
+            dest="count", type=int, default=1, metavar="COUNT",
             help="Generate COUNT passphrases.")
-        self.add_option(
+        self.add_argument(
             "-d", "--delimiter",
             dest="delimiter", default=" ", metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
+
+        self.add_argument(
+            "wordfile",
+            default=None, metavar="WORDFILE", nargs="?",
+            help=(
+                "Specify that the file WORDFILE contains the list"
+                " of valid words from which to generate passphrases."))
 
 
 def main(argv=None):
@@ -323,10 +316,10 @@ def main(argv=None):
     count = 1
 
     program_name = os.path.basename(argv[0])
-    parser = XkcdPassOptionParser(prog=program_name)
+    parser = XkcdPassArgumentParser(prog=program_name)
 
-    (options, args) = parser.parse_args(argv[1:])
-    validate_options(parser, options, args)
+    options = parser.parse_args(argv[1:])
+    validate_options(parser, options)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
                                     min_length=options.min_length,
