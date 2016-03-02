@@ -314,13 +314,18 @@ class XkcdPassOptionParser(optparse.OptionParser, object):
             help="Separate words within a passphrase with DELIM.")
 
 
-def main():
+def main(argv=None):
+    """ Mainline code for this program. """
+
+    if argv is None:
+        argv = sys.argv
+
     count = 1
 
-    program_name = os.path.basename(sys.argv[0])
+    program_name = os.path.basename(argv[0])
     parser = XkcdPassOptionParser(prog=program_name)
 
-    (options, args) = parser.parse_args(sys.argv[1:])
+    (options, args) = parser.parse_args(argv[1:])
     validate_options(parser, options, args)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
@@ -344,4 +349,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
