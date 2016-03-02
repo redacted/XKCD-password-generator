@@ -253,57 +253,70 @@ def generate_xkcdpassword(wordlist,
     return passwd
 
 
+class XkcdPassOptionParser(optparse.OptionParser, object):
+    """ Command-line argument parser for this program. """
+
+    def __init__(self, *args, **kwargs):
+        super(XkcdPassOptionParser, self).__init__(*args, **kwargs)
+
+        self.usage = "%prog [options]"
+
+        self._add_options()
+
+    def _add_options(self):
+        """ Add the options needed for this program. """
+        self.add_option(
+            "-w", "--wordfile",
+            dest="wordfile", default=None, metavar="WORDFILE",
+            help=(
+                "Specify that the file WORDFILE contains the list"
+                " of valid words from which to generate passphrases."))
+        self.add_option(
+            "--min",
+            dest="min_length", type="int", default=5, metavar="MIN_LENGTH",
+            help="Generate passphrases containing at least MIN_LENGTH words.")
+        self.add_option(
+            "--max",
+            dest="max_length", type="int", default=9, metavar="MAX_LENGTH",
+            help="Generate passphrases containing at most MAX_LENGTH words.")
+        self.add_option(
+            "-n", "--numwords",
+            dest="numwords", type="int", default=6, metavar="NUM_WORDS",
+            help="Generate passphrases containing exactly NUM_WORDS words.")
+        self.add_option(
+            "-i", "--interactive",
+            action="store_true", dest="interactive", default=False,
+            help=(
+                "Generate and output a passphrase, query the user to accept it,"
+                " and loop until one is accepted."))
+        self.add_option(
+            "-v", "--valid_chars",
+            dest="valid_chars", default=".", metavar="VALID_CHARS",
+            help=(
+                "Limit passphrases to only include words matching the regex"
+                " pattern VALID_CHARS (e.g. '[a-z]')."))
+        self.add_option(
+            "-V", "--verbose",
+            action="store_true", dest="verbose", default=False,
+            help="Report various metrics for given options.")
+        self.add_option(
+            "-a", "--acrostic",
+            dest="acrostic", default=False,
+            help="Generate passphrases with an acrostic matching ACROSTIC.")
+        self.add_option(
+            "-c", "--count",
+            dest="count", type="int", default=1, metavar="COUNT",
+            help="Generate COUNT passphrases.")
+        self.add_option(
+            "-d", "--delimiter",
+            dest="delimiter", default=" ", metavar="DELIM",
+            help="Separate words within a passphrase with DELIM.")
+
+
 def main():
     count = 1
-    usage = "usage: %prog [options]"
-    parser = optparse.OptionParser(usage)
 
-    parser.add_option(
-        "-w", "--wordfile",
-        dest="wordfile", default=None, metavar="WORDFILE",
-        help=(
-            "Specify that the file WORDFILE contains the list of valid words"
-            " from which to generate passphrases."))
-    parser.add_option(
-        "--min",
-        dest="min_length", type="int", default=5, metavar="MIN_LENGTH",
-        help="Generate passphrases containing at least MIN_LENGTH words.")
-    parser.add_option(
-        "--max",
-        dest="max_length", type="int", default=9, metavar="MAX_LENGTH",
-        help="Generate passphrases containing at most MAX_LENGTH words.")
-    parser.add_option(
-        "-n", "--numwords",
-        dest="numwords", type="int", default=6, metavar="NUM_WORDS",
-        help="Generate passphrases containing exactly NUM_WORDS words.")
-    parser.add_option(
-        "-i", "--interactive",
-        action="store_true", dest="interactive", default=False,
-        help=(
-            "Generate and output a passphrase, query the user to accept it,"
-            " and loop until one is accepted."))
-    parser.add_option(
-        "-v", "--valid_chars",
-        dest="valid_chars", default=".", metavar="VALID_CHARS",
-        help=(
-            "Limit passphrases to only include words matching the regex"
-            " pattern VALID_CHARS (e.g. '[a-z]')."))
-    parser.add_option(
-        "-V", "--verbose",
-        action="store_true", dest="verbose", default=False,
-        help="Report various metrics for given options.")
-    parser.add_option(
-        "-a", "--acrostic",
-        dest="acrostic", default=False,
-        help="Generate passphrases with an acrostic matching ACROSTIC.")
-    parser.add_option(
-        "-c", "--count",
-        dest="count", type="int", default=1, metavar="COUNT",
-        help="Generate COUNT passphrases.")
-    parser.add_option(
-        "-d", "--delimiter",
-        dest="delimiter", default=" ", metavar="DELIM",
-        help="Separate words within a passphrase with DELIM.")
+    parser = XkcdPassOptionParser()
 
     (options, args) = parser.parse_args()
     validate_options(parser, options, args)
