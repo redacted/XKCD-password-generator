@@ -320,7 +320,7 @@ def main():
     program_name = os.path.basename(sys.argv[0])
     parser = XkcdPassOptionParser(prog=program_name)
 
-    (options, args) = parser.parse_args()
+    (options, args) = parser.parse_args(sys.argv[1:])
     validate_options(parser, options, args)
 
     my_wordlist = generate_wordlist(wordfile=options.wordfile,
