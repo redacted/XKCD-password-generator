@@ -3,6 +3,7 @@
 
 import random
 import os
+import os.path
 import optparse
 import re
 import math
@@ -316,7 +317,8 @@ class XkcdPassOptionParser(optparse.OptionParser, object):
 def main():
     count = 1
 
-    parser = XkcdPassOptionParser()
+    program_name = os.path.basename(sys.argv[0])
+    parser = XkcdPassOptionParser(prog=program_name)
 
     (options, args) = parser.parse_args()
     validate_options(parser, options, args)
