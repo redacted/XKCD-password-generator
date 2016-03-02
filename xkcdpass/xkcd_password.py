@@ -242,6 +242,19 @@ def generate_xkcdpassword(wordlist,
     return passwd
 
 
+def emit_passwords(wordlist, options):
+    """ Generate the specified number of passwords and output them. """
+    count = options.count
+    while count > 0:
+        print(generate_xkcdpassword(
+            wordlist,
+            interactive=options.interactive,
+            numwords=options.numwords,
+            acrostic=options.acrostic,
+            delimiter=options.delimiter))
+        count -= 1
+
+
 class XkcdPassArgumentParser(argparse.ArgumentParser):
     """ Command-line argument parser for this program. """
 
@@ -313,8 +326,6 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    count = 1
-
     program_name = os.path.basename(argv[0])
     parser = XkcdPassArgumentParser(prog=program_name)
 
@@ -331,14 +342,7 @@ def main(argv=None):
                         options.numwords,
                         options.wordfile)
 
-    count = options.count
-    while count > 0:
-        print(generate_xkcdpassword(my_wordlist,
-                                    interactive=options.interactive,
-                                    numwords=options.numwords,
-                                    acrostic=options.acrostic,
-                                    delimiter=options.delimiter))
-        count -= 1
+    emit_passwords(my_wordlist, options)
 
 
 if __name__ == '__main__':
