@@ -326,24 +326,35 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    program_name = os.path.basename(argv[0])
-    parser = XkcdPassArgumentParser(prog=program_name)
+    exit_status = 0
 
-    options = parser.parse_args(argv[1:])
-    validate_options(parser, options)
+    try:
+        program_name = os.path.basename(argv[0])
+        parser = XkcdPassArgumentParser(prog=program_name)
 
-    my_wordlist = generate_wordlist(wordfile=options.wordfile,
-                                    min_length=options.min_length,
-                                    max_length=options.max_length,
-                                    valid_chars=options.valid_chars)
+        options = parser.parse_args(argv[1:])
+        validate_options(parser, options)
 
-    if options.verbose:
-        verbose_reports(len(my_wordlist),
-                        options.numwords,
-                        options.wordfile)
+        my_wordlist = generate_wordlist(
+            wordfile=options.wordfile,
+            min_length=options.min_length,
+            max_length=options.max_length,
+            valid_chars=options.valid_chars)
 
-    emit_passwords(my_wordlist, options)
+        if options.verbose:
+            verbose_reports(
+                len(my_wordlist),
+                options.numwords,
+                options.wordfile)
+
+        emit_passwords(my_wordlist, options)
+
+    except SystemExit as exc:
+        exit_status = exc.code
+
+    return exit_status
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    exit_status = main(sys.argv)
+    sys.exit(exit_status)
