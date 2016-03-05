@@ -1,0 +1,40 @@
+# Programmable Bash command completion for the ‘xkcdpass’ command.
+# See the Bash manual “Programmable Completion” section.
+#
+# Copyright © 2015–2016 Ben Finney <ben+python@benfinney.id.au>
+# This is free software: you may copy, modify, and/or distribute this
+# work under the terms of the BSD 3-Clause license.
+# See the file ‘LICENSE.BSD’ for details.
+
+shopt -s progcomp
+
+_xkcdpass_completion () {
+    COMPREPLY=()
+
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    local opts="-h --help -V --verbose"
+    opts+=" -w --wordfile -v --valid-chars -a --acrostic"
+    opts+=" -n --numwords --min --max"
+    opts+=" -c --count -d --delimiter"
+
+    case "${prev}" in
+        -w|--wordfile)
+            COMPREPLY=( $(compgen -A file -- ${cur}) )
+            ;;
+
+        *)
+            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            ;;
+    esac
+}
+
+complete -F _xkcdpass_completion xkcdpass
+
+
+# Local variables:
+# coding: utf-8
+# mode: shell-script
+# End:
+# vim: fileencoding=utf-8 filetype=bash :
