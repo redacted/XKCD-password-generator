@@ -38,7 +38,7 @@ Contributions welcome and gratefully appreciated!
 Requirements
 ============
 
-Python 2.4+ (Python 3.x compatible)
+Python 2 (version 2.7 or later), or Python 3 (version 3.2 or later).
 
 
 
