@@ -196,6 +196,7 @@ def choose_words(wordlist, numwords):
         s.append(rng().choice(wordlist))
     return s
 
+
 def generate_xkcdpassword(wordlist,
                           numwords=6,
                           interactive=False,
@@ -287,8 +288,8 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "-i", "--interactive",
             action="store_true", dest="interactive", default=False,
             help=(
-                "Generate and output a passphrase, query the user to accept it,"
-                " and loop until one is accepted."))
+                "Generate and output a passphrase, query the user to"
+                " accept it, and loop until one is accepted."))
         self.add_argument(
             "-v", "--valid-chars",
             dest="valid_chars", default=".", metavar="VALID_CHARS",
