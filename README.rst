@@ -151,6 +151,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.6.0** rename `--valid_chars` to `--valid-chars` for consistency
 - **1.5.0** migrate from deprecated `optparse` to `argparse`. Users on older python versions (below 2.7 or 3.2) will need to manually install `argparse`.
 - **1.4.4** move example code out of package
 - **1.4.3** add tests to package
