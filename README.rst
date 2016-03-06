@@ -65,7 +65,7 @@ which returns
 * ``--acrostic='chaos'``   the first letters of which spell 'chaos'
 * ``--delimiter='|'``   joined using '|'
 * ``--min=5 --max=6``  with words between 5 and 6 characters long
-* ``--valid_chars='[a-z]'``   using only lower-case letters (via regex).
+* ``--valid-chars='[a-z]'``   using only lower-case letters (via regex).
 
 
 A concise overview of the available ``xkcdpass`` options can be accessed via::
@@ -87,7 +87,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     Number of words to make password
         -i, --interactive
                                     Interactively select a password
-        -v VALID_CHARS, --valid_chars=VALID_CHARS
+        -v VALID_CHARS, --valid-chars=VALID_CHARS
                                     Valid chars, using regexp style (e.g. '[a-z]')
         -V, --verbose
                                     Report various metrics for given options, including word list entropy

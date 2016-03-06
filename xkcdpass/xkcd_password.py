@@ -290,7 +290,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Generate and output a passphrase, query the user to accept it,"
                 " and loop until one is accepted."))
         self.add_argument(
-            "-v", "--valid_chars",
+            "-v", "--valid-chars",
             dest="valid_chars", default=".", metavar="VALID_CHARS",
             help=(
                 "Limit passphrases to only include words matching the regex"
