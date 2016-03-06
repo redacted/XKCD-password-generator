@@ -149,6 +149,14 @@ While we recommend the standard word list for most purposes, we note that this l
 An important caveat: due to the significant reduction in the size of the filtered word list when compared to the default, the strength of the corresponding passwords is also reduced. Users should expect approximately an *order of magnitude* reduction in the strength of a five word passphrase. This can be mitigated by increasing the length of generated passphrases.
 
 
+Changelog
+=========
+- **1.5.0** migrate from deprecated `optparse` to `argparse`. Users on older python versions (below 2.7 or 3.2) will need to manually install `argparse`.
+- **1.4.4** move example code out of package
+- **1.4.3** add tests to package
+- **1.4.2** add filtered wordlist (reducing potential NSFW passphrases)
+- **1.4.0** allow duplicate words in passphrase
+
 License
 =======
 This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license.
