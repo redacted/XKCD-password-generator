@@ -115,7 +115,7 @@ def generate_wordlist(wordfile=None,
 
     wlf.close()
 
-    return words
+    return list(set(words)) # deduplicate, just in case
 
 
 def wordlist_to_worddict(wordlist):
