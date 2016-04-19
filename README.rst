@@ -151,6 +151,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.6.4** fix broken link in README
 - **1.6.3** ensure deduplication of wordlist
 - **1.6.2** move contributors to stand-alone CONTRIBUTORS file
 - **1.6.0** rename `--valid_chars` to `--valid-chars` for consistency
@@ -158,7 +159,6 @@ Changelog
 - **1.4.4** move example code out of package
 - **1.4.3** add tests to package
 - **1.4.2** add filtered wordlist (reducing potential NSFW passphrases)
-- **1.4.0** allow duplicate words in passphrase
 
 License
 =======
