@@ -36,21 +36,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-# random.SystemRandom() should be cryptographically secure
-try:
-    rng = random.SystemRandom
-except AttributeError:
-    sys.stderr.write("WARNING: System does not support cryptographically "
-                     "secure random number generator or you are using Python "
-                     "version < 2.4.\n"
-                     "Continuing with less-secure generator.\n")
-    rng = random.Random
-
 # Python 3 compatibility
 if sys.version_info[0] >= 3:
     raw_input = input
     xrange = range
-
 
 def validate_options(parser, options):
     """
@@ -159,6 +148,25 @@ def verbose_reports(length, numwords, wordfile):
     print("assuming truly random word selection.")
 
 
+def determine_rng(allow_weak_rng=False):
+    global rng # kludgy, but works for now
+
+    try:
+        # random.SystemRandom() should be cryptographically secure
+        rng = random.SystemRandom
+    except AttributeError:
+        sys.stderr.write("WARNING: System does not support cryptographically "
+                         "secure random number generator or you are using Python "
+                         "version < 2.4.\n")
+        if allow_weak_rng:
+            sys.stderr.write("Continuing with less-secure generator.\n")
+            rng = random.Random
+        else:
+            sys.stderr.write("If you know what you are doing and wish to continue using weak RNG, "
+                             "try again with option --allow-weak-rng.\n")
+            sys.exit(1)
+
+
 def find_acrostic(acrostic, worddict):
     """
     Constrain choice of words to those beginning with the letters of the
@@ -188,12 +196,15 @@ def generate_xkcdpassword(wordlist,
                           numwords=6,
                           interactive=False,
                           acrostic=False,
-                          delimiter=" "):
+                          delimiter=" ",
+                          allow_weak_rng=False):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
 
     passwd = False
+
+    determine_rng(allow_weak_rng=allow_weak_rng)
 
     # generate the worddict if we are looking for acrostics
     if acrostic:
@@ -239,7 +250,8 @@ def emit_passwords(wordlist, options):
             interactive=options.interactive,
             numwords=options.numwords,
             acrostic=options.acrostic,
-            delimiter=options.delimiter))
+            delimiter=options.delimiter,
+            allow_weak_rng=options.allow_weak_rng))
         count -= 1
 
 
@@ -299,6 +311,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "-d", "--delimiter",
             dest="delimiter", default=" ", metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
+        self.add_argument(
+            "--allow-weak-rng",
+            action="store_true", dest="allow_weak_rng", default=False,
+            help=(
+                "Allow fallback to weak RNG, \
+                if the system does not support cryptographically secure RNG. \
+                Only use this if you know what you are doing."))
 
         self.add_argument(
             "wordfile",
