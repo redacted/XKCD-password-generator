@@ -39,12 +39,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # random.SystemRandom() should be cryptographically secure
 try:
     rng = random.SystemRandom
-except AttributeError:
+except AttributeError as ex:
     sys.stderr.write("WARNING: System does not support cryptographically "
                      "secure random number generator or you are using Python "
-                     "version < 2.4.\n"
-                     "Continuing with less-secure generator.\n")
-    rng = random.Random
+                     "version < 2.4.\n")
+    if "XKCDPASS_ALLOW_WEAKRNG" in os.environ or \
+       "--allow-weak-rng" in sys.argv:
+        sys.stderr.write("Continuing with less-secure generator.\n")
+        rng = random.Random
+    else:
+        raise ex
+
 
 # Python 3 compatibility
 if sys.version_info[0] >= 3:
@@ -115,7 +120,7 @@ def generate_wordlist(wordfile=None,
 
     wlf.close()
 
-    return list(set(words)) # deduplicate, just in case
+    return list(set(words))  # deduplicate, just in case
 
 
 def wordlist_to_worddict(wordlist):
@@ -299,6 +304,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "-d", "--delimiter",
             dest="delimiter", default=" ", metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
+        self.add_argument(
+            "--allow-weak-rng",
+            action="store_true", dest="allow_weak_rng", default=False,
+            help=(
+                "Allow fallback to weak RNG, \
+                if the system does not support cryptographically secure RNG. \
+                Only use this if you know what you are doing."))
 
         self.add_argument(
             "wordfile",
