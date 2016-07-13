@@ -142,6 +142,17 @@ While `generate_xkcdpassword()` takes::
     delimiter=" "
 
 
+Insecure random number generators
+=================================
+`xkcdpass` uses crytographically strong random number generators where possible (provided by `random.SystemRandom()` on most modern operating systems). From version 1.7.0 falling back to an insecure RNG must be explicitly enabled, either by using a new command line variable before running the script::
+
+    xkcdpass --allow-weak-rng
+
+or setting the appropriate environment variable::
+
+    export XKCDPASS_ALLOW_WEAKRNG=1
+
+
 Filtered word list
 ===================
 While we recommend the standard word list for most purposes, we note that this list is uncensored and, as such, generated passwords could offend. For this reason, `a filtered word list can be found in the github repo <https://github.com/redacted/XKCD-password-generator/tree/master/contrib/office-safe.txt>`_ (filtered by Twig Nyugen and included here with permission).
@@ -151,6 +162,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.7.0** require explicit permission to fall back to insecure PRNG
 - **1.6.4** fix broken link in README
 - **1.6.3** ensure deduplication of wordlist
 - **1.6.2** move contributors to stand-alone CONTRIBUTORS file
