@@ -308,16 +308,9 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "--allow-weak-rng",
             action="store_true", dest="allow_weak_rng", default=False,
             help=(
-                "Allow fallback to weak RNG, \
-                if the system does not support cryptographically secure RNG. \
-                Only use this if you know what you are doing."))
-
-        self.add_argument(
-            "wordfile",
-            default=None, metavar="WORDFILE", nargs="?",
-            help=(
-                "Specify that the file WORDFILE contains the list"
-                " of valid words from which to generate passphrases."))
+                "Allow fallback to weak RNG if the "
+                "system does not support cryptographically secure RNG. "
+                "Only use this if you know what you are doing."))
 
 
 def main(argv=None):
