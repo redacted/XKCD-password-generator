@@ -12,7 +12,10 @@ def json_password_generator(request):
         titlecase = request.GET.get("tc", None)
 
         wordfile = xp.locate_wordfile()
-        words = xp.generate_wordlist(wordfile=wordfile, min_length=3, max_length=8)
+        words = xp.generate_wordlist(
+            wordfile=wordfile, 
+            min_length=3, 
+            max_length=8)
         suggestion = xp.generate_xkcdpassword(words, acrostic=acrostic)
 
         if titlecase:
