@@ -64,7 +64,7 @@ def validate_options(parser, options):
 
     if options.max_length < options.min_length:
         sys.stderr.write("The maximum length of a word can not be "
-                         "lesser then minimum length.\n"
+                         "less than the minimum length.\n"
                          "Check the specified settings.\n")
         sys.exit(1)
 
