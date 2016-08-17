@@ -162,6 +162,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.8.1** Fix typo in validation function
 - **1.8.0** Fix error in wordfile argument handling
 - **1.7.0** require explicit permission to fall back to insecure PRNG
 - **1.6.4** fix broken link in README
@@ -170,7 +171,6 @@ Changelog
 - **1.6.0** rename `--valid_chars` to `--valid-chars` for consistency
 - **1.5.0** migrate from deprecated `optparse` to `argparse`. Users on older python versions (below 2.7 or 3.2) will need to manually install `argparse`.
 - **1.4.4** move example code out of package
-- **1.4.3** add tests to package
 
 License
 =======
