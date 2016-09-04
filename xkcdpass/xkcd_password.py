@@ -104,6 +104,9 @@ def generate_wordlist(wordfile=None,
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
+                      
+    if wordfile is None:
+        wordfile = locate_wordfile()
 
     words = []
 
