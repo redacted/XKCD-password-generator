@@ -162,6 +162,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.8.2** `generate_wordlist` behaviour didn't match doctring, fixed
 - **1.8.1** Fix typo in validation function
 - **1.8.0** Fix error in wordfile argument handling
 - **1.7.0** require explicit permission to fall back to insecure PRNG
