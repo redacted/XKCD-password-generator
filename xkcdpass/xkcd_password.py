@@ -114,14 +114,13 @@ def generate_wordlist(wordfile=None,
 
     # At this point wordfile is set
     wordfile = os.path.expanduser(wordfile)  # just to be sure
-    wlf = open(wordfile)
 
-    for line in wlf:
-        thisword = line.strip()
-        if regexp.match(thisword) is not None:
-            words.append(thisword)
-
-    wlf.close()
+    # read words from file into wordlist
+    with open(wordfile) as wlf:
+        for line in wlf:
+            thisword = line.strip()
+            if regexp.match(thisword) is not None:
+                words.append(thisword)
 
     return list(set(words))  # deduplicate, just in case
 
