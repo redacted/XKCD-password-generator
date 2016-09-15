@@ -186,10 +186,11 @@ def find_acrostic(acrostic, worddict):
 
 
 def choose_words(wordlist, numwords):
-    s = []
-    for i in xrange(numwords):
-        s.append(rng().choice(wordlist))
-    return s
+    """
+    Choose numwords randomly from wordlist
+    """
+
+    return [rng().choice(wordlist) for i in xrange(numwords)]
 
 
 def generate_xkcdpassword(wordlist,
