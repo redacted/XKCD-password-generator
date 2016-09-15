@@ -69,7 +69,7 @@ def validate_options(parser, options):
         sys.exit(1)
 
     if options.wordfile is not None:
-        if not os.path.exists(os.path.abspath(options.wordfile)):
+        if not os.path.isfile(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
@@ -92,7 +92,7 @@ def locate_wordfile():
                          "/usr/share/dict/words"]
 
     for wfile in common_word_files:
-        if os.path.exists(wfile):
+        if os.path.isfile(wfile):
             return wfile
 
 
