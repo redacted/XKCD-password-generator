@@ -110,7 +110,9 @@ def generate_wordlist(wordfile=None,
 
     words = []
 
-    regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
+    regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
+                                                  min_length,
+                                                  max_length))
 
     # At this point wordfile is set
     wordfile = os.path.expanduser(wordfile)  # just to be sure
@@ -150,19 +152,19 @@ def verbose_reports(length, numwords, wordfile):
 
     bits = math.log(length, 2)
 
-    print("The supplied word list is located at %s."
-          % os.path.abspath(wordfile))
+    print("The supplied word list is located at"
+          " {0}.".format(os.path.abspath(wordfile)))
 
     if int(bits) == bits:
-        print("Your word list contains %i words, or 2^%i words."
-              % (length, bits))
+        print("Your word list contains {0} words, or 2^{1} words."
+              "".format(length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words."
-              % (length, bits))
+        print("Your word list contains {0} words, or 2^{1:.2f} words."
+              "".format(length, bits))
 
-    print("A %i word password from this list will have roughly "
-          "%i (%0.2f * %i) bits of entropy," %
-          (numwords, int(bits * numwords), bits, numwords)),
+    print("A {0} word password from this list will have roughly "
+          "{1} ({2:.2f} * {3}) bits of entropy,"
+          "".format(numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
 
