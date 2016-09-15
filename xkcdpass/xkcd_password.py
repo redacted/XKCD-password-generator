@@ -192,16 +192,21 @@ def choose_words(wordlist, numwords):
     return s
 
 
-def try_input(prompt):
+def try_input(prompt, validate):
     """
-    Suppress stack trace on user cancel:
+    Suppress stack trace on user cancel and validate input with supplied
+    validate callable.
     """
+
     try:
-        return raw_input(prompt)
+        answer = raw_input(prompt)
     except (KeyboardInterrupt, EOFError):
         # user cancelled
         print("")
         sys.exit(0)
+
+    # validate input
+    return validate(answer)
 
 
 def generate_xkcdpassword(wordlist,
@@ -230,22 +235,40 @@ def generate_xkcdpassword(wordlist,
 
     # else, interactive session
     if not acrostic:
-        custom_n_words = try_input("Enter number of words (default 6): ")
+        def n_words_validator(answer):
+            """
+            Validate custom number of words input
+            """
 
-        if custom_n_words:
-            numwords = int(custom_n_words)
+            if isinstance(answer, str) and len(answer) == 0:
+                return numwords
+            try:
+                number = int(answer)
+                if number < 1:
+                    raise ValueError
+                return number
+            except ValueError:
+                sys.stderr.write("Please enter a positive integer\n")
+                sys.exit(1)
+
+        n_words_prompt = ("Enter number of words (default {0}):"
+                          " ".format(numwords))
+
+        numwords = try_input(n_words_prompt, n_words_validator)
     else:
         numwords = len(acrostic)
 
-    accepted = "n"
+    # generate passwords until the user accepts
+    accepted = False
 
-    while accepted.lower() not in ["y", "yes"]:
+    while not accepted:
         if not acrostic:
             passwd = delimiter.join(choose_words(wordlist, numwords))
         else:
             passwd = delimiter.join(find_acrostic(acrostic, worddict))
         print("Generated: ", passwd)
-        accepted = try_input("Accept? [yN] ")
+        accepted_validator = lambda ans: ans.lower().strip() in ["y", "yes"]
+        accepted = try_input("Accept? [yN] ", accepted_validator)
 
     return passwd
 
