@@ -192,6 +192,18 @@ def choose_words(wordlist, numwords):
     return s
 
 
+def try_input(prompt):
+    """
+    Suppress stack trace on user cancel:
+    """
+    try:
+        return raw_input(prompt)
+    except (KeyboardInterrupt, EOFError):
+        # user cancelled
+        print("")
+        sys.exit(0)
+
+
 def generate_xkcdpassword(wordlist,
                           numwords=6,
                           interactive=False,
@@ -218,7 +230,7 @@ def generate_xkcdpassword(wordlist,
 
     # else, interactive session
     if not acrostic:
-        custom_n_words = raw_input("Enter number of words (default 6): ")
+        custom_n_words = try_input("Enter number of words (default 6): ")
 
         if custom_n_words:
             numwords = int(custom_n_words)
@@ -233,7 +245,7 @@ def generate_xkcdpassword(wordlist,
         else:
             passwd = delimiter.join(find_acrostic(acrostic, worddict))
         print("Generated: ", passwd)
-        accepted = raw_input("Accept? [yN] ")
+        accepted = try_input("Accept? [yN] ")
 
     return passwd
 
