@@ -203,7 +203,7 @@ def generate_xkcdpassword(wordlist,
     Generate an XKCD-style password from the words in wordlist.
     """
 
-    passwd = False
+    passwd = None
 
     # generate the worddict if we are looking for acrostics
     if acrostic:
