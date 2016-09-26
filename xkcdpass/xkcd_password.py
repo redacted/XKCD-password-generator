@@ -69,7 +69,7 @@ def validate_options(parser, options):
         sys.exit(1)
 
     if options.wordfile is not None:
-        if not os.path.exists(os.path.abspath(options.wordfile)):
+        if not os.path.isfile(os.path.abspath(options.wordfile)):
             sys.stderr.write("Could not open the specified word file.\n")
             sys.exit(1)
     else:
@@ -92,7 +92,7 @@ def locate_wordfile():
                          "/usr/share/dict/words"]
 
     for wfile in common_word_files:
-        if os.path.exists(wfile):
+        if os.path.isfile(wfile):
             return wfile
 
 
@@ -110,18 +110,19 @@ def generate_wordlist(wordfile=None,
 
     words = []
 
-    regexp = re.compile("^%s{%i,%i}$" % (valid_chars, min_length, max_length))
+    regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
+                                                  min_length,
+                                                  max_length))
 
     # At this point wordfile is set
     wordfile = os.path.expanduser(wordfile)  # just to be sure
-    wlf = open(wordfile)
 
-    for line in wlf:
-        thisword = line.strip()
-        if regexp.match(thisword) is not None:
-            words.append(thisword)
-
-    wlf.close()
+    # read words from file into wordlist
+    with open(wordfile) as wlf:
+        for line in wlf:
+            thisword = line.strip()
+            if regexp.match(thisword) is not None:
+                words.append(thisword)
 
     return list(set(words))  # deduplicate, just in case
 
@@ -151,19 +152,19 @@ def verbose_reports(length, numwords, wordfile):
 
     bits = math.log(length, 2)
 
-    print("The supplied word list is located at %s."
-          % os.path.abspath(wordfile))
+    print("The supplied word list is located at"
+          " {0}.".format(os.path.abspath(wordfile)))
 
     if int(bits) == bits:
-        print("Your word list contains %i words, or 2^%i words."
-              % (length, bits))
+        print("Your word list contains {0} words, or 2^{1} words."
+              "".format(length, bits))
     else:
-        print("Your word list contains %i words, or 2^%0.2f words."
-              % (length, bits))
+        print("Your word list contains {0} words, or 2^{1:.2f} words."
+              "".format(length, bits))
 
-    print("A %i word password from this list will have roughly "
-          "%i (%0.2f * %i) bits of entropy," %
-          (numwords, int(bits * numwords), bits, numwords)),
+    print("A {0} word password from this list will have roughly "
+          "{1} ({2:.2f} * {3}) bits of entropy,"
+          "".format(numwords, int(bits * numwords), bits, numwords)),
     print("assuming truly random word selection.")
 
 
@@ -186,10 +187,11 @@ def find_acrostic(acrostic, worddict):
 
 
 def choose_words(wordlist, numwords):
-    s = []
-    for i in xrange(numwords):
-        s.append(rng().choice(wordlist))
-    return s
+    """
+    Choose numwords randomly from wordlist
+    """
+
+    return [rng().choice(wordlist) for i in xrange(numwords)]
 
 
 def try_input(prompt, validate):
@@ -218,7 +220,7 @@ def generate_xkcdpassword(wordlist,
     Generate an XKCD-style password from the words in wordlist.
     """
 
-    passwd = False
+    passwd = None
 
     # generate the worddict if we are looking for acrostics
     if acrostic:
