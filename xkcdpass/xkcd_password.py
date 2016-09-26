@@ -104,7 +104,7 @@ def generate_wordlist(wordfile=None,
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
-                      
+
     if wordfile is None:
         wordfile = locate_wordfile()
 
@@ -236,23 +236,27 @@ def generate_xkcdpassword(wordlist,
         return passwd
 
     # else, interactive session
+    # define input validators
+    def n_words_validator(answer):
+        """
+        Validate custom number of words input
+        """
+
+        if isinstance(answer, str) and len(answer) == 0:
+            return numwords
+        try:
+            number = int(answer)
+            if number < 1:
+                raise ValueError
+            return number
+        except ValueError:
+            sys.stderr.write("Please enter a positive integer\n")
+            sys.exit(1)
+
+    def accepted_validator(answer):
+        return answer.lower().strip() in ["y", "yes"]
+
     if not acrostic:
-        def n_words_validator(answer):
-            """
-            Validate custom number of words input
-            """
-
-            if isinstance(answer, str) and len(answer) == 0:
-                return numwords
-            try:
-                number = int(answer)
-                if number < 1:
-                    raise ValueError
-                return number
-            except ValueError:
-                sys.stderr.write("Please enter a positive integer\n")
-                sys.exit(1)
-
         n_words_prompt = ("Enter number of words (default {0}):"
                           " ".format(numwords))
 
@@ -268,8 +272,7 @@ def generate_xkcdpassword(wordlist,
             passwd = delimiter.join(choose_words(wordlist, numwords))
         else:
             passwd = delimiter.join(find_acrostic(acrostic, worddict))
-        print("Generated: ", passwd)
-        accepted_validator = lambda ans: ans.lower().strip() in ["y", "yes"]
+        print("Generated: " + passwd)
         accepted = try_input("Accept? [yN] ", accepted_validator)
 
     return passwd
