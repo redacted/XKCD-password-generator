@@ -52,7 +52,7 @@ Running ``xkcdpass``
 
 which returns a single password, using the default dictionary and default settings. Or you can mix whatever arguments you want::
 
-    $ xkcdpass --count=5 --acrostic='chaos' --delimiter='|' --min=5 --max=6 --valid_chars='[a-z]'
+    $ xkcdpass --count=5 --acrostic='chaos' --delimiter='|' --min=5 --max=6 --valid-chars='[a-z]'
     > collar|highly|asset|ovoid|sultan
     > caper|hangup|addle|oboist|scroll
     > couple|honcho|abbot|obtain|simple
