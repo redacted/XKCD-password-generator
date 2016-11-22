@@ -162,6 +162,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.9.1** Fixed typo in example
 - **1.9.0** Improvements to interactive mode
 - **1.8.2** `generate_wordlist` behaviour didn't match doctring, fixed
 - **1.8.1** Fix typo in validation function
@@ -171,7 +172,6 @@ Changelog
 - **1.6.3** ensure deduplication of wordlist
 - **1.6.2** move contributors to stand-alone CONTRIBUTORS file
 - **1.6.0** rename `--valid_chars` to `--valid-chars` for consistency
-- **1.5.0** migrate from deprecated `optparse` to `argparse`. Users on older python versions (below 2.7 or 3.2) will need to manually install `argparse`.
 
 
 License
