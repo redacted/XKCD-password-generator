@@ -60225,6 +60225,7 @@ truth
 truthful
 truthfully
 truthfulness
+truthiness
 try
 trying
 tryingly
