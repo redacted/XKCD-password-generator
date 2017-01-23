@@ -87,6 +87,7 @@ def locate_wordfile():
         'static',
         'default.txt')
     common_word_files = ["/usr/share/cracklib/cracklib-small",
+                         "/usr/share/dict/cracklib-small",
                          static_default,
                          "/usr/dict/words",
                          "/usr/share/dict/words"]
