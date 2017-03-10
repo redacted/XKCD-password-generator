@@ -10,7 +10,7 @@ import math
 import sys
 
 __LICENSE__ = """
-Copyright (c) 2011 - 2016, Steven Tobin and Contributors.
+Copyright (c) 2011 - 2017, Steven Tobin and Contributors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
