@@ -109,6 +109,8 @@ http://wordlist.aspell.net/12dicts/ contains the following dedication:
     The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use.
 
 
+The EFF has specifically designed a word list for passphrase generation, which can be downloaded from their `website <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_. As it was originally intended for use with Diceware ensure that the number of words in your passphrase is at least six when using it.
+
 Using xkcdpass as an imported module
 ====================================
 
@@ -162,6 +164,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.9.3** Link EFF wordlist information, fix typos, update copyright
 - **1.9.2** Added Debian cracklib path
 - **1.9.1** Fixed typo in example
 - **1.9.0** Improvements to interactive mode
@@ -171,7 +174,6 @@ Changelog
 - **1.7.0** require explicit permission to fall back to insecure PRNG
 - **1.6.4** fix broken link in README
 - **1.6.3** ensure deduplication of wordlist
-- **1.6.2** move contributors to stand-alone CONTRIBUTORS file
 
 
 License
