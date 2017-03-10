@@ -165,7 +165,7 @@ Changelog
 - **1.9.2** Added Debian cracklib path
 - **1.9.1** Fixed typo in example
 - **1.9.0** Improvements to interactive mode
-- **1.8.2** `generate_wordlist` behaviour didn't match doctring, fixed
+- **1.8.2** `generate_wordlist` behaviour didn't match docstring, fixed
 - **1.8.1** Fix typo in validation function
 - **1.8.0** Fix error in wordfile argument handling
 - **1.7.0** require explicit permission to fall back to insecure PRNG
