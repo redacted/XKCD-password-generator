@@ -191,14 +191,6 @@ def find_acrostic(acrostic, worddict):
     return words
 
 
-def choose_words(wordlist, numwords):
-    """
-    Choose numwords randomly from wordlist
-    """
-
-    return [rng().choice(wordlist) for i in xrange(numwords)]
-
-
 def try_input(prompt, validate):
     """
     Suppress stack trace on user cancel and validate input with supplied
@@ -234,10 +226,9 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
-
+            acrostic = '_' * numwords
+            worddict = {'_': wordlist}
+        passwd = delimiter.join(find_acrostic(acrostic, worddict))
         return passwd
 
     # else, interactive session
@@ -266,17 +257,14 @@ def generate_xkcdpassword(wordlist,
                           " ".format(numwords))
 
         numwords = try_input(n_words_prompt, n_words_validator)
-    else:
-        numwords = len(acrostic)
+        acrostic = '_' * numwords
+        worddict = {'_': wordlist}
 
     # generate passwords until the user accepts
     accepted = False
 
     while not accepted:
-        if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
+        passwd = delimiter.join(find_acrostic(acrostic, worddict))
         print("Generated: " + passwd)
         accepted = try_input("Accept? [yN] ", accepted_validator)
 
