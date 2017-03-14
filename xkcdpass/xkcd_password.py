@@ -154,26 +154,29 @@ def wordlist_to_worddict(wordlist, acrostic):
     return worddict
 
 
-def verbose_reports(length, numwords, wordfile):
+def verbose_reports(wordlist, acrostic, worddict, wordfile):
     """
     Report entropy metrics based on word list and requested password size"
     """
 
-    bits = math.log(length, 2)
+    numwords = len(acrostic)
+    total_bits = sum(math.log(len(worddict[letter]), 2) for letter in acrostic)
+    bits_per_word = total_bits / float(numwords)
+    length = math.pow(2, bits_per_word)
 
-    print("The supplied word list is located at"
-          " {0}.".format(os.path.abspath(wordfile)))
+    # Convert bits to string with 2 decimal fraction digits, discarding .00
+    bits_f = "{:.2f}".format(bits_per_word).rstrip("0").rstrip(".")
 
-    if int(bits) == bits:
-        print("Your word list contains {0} words, or 2^{1} words."
-              "".format(length, bits))
-    else:
-        print("Your word list contains {0} words, or 2^{1:.2f} words."
-              "".format(length, bits))
+    print("The supplied word list ({0} words) is located at {1}."
+          "".format(len(wordlist), os.path.abspath(wordfile)))
+
+    print("After filtering for word length and acrostic, "
+          "your word list contains {0} words, or 2^{1} words."
+          "".format(int(length), bits_f))
 
     print("A {0} word password from this list will have roughly "
-          "{1} ({2:.2f} * {3}) bits of entropy,"
-          "".format(numwords, int(bits * numwords), bits, numwords)),
+          "{1} ({2} * {3}) bits of entropy,"
+          "".format(numwords, int(total_bits), bits_f, numwords)),
     print("assuming truly random word selection.")
 
 
@@ -291,6 +294,12 @@ def emit_passwords(wordlist, options):
                                                    worddict=wordlist,
                                                    numwords=numwords)
 
+    if options.verbose:
+        verbose_reports(
+            wordlist,
+            acrostic,
+            worddict,
+            options.wordfile)
 
     count = options.count
     while count > 0:
@@ -386,12 +395,6 @@ def main(argv=None):
         min_length=options.min_length,
         max_length=options.max_length,
         valid_chars=options.valid_chars)
-
-    if options.verbose:
-        verbose_reports(
-            len(my_wordlist),
-            options.numwords,
-            options.wordfile)
 
     emit_passwords(my_wordlist, options)
 
