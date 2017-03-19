@@ -3,7 +3,7 @@ import sys
 import fileinput
 import random
 
-SYMBOLS = [str(unichr(i)) for i in range(32, 65)]
+SYMBOLS = [str(unichr(i)) for i in range(33, 65)]
 
 
 def rng_delimitor(password):
