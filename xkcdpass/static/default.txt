@@ -1820,7 +1820,6 @@ Coca-Cola
 Cochabamba
 Cochin
 Cochise
-Cockney
 Coco
 Cocteau
 Cod
@@ -2267,7 +2266,6 @@ Dianna
 Dianne
 Dias
 Diaz
-Dick
 Dickens
 Dickensian
 Dickinson
@@ -11474,7 +11472,6 @@ aspirin
 aspiring
 aspiringly
 asquint
-ass
 assail
 assailable
 assailant
@@ -11513,7 +11510,6 @@ asset
 assets
 asseverate
 asseveration
-asshole
 assiduities
 assiduity
 assiduous
@@ -12730,7 +12726,6 @@ beautify
 beauty
 beauty parlor
 beaux
-beaver
 beaverboard
 bebop
 becalm
@@ -13390,10 +13385,6 @@ bison
 bisque
 bistro
 bit
-bitch
-bitchily
-bitchiness
-bitchy
 bite
 bite-size
 biter
@@ -13917,10 +13908,8 @@ bony
 bonze
 boo
 boo-boo
-boob
 boob tube
 booboo
-booby
 booby trap
 booby-trap
 booby-trapped
@@ -14294,9 +14283,6 @@ breakthrough
 breakup
 breakwater
 bream
-breast
-breast-fed
-breast-feed
 breastbone
 breastplate
 breaststroke
@@ -14667,8 +14653,6 @@ bullishness
 bullock
 bullpen
 bullring
-bullshit
-bullshitter
 bullwhip
 bully
 bullying
@@ -16492,7 +16476,6 @@ chinaware
 chinch
 chinchilla
 chine
-chink
 chinless
 chino
 chinoiserie
@@ -19979,7 +19962,6 @@ cunnilinctus
 cunnilingus
 cunning
 cunningly
-cunt
 cup
 cupboard
 cupcake
@@ -20266,15 +20248,6 @@ damascened
 damask
 dame
 dammit
-damn
-damnable
-damnably
-damnation
-damnatory
-damndest
-damned
-damnedest
-damning
 damp
 damp-dry
 dampen
@@ -25897,11 +25870,6 @@ faecal
 faeces
 faerie
 faery
-fag
-faggot
-faggoting
-fagot
-fagoting
 faience
 fail
 fail-safe
@@ -28056,10 +28024,6 @@ fryer
 frying pan
 ft.
 fuchsia
-fuck
-fucked up
-fucker
-fucking
 fuddle
 fuddy-duddy
 fudge
@@ -28549,10 +28513,6 @@ gawker
 gawkily
 gawkiness
 gawky
-gay
-gayety
-gayly
-gayness
 gaze
 gazebo
 gazelle
@@ -29182,9 +29142,6 @@ god-awful
 god-fearing
 godchild
 godchildren
-goddammit
-goddamn
-goddamned
 goddaughter
 goddess
 godfather
@@ -30829,14 +30786,12 @@ heliotrope
 heliport
 helium
 helix
-hell
 hellbent
 hellcat
 hellebore
 hellgrammite
 hellhole
 hellion
-hellish
 hellishly
 hellishness
 hello
@@ -31439,10 +31394,7 @@ hominess
 hominid
 hominoid
 hominy
-homo
 homoeopathy
-homoerotic
-homoeroticism
 homogeneity
 homogeneous
 homogeneously
@@ -31471,8 +31423,6 @@ homophonic
 homophonically
 homophonous
 homophony
-homosexual
-homosexuality
 homy
 hon
 honcho
@@ -31584,7 +31534,6 @@ horniness
 hornless
 hornlike
 hornpipe
-horny
 horologer
 horologic
 horological
@@ -35669,10 +35618,6 @@ lab
 label
 labeler
 labeller
-labia
-labial
-labialize
-labially
 labile
 lability
 labium
@@ -41046,14 +40991,6 @@ nictitation
 niece
 nielsbohrium
 nifty
-niggard
-niggardliness
-niggardly
-nigger
-niggle
-niggler
-niggling
-nigglingly
 nigh
 night
 night light
@@ -44580,7 +44517,6 @@ penicillin
 penile
 peninsula
 peninsular
-penis
 penitence
 penitent
 penitential
@@ -45615,9 +45551,6 @@ piscinae
 piscine
 pismire
 piso
-piss
-pissed
-pissed off
 pistachio
 pistil
 pistillate
@@ -46288,8 +46221,6 @@ pooh-pooh
 pool
 pool table
 poolroom
-poop
-pooped
 poor
 poor-mouth
 poorboy
@@ -47163,7 +47094,6 @@ price
 priceless
 pricey
 pricing
-prick
 pricker
 prickle
 prickliness
@@ -48208,8 +48138,6 @@ pushy
 pusillanimity
 pusillanimous
 pusillanimously
-puss
-pussy
 pussycat
 pussyfoot
 pustular
@@ -52370,9 +52298,6 @@ scrofula
 scrofulous
 scroll
 scrooge
-scrota
-scrotal
-scrotum
 scrounge
 scrounger
 scrounginess
@@ -53556,8 +53481,6 @@ shirtsleeve
 shirtsleeves
 shirttail
 shirtwaist
-shit
-shitty
 shiv
 shiva
 shivah
@@ -58534,9 +58457,6 @@ testator
 testatrices
 testatrix
 tester
-testes
-testicle
-testicular
 testifier
 testify
 testily
@@ -59159,8 +59079,7 @@ tiresomeness
 tiring
 tiro
 tissue
-tissue paper
-tit
+tissue pap
 tit-for-tat
 titan
 titanic
@@ -62741,10 +62660,6 @@ vagaries
 vagarious
 vagariously
 vagary
-vagina
-vaginae
-vaginal
-vaginally
 vaginitis
 vagrancy
 vagrant
