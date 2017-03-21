@@ -355,6 +355,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Allow fallback to weak RNG if the "
                 "system does not support cryptographically secure RNG. "
                 "Only use this if you know what you are doing."))
+        self.add_argument(
+            "-C", "--capitalize-first-letter",
+            action="store_true", dest="capitalize_first_letter", default=False,
+            help=(
+                "Capitalizes every first letter of a generated word"
+            )
+        )
 
 
 def main(argv=None):
@@ -377,6 +384,12 @@ def main(argv=None):
             min_length=options.min_length,
             max_length=options.max_length,
             valid_chars=options.valid_chars)
+
+        if options.capitalize_first_letter:
+            temp_wordlist = []
+            for x in range(len(my_wordlist)):
+                temp_wordlist.append(my_wordlist[x].capitalize())
+            my_wordlist = temp_wordlist
 
         if options.verbose:
             verbose_reports(
