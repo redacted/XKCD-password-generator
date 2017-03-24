@@ -164,6 +164,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.9.4** Improve office-safe wordlist contents
 - **1.9.3** Link EFF wordlist information, fix typos, update copyright
 - **1.9.2** Added Debian cracklib path
 - **1.9.1** Fixed typo in example
@@ -173,7 +174,6 @@ Changelog
 - **1.8.0** Fix error in wordfile argument handling
 - **1.7.0** require explicit permission to fall back to insecure PRNG
 - **1.6.4** fix broken link in README
-- **1.6.3** ensure deduplication of wordlist
 
 
 License
