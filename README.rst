@@ -164,6 +164,7 @@ An important caveat: due to the significant reduction in the size of the filtere
 
 Changelog
 =========
+- **1.9.5** Fix broken test
 - **1.9.4** Improve office-safe wordlist contents
 - **1.9.3** Link EFF wordlist information, fix typos, update copyright
 - **1.9.2** Added Debian cracklib path
