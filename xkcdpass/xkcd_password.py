@@ -57,7 +57,7 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
-DEFAULT_WORDFILE = "default.txt"
+DEFAULT_WORDFILE = "eff-long"
 
 
 def validate_options(parser, options):
@@ -311,7 +311,9 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             dest="wordfile", default=None, metavar="WORDFILE",
             help=(
                 "Specify that the file WORDFILE contains the list"
-                " of valid words from which to generate passphrases."))
+                " of valid words from which to generate passphrases."
+                " Provided wordfiles: eff-long (default), eff-short,"
+                " eff-special, legacy"))
         self.add_argument(
             "--min",
             dest="min_length", type=int, default=5, metavar="MIN_LENGTH",

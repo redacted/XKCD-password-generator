@@ -22,6 +22,10 @@ _xkcdpass_completion () {
     case "${prev}" in
         -w|--wordfile)
             COMPREPLY=( $(compgen -A file -- ${cur}) )
+            COMPREPLY+=("eff-long")
+            COMPREPLY+=("eff-short")
+            COMPREPLY+=("eff-special")
+            COMPREPLY+=("legacy")
             ;;
 
         *)

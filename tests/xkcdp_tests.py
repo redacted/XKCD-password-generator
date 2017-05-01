@@ -3,7 +3,7 @@ import subprocess
 import re
 from xkcdpass import xkcd_password
 
-WORDFILE = 'xkcdpass/static/default.txt'
+WORDFILE = 'xkcdpass/static/legacy'
 
 
 class XkcdPasswordTests(unittest.TestCase):
