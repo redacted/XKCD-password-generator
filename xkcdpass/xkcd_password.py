@@ -57,6 +57,9 @@ if sys.version_info[0] >= 3:
     xrange = range
 
 
+DEFAULT_WORDFILE = "default.txt"
+
+
 def validate_options(parser, options):
     """
     Given a parsed collection of options, performs various validation checks.
@@ -68,29 +71,34 @@ def validate_options(parser, options):
                          "Check the specified settings.\n")
         sys.exit(1)
 
-    if options.wordfile is not None:
-        if not os.path.isfile(os.path.abspath(options.wordfile)):
-            sys.stderr.write("Could not open the specified word file.\n")
-            sys.exit(1)
-    else:
-        options.wordfile = locate_wordfile()
-
-        if not options.wordfile:
-            sys.stderr.write("Could not find a word file, or word file does "
-                             "not exist.\n")
-            sys.exit(1)
+    wordfile = locate_wordfile(options.wordfile)
+    if not wordfile:
+        sys.stderr.write("Could not find a word file, or word file does "
+                         "not exist.\n")
+        sys.exit(1)
 
 
-def locate_wordfile():
-    static_default = os.path.join(
+def locate_wordfile(wordfile=None):
+    """
+    Locate a wordfile from provided name/path. Return a path to wordfile
+    either from static directory, the provided path or use a default.
+    """
+    common_word_files = []
+    static_dir = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
-        'static',
-        'default.txt')
-    common_word_files = ["/usr/share/cracklib/cracklib-small",
-                         "/usr/share/dict/cracklib-small",
-                         static_default,
-                         "/usr/dict/words",
-                         "/usr/share/dict/words"]
+        'static')
+
+    if wordfile is not None:
+        # wordfile can be in static dir or provided as a complete path
+        common_word_files.append(os.path.join(static_dir, wordfile))
+        common_word_files.append(os.path.expanduser(wordfile))
+
+    common_word_files.extend([
+        "/usr/share/cracklib/cracklib-small",
+        "/usr/share/dict/cracklib-small",
+        os.path.join(static_dir, DEFAULT_WORDFILE),
+        "/usr/dict/words",
+        "/usr/share/dict/words"])
 
     for wfile in common_word_files:
         if os.path.isfile(wfile):
@@ -106,17 +114,13 @@ def generate_wordlist(wordfile=None,
     valid_chars is a regular expression match condition (default - all chars)
     """
 
-    if wordfile is None:
-        wordfile = locate_wordfile()
+    wordfile = locate_wordfile(wordfile)
 
     words = []
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
                                                   max_length))
-
-    # At this point wordfile is set
-    wordfile = os.path.expanduser(wordfile)  # just to be sure
 
     # read words from file into wordlist
     with open(wordfile) as wlf:
