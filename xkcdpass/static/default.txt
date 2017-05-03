@@ -14396,6 +14396,7 @@ brindle
 brindled
 brine
 bring
+bringo
 bringer
 brininess
 brink
@@ -60223,6 +60224,7 @@ truth
 truthful
 truthfully
 truthfulness
+truthiness
 try
 trying
 tryingly
