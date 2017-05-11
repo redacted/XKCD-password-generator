@@ -78,7 +78,10 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -h, --help
                                     show this help message and exit
         -w WORDFILE, --wordfile=WORDFILE
-                                    List of valid words for password
+                                    Specify that the file WORDFILE contains the list of
+                                    valid words from which to generate passphrases.
+                                    Provided wordfiles: eff-long (default), eff-short,
+                                    eff-special, legacy
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -181,4 +184,19 @@ License
 =======
 This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license.
 See the file ``LICENSE.BSD`` for details.
--
+
+
+Wordfiles
+---------
+
+- "[eff-long](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt)"
+  by [EFF](https://www.eff.org) is licensed under
+  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
+
+- "[eff-short](https://www.eff.org/files/2016/09/08/eff_short_wordlist_1.txt)"
+  by [EFF](https://www.eff.org) is licensed under
+  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
+
+- "[eff-special](https://www.eff.org/files/2016/09/08/eff_short_wordlist_2_0.txt)"
+  by [EFF](https://www.eff.org) is licensed under
+  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
