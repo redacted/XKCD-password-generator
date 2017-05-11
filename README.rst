@@ -101,18 +101,20 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -d DELIM, --delimiter=DELIM
                                     separator character between words
 
+Word lists
+==========
 
-A large wordlist is provided for convenience, but the generator can be used with any word file of the correct format: a file containing one 'word' per line. The default word file can be found in ``xkcdpass/static/default.txt``.
+Several word lists are provided with the package. The default, `eff-long`, was specifically designed by the EFF for `passphrase generation  <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_ and is licensed under `CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/us/>`_. As it was originally intended for use with Diceware ensure that the number of words in your passphrase is at least six when using it. We also include two shorter variants of that list, `eff-short` and `eff-special`. Please refer to the EFF documentation linked above for more information.
 
-The default word list is derived mechanically from `12Dicts <http://wordlist.aspell.net/12dicts/>`_ by Alan Beale. It is the understanding of the author of ``xkcdpass`` that purely mechanical transformation does not imbue copyright in the resulting work. The documentation for the 12Dicts project at
+The original word list from `xkcdpass` versions earlier than 1.10.0 is also provided as a convenience, and is available under `legacy`. This word list is derived mechanically from `12Dicts <http://wordlist.aspell.net/12dicts/>`_ by Alan Beale. It is the understanding of the author of ``xkcdpass`` that purely mechanical transformation does not imbue copyright in the resulting work. The documentation for the 12Dicts project at
 http://wordlist.aspell.net/12dicts/ contains the following dedication:
 
 ..
 
     The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use.
 
+Note that the generator can be used with any word file of the correct format: a file containing one 'word' per line. 
 
-The EFF has specifically designed a word list for passphrase generation, which can be downloaded from their `website <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_. As it was originally intended for use with Diceware ensure that the number of words in your passphrase is at least six when using it.
 
 Using xkcdpass as an imported module
 ====================================
@@ -158,15 +160,9 @@ or setting the appropriate environment variable::
     export XKCDPASS_ALLOW_WEAKRNG=1
 
 
-Filtered word list
-===================
-While we recommend the standard word list for most purposes, we note that this list is uncensored and, as such, generated passwords could offend. For this reason, `a filtered word list can be found in the github repo <https://github.com/redacted/XKCD-password-generator/tree/master/contrib/office-safe.txt>`_ (filtered by Twig Nyugen and included here with permission).
-
-An important caveat: due to the significant reduction in the size of the filtered word list when compared to the default, the strength of the corresponding passwords is also reduced. Users should expect approximately an *order of magnitude* reduction in the strength of a five word passphrase. This can be mitigated by increasing the length of generated passphrases.
-
-
 Changelog
 =========
+- **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
 - **1.9.5** Fix broken test
 - **1.9.4** Improve office-safe wordlist contents
 - **1.9.3** Link EFF wordlist information, fix typos, update copyright
@@ -177,26 +173,9 @@ Changelog
 - **1.8.1** Fix typo in validation function
 - **1.8.0** Fix error in wordfile argument handling
 - **1.7.0** require explicit permission to fall back to insecure PRNG
-- **1.6.4** fix broken link in README
 
 
 License
 =======
 This is free software: you may copy, modify, and/or distribute this work under the terms of the BSD 3-Clause license.
 See the file ``LICENSE.BSD`` for details.
-
-
-Wordfiles
----------
-
-- "[eff-long](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt)"
-  by [EFF](https://www.eff.org) is licensed under
-  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
-
-- "[eff-short](https://www.eff.org/files/2016/09/08/eff_short_wordlist_1.txt)"
-  by [EFF](https://www.eff.org) is licensed under
-  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
-
-- "[eff-special](https://www.eff.org/files/2016/09/08/eff_short_wordlist_2_0.txt)"
-  by [EFF](https://www.eff.org) is licensed under
-  [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/us/)
