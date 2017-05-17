@@ -132,45 +132,63 @@ def generate_wordlist(wordfile=None,
     return list(set(words))  # deduplicate, just in case
 
 
-def wordlist_to_worddict(wordlist):
+def wordlist_to_worddict(wordlist, acrostic):
     """
     Takes a wordlist and returns a dictionary keyed by the first letter of
     the words. Used for acrostic pass phrase generation
     """
 
-    worddict = {}
+    worddict = dict([letter, []] for letter in acrostic)
 
-    # Maybe should be a defaultdict, but this reduces dependencies
     for word in wordlist:
         try:
             worddict[word[0]].append(word)
         except KeyError:
-            worddict[word[0]] = [word, ]
+            pass  # letter not in acrostic
+
+    for letter, lst in worddict.items():
+        if not lst:
+            sys.stderr.write("No words found starting with " + letter + "\n")
+            sys.exit(1)
 
     return worddict
 
 
-def verbose_reports(length, numwords, wordfile):
+def verbose_reports(wordlist, acrostic, worddict, wordfile):
     """
     Report entropy metrics based on word list and requested password size"
     """
 
-    bits = math.log(length, 2)
+    numwords = len(acrostic)
+    total_bits = sum(math.log(len(worddict[letter]), 2) for letter in acrostic)
+    bits_per_word = total_bits / float(numwords)
+    length = math.pow(2, bits_per_word)
 
-    print("The supplied word list is located at"
-          " {0}.".format(os.path.abspath(wordfile)))
+    # Convert bits to string with 2 decimal fraction digits, discarding .00
+    bits_f = "{:.2f}".format(bits_per_word).rstrip("0").rstrip(".")
 
-    if int(bits) == bits:
-        print("Your word list contains {0} words, or 2^{1} words."
-              "".format(length, bits))
-    else:
-        print("Your word list contains {0} words, or 2^{1:.2f} words."
-              "".format(length, bits))
+    print("The supplied word list ({0} words) is located at {1}."
+          "".format(len(wordlist), os.path.abspath(wordfile)))
+
+    print("After filtering for word length and acrostic, "
+          "your word list contains {0} words, or 2^{1} words."
+          "".format(int(length), bits_f))
 
     print("A {0} word password from this list will have roughly "
-          "{1} ({2:.2f} * {3}) bits of entropy,"
-          "".format(numwords, int(bits * numwords), bits, numwords)),
+          "{1} ({2} * {3}) bits of entropy,"
+          "".format(numwords, int(total_bits), bits_f, numwords)),
     print("assuming truly random word selection.")
+
+
+def _to_acrostic_and_worddict(acrostic, worddict, numwords):
+    if not isinstance(worddict, dict):
+        if acrostic:
+            worddict = wordlist_to_worddict(worddict, acrostic)
+        else:
+            worddict = {'_': worddict}
+            acrostic = '_' * numwords
+
+    return acrostic, worddict
 
 
 def find_acrostic(acrostic, worddict):
@@ -183,20 +201,8 @@ def find_acrostic(acrostic, worddict):
     words = []
 
     for letter in acrostic:
-        try:
-            words.append(rng().choice(worddict[letter]))
-        except KeyError:
-            sys.stderr.write("No words found starting with " + letter + "\n")
-            sys.exit(1)
+        words.append(rng().choice(worddict[letter]))
     return words
-
-
-def choose_words(wordlist, numwords):
-    """
-    Choose numwords randomly from wordlist
-    """
-
-    return [rng().choice(wordlist) for i in xrange(numwords)]
 
 
 def try_input(prompt, validate):
@@ -217,31 +223,49 @@ def try_input(prompt, validate):
 
 
 def generate_xkcdpassword(wordlist,
-                          numwords=6,
                           interactive=False,
+                          numwords=6,
                           acrostic=False,
                           delimiter=" "):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
 
+    acrostic, worddict = _to_acrostic_and_worddict(acrostic=acrostic,
+                                                   worddict=wordlist,
+                                                   numwords=numwords)
+    return _generate_xkcdpassword(worddict,
+                                  interactive=interactive,
+                                  acrostic=acrostic,
+                                  delimiter=delimiter)
+
+
+def _generate_xkcdpassword(worddict,
+                           interactive=False,
+                           acrostic=False,
+                           delimiter=" "):
+
     passwd = None
 
-    # generate the worddict if we are looking for acrostics
-    if acrostic:
-        worddict = wordlist_to_worddict(wordlist)
+    def accepted_validator(answer):
+        return answer.lower().strip() in ["y", "yes"]
 
-    # useful if driving the logic from other code
-    if not interactive:
-        if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
+    # generate passwords until the user accepts
+    accepted = False
 
-        return passwd
+    while not accepted:
+        passwd = delimiter.join(find_acrostic(acrostic, worddict))
+        if not interactive:
+            break
+        print("Generated: " + passwd)
+        accepted = try_input("Accept? [yN] ", accepted_validator)
 
-    # else, interactive session
-    # define input validators
+    return passwd
+
+
+def emit_passwords(wordlist, options):
+    """ Generate the specified number of passwords and output them. """
+
     def n_words_validator(answer):
         """
         Validate custom number of words input
@@ -258,40 +282,31 @@ def generate_xkcdpassword(wordlist,
             sys.stderr.write("Please enter a positive integer\n")
             sys.exit(1)
 
-    def accepted_validator(answer):
-        return answer.lower().strip() in ["y", "yes"]
-
-    if not acrostic:
+    numwords = options.numwords
+    acrostic = options.acrostic
+    if options.interactive and not acrostic:
         n_words_prompt = ("Enter number of words (default {0}):"
                           " ".format(numwords))
 
         numwords = try_input(n_words_prompt, n_words_validator)
-    else:
-        numwords = len(acrostic)
 
-    # generate passwords until the user accepts
-    accepted = False
+    acrostic, worddict = _to_acrostic_and_worddict(acrostic=acrostic,
+                                                   worddict=wordlist,
+                                                   numwords=numwords)
 
-    while not accepted:
-        if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
-        print("Generated: " + passwd)
-        accepted = try_input("Accept? [yN] ", accepted_validator)
+    if options.verbose:
+        verbose_reports(
+            wordlist,
+            acrostic,
+            worddict,
+            options.wordfile)
 
-    return passwd
-
-
-def emit_passwords(wordlist, options):
-    """ Generate the specified number of passwords and output them. """
     count = options.count
     while count > 0:
-        print(generate_xkcdpassword(
-            wordlist,
+        print(_generate_xkcdpassword(
+            worddict,
             interactive=options.interactive,
-            numwords=options.numwords,
-            acrostic=options.acrostic,
+            acrostic=acrostic,
             delimiter=options.delimiter))
         count -= 1
 
@@ -316,11 +331,11 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 " eff-special, legacy"))
         self.add_argument(
             "--min",
-            dest="min_length", type=int, default=5, metavar="MIN_LENGTH",
+            dest="min_length", type=int, default=1, metavar="MIN_LENGTH",
             help="Generate passphrases containing at least MIN_LENGTH words.")
         self.add_argument(
             "--max",
-            dest="max_length", type=int, default=9, metavar="MAX_LENGTH",
+            dest="max_length", type=int, default=99, metavar="MAX_LENGTH",
             help="Generate passphrases containing at most MAX_LENGTH words.")
         self.add_argument(
             "-n", "--numwords",
@@ -369,35 +384,20 @@ def main(argv=None):
     if argv is None:
         argv = sys.argv
 
-    exit_status = 0
+    program_name = os.path.basename(argv[0])
+    parser = XkcdPassArgumentParser(prog=program_name)
 
-    try:
-        program_name = os.path.basename(argv[0])
-        parser = XkcdPassArgumentParser(prog=program_name)
+    options = parser.parse_args(argv[1:])
+    validate_options(parser, options)
 
-        options = parser.parse_args(argv[1:])
-        validate_options(parser, options)
+    my_wordlist = generate_wordlist(
+        wordfile=options.wordfile,
+        min_length=options.min_length,
+        max_length=options.max_length,
+        valid_chars=options.valid_chars)
 
-        my_wordlist = generate_wordlist(
-            wordfile=options.wordfile,
-            min_length=options.min_length,
-            max_length=options.max_length,
-            valid_chars=options.valid_chars)
-
-        if options.verbose:
-            verbose_reports(
-                len(my_wordlist),
-                options.numwords,
-                options.wordfile)
-
-        emit_passwords(my_wordlist, options)
-
-    except SystemExit as exc:
-        exit_status = exc.code
-
-    return exit_status
+    emit_passwords(my_wordlist, options)
 
 
 if __name__ == '__main__':
-    exit_status = main(sys.argv)
-    sys.exit(exit_status)
+    main(sys.argv)
