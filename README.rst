@@ -162,6 +162,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.11.1** Fix bug in entropy calc
 - **1.11.0** Rewrite verbose report to take acrostics etc into account
 - **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
 - **1.9.5** Fix broken test

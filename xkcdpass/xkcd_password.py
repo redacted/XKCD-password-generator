@@ -157,11 +157,13 @@ def verbose_reports(wordlist, options):
 
     if options.acrostic:
         worddict = wordlist_to_worddict(wordlist)
+        numwords = len(options.acrostic)
         length = 0
         for char in options.acrostic:
             length += len(worddict.get(char, []))
     else:
         length = len(wordlist)
+        numwords = options.numwords
 
     bits = math.log(length, 2)
 
@@ -170,10 +172,7 @@ def verbose_reports(wordlist, options):
 
     print("A {0} word password from this list will have roughly "
           "{1} ({2:.2f} * {3}) bits of entropy,"
-          "".format(
-              options.numwords,
-              int(bits * options.numwords),
-              bits, options.numwords)),
+          "".format(numwords, int(bits * numwords), bits, numwords))
     print("assuming truly random word selection.\n")
 
 
