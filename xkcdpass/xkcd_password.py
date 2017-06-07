@@ -150,27 +150,31 @@ def wordlist_to_worddict(wordlist):
     return worddict
 
 
-def verbose_reports(length, numwords, wordfile):
+def verbose_reports(wordlist, options):
     """
     Report entropy metrics based on word list and requested password size"
     """
 
+    if options.acrostic:
+        worddict = wordlist_to_worddict(wordlist)
+        length = 0
+        for char in options.acrostic:
+            length += len(worddict.get(char, []))
+    else:
+        length = len(wordlist)
+
     bits = math.log(length, 2)
 
-    print("The supplied word list is located at"
-          " {0}.".format(os.path.abspath(wordfile)))
-
-    if int(bits) == bits:
-        print("Your word list contains {0} words, or 2^{1} words."
-              "".format(length, bits))
-    else:
-        print("Your word list contains {0} words, or 2^{1:.2f} words."
-              "".format(length, bits))
+    print("With the current options, your word list contains {0} words."
+          .format(length))
 
     print("A {0} word password from this list will have roughly "
           "{1} ({2:.2f} * {3}) bits of entropy,"
-          "".format(numwords, int(bits * numwords), bits, numwords)),
-    print("assuming truly random word selection.")
+          "".format(
+              options.numwords,
+              int(bits * options.numwords),
+              bits, options.numwords)),
+    print("assuming truly random word selection.\n")
 
 
 def find_acrostic(acrostic, worddict):
@@ -385,10 +389,7 @@ def main(argv=None):
             valid_chars=options.valid_chars)
 
         if options.verbose:
-            verbose_reports(
-                len(my_wordlist),
-                options.numwords,
-                options.wordfile)
+            verbose_reports(my_wordlist, options)
 
         emit_passwords(my_wordlist, options)
 
