@@ -162,6 +162,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.11.0** Rewrite verbose report to take acrostics etc into account
 - **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
 - **1.9.5** Fix broken test
 - **1.9.4** Improve office-safe wordlist contents
@@ -172,7 +173,6 @@ Changelog
 - **1.8.2** `generate_wordlist` behaviour didn't match docstring, fixed
 - **1.8.1** Fix typo in validation function
 - **1.8.0** Fix error in wordfile argument handling
-- **1.7.0** require explicit permission to fall back to insecure PRNG
 
 
 License
