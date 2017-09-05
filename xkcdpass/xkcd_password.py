@@ -66,10 +66,9 @@ def validate_options(parser, options):
     """
 
     if options.max_length < options.min_length:
-        sys.stderr.write("The maximum length of a word can not be "
-                         "less than the minimum length.\n"
-                         "Check the specified settings.\n")
-        sys.exit(1)
+        sys.stderr.write("Warning: maximum word length less than minimum. "
+                         "Setting maximum equal to minimum.\n")
+        # sys.exit(1)
 
     wordfile = locate_wordfile(options.wordfile)
     if not wordfile:
@@ -113,7 +112,10 @@ def generate_wordlist(wordfile=None,
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
-
+    
+    # deal with inconsistent min and max, erring toward security
+    if min_length > max_length:
+        max_length = min_length
     wordfile = locate_wordfile(wordfile)
 
     words = []
@@ -121,7 +123,6 @@ def generate_wordlist(wordfile=None,
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
                                                   max_length))
-
     # read words from file into wordlist
     with open(wordfile) as wlf:
         for line in wlf:
