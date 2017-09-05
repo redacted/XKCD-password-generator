@@ -162,6 +162,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.12.0** Handle maximum word length < minimum case by setting max = min
 - **1.11.1** Fix bug in entropy calc
 - **1.11.0** Rewrite verbose report to take acrostics etc into account
 - **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
@@ -173,7 +174,6 @@ Changelog
 - **1.9.0** Improvements to interactive mode
 - **1.8.2** `generate_wordlist` behaviour didn't match docstring, fixed
 - **1.8.1** Fix typo in validation function
-- **1.8.0** Fix error in wordfile argument handling
 
 
 License
