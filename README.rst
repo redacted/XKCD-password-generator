@@ -113,7 +113,9 @@ http://wordlist.aspell.net/12dicts/ contains the following dedication:
 
     The 12dicts lists were compiled by Alan Beale. I explicitly release them to the public domain, but request acknowledgment of their use.
 
-Note that the generator can be used with any word file of the correct format: a file containing one 'word' per line. 
+Note that the generator can be used with any word file of the correct format: a file containing one 'word' per line.  
+
+Spanish list of words used is a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80K words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see [here](http://www.umich.edu/~archive/linguistics/00readme.txt).  
 
 
 Using xkcdpass as an imported module
