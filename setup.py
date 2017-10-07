@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='xkcdpass',
-    version='1.12.0',
+    version='1.13.0',
     author='Steven Tobin',
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',
