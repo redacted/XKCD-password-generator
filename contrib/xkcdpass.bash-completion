@@ -26,6 +26,8 @@ _xkcdpass_completion () {
             COMPREPLY+=("eff-short")
             COMPREPLY+=("eff-special")
             COMPREPLY+=("legacy")
+            COMPREPLY+=("spa-mich")
+            COMPREPLY+=("fin-kotus")
             ;;
 
         *)
