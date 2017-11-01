@@ -168,6 +168,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.14.0** Added Finnish and Italian language support (thanks to Jussi Tiira and Lorenzo Mureu respectively)
 - **1.13.0** Added Spanish language wordfile (thanks to Javier Meija)
 - **1.12.0** Handle maximum word length < minimum case by setting max = min
 - **1.11.1** Fix bug in entropy calc
@@ -180,7 +181,6 @@ Changelog
 - **1.9.1** Fixed typo in example
 - **1.9.0** Improvements to interactive mode
 - **1.8.2** `generate_wordlist` behaviour didn't match docstring, fixed
-- **1.8.1** Fix typo in validation function
 
 
 License
