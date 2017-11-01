@@ -93,9 +93,9 @@ def locate_wordfile(wordfile=None):
         common_word_files.append(os.path.expanduser(wordfile))
 
     common_word_files.extend([
+        os.path.join(static_dir, DEFAULT_WORDFILE),
         "/usr/share/cracklib/cracklib-small",
         "/usr/share/dict/cracklib-small",
-        os.path.join(static_dir, DEFAULT_WORDFILE),
         "/usr/dict/words",
         "/usr/share/dict/words"])
 
