@@ -81,7 +81,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     Specify that the file WORDFILE contains the list of
                                     valid words from which to generate passphrases.
                                     Provided wordfiles: eff-long (default), eff-short,
-                                    eff-special, legacy
+                                    eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -115,8 +115,12 @@ http://wordlist.aspell.net/12dicts/ contains the following dedication:
 
 Note that the generator can be used with any word file of the correct format: a file containing one 'word' per line.  
 
-Spanish list of words used is a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80K words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
+Additional languages
+~~~~~~~~~~~~~~~~~~~~
 
+Spanish list of words used is a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80k words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
+
+Finnish word list is a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
 
 Using xkcdpass as an imported module
 ====================================
