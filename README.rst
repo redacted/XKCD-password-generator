@@ -82,6 +82,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     valid words from which to generate passphrases.
                                     Provided wordfiles: eff-long (default), eff-short,
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
+                                    ita-wiki (Italian)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -168,6 +169,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.14.1** Fix wordlist order in `locate_wordfile`
 - **1.14.0** Added Finnish and Italian language support (thanks to Jussi Tiira and Lorenzo Mureu respectively)
 - **1.13.0** Added Spanish language wordfile (thanks to Javier Meija)
 - **1.12.0** Handle maximum word length < minimum case by setting max = min
