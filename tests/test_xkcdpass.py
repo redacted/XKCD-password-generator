@@ -17,7 +17,7 @@ class XkcdPasswordTests(unittest.TestCase):
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
-        self.assertEquals(len(self.wordlist_full), 29611)
+        self.assertEqual(len(self.wordlist_full), 29611)
 
     def test_regex(self):
         self.assertNotIn("__$$$__", self.wordlist_small)
@@ -27,7 +27,7 @@ class XkcdPasswordTests(unittest.TestCase):
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
             acrostic=word)
-        self.assertEquals("".join(map(lambda x: x[0], result.split())), word)
+        self.assertEqual("".join(map(lambda x: x[0], result.split())), word)
 
     def test_commandlineCount(self):
         count = 5
