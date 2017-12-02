@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import print_function
+
 import argparse
 import math
 import os
@@ -291,12 +293,15 @@ def emit_passwords(wordlist, options):
     """ Generate the specified number of passwords and output them. """
     count = options.count
     while count > 0:
-        print(generate_xkcdpassword(
-            wordlist,
-            interactive=options.interactive,
-            numwords=options.numwords,
-            acrostic=options.acrostic,
-            delimiter=options.delimiter))
+        print(
+            generate_xkcdpassword(
+                wordlist,
+                interactive=options.interactive,
+                numwords=options.numwords,
+                acrostic=options.acrostic,
+                delimiter=options.delimiter
+            ),
+            end=options.separator)
         count -= 1
 
 
@@ -358,6 +363,10 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "-d", "--delimiter",
             dest="delimiter", default=" ", metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
+        self.add_argument(
+            "-s", "--separator",
+            dest="separator", default="\n", metavar="SEP",
+            help="Separate generated passphrases with SEP.")
         self.add_argument(
             "--allow-weak-rng",
             action="store_true", dest="allow_weak_rng", default=False,
