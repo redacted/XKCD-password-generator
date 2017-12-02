@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import random
+import argparse
+import math
 import os
 import os.path
-import argparse
+import random
 import re
-import math
 import sys
 
 __LICENSE__ = """

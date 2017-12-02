@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import sys
 import fileinput
 import random
+import sys
 
 # generate a list of symbols via ascii code
 SYMBOLS = [str(unichr(i)) for i in range(33, 65)]
