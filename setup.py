@@ -1,5 +1,8 @@
+import sys
 from setuptools import setup
 import sys
+
+PYTHON2 = sys.version_info < (3,)
 
 setup(
     name='xkcdpass',
@@ -10,6 +13,9 @@ setup(
     description='Generate secure multiword passwords/passphrases, inspired by XKCD',
     long_description=open('README.rst').read(),
     packages=['xkcdpass'],
+    extras_require={
+        'test': ['mock'] if PYTHON2 else [],
+    },
     zip_safe=False,
     license='BSD',
     include_package_data=True,

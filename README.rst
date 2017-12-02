@@ -185,6 +185,27 @@ or setting the appropriate environment variable::
     export XKCDPASS_ALLOW_WEAKRNG=1
 
 
+Contributing
+============
+
+Python 2.7 users need an extra dependency for tests::
+
+    $ pip install -e '.[test]'
+
+Tests can be run against your current environment using::
+
+    $ python -m unittest
+
+To run the test suite against all available environments, install `tox
+<https://pypi.python.org/pypi/tox>`_::
+
+    $ pip install tox
+
+Run the tests with::
+
+    $ tox
+
+
 Changelog
 =========
 - **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
