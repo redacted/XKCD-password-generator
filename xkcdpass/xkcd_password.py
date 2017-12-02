@@ -112,7 +112,7 @@ def generate_wordlist(wordfile=None,
     Generate a word list from either a kwarg wordfile, or a system default
     valid_chars is a regular expression match condition (default - all chars)
     """
-    
+
     # deal with inconsistent min and max, erring toward security
     if min_length > max_length:
         max_length = min_length
