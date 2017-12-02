@@ -1,7 +1,9 @@
-import unittest
-import subprocess
 import re
+import subprocess
+import unittest
+
 from xkcdpass import xkcd_password
+
 
 WORDFILE = 'xkcdpass/static/legacy'
 
