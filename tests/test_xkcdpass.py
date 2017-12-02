@@ -1,4 +1,5 @@
 import re
+import sys
 import subprocess
 import unittest
 
@@ -34,7 +35,7 @@ class XkcdPasswordTests(unittest.TestCase):
     def test_commandlineCount(self):
         count = 5
         result = subprocess.check_output([
-            "python", "xkcdpass/xkcd_password.py",
+            sys.executable, "xkcdpass/xkcd_password.py",
             "-w", WORDFILE,
             "-c", str(count),
         ])
