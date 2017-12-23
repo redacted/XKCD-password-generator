@@ -169,6 +169,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 - **1.14.2** Improve unit test discovery, remove deprecation warnings
 - **1.14.1** Fix wordlist order in `locate_wordfile`
 - **1.14.0** Added Finnish and Italian language support (thanks to Jussi Tiira and Lorenzo Mureu respectively)
@@ -182,7 +183,6 @@ Changelog
 - **1.9.3** Link EFF wordlist information, fix typos, update copyright
 - **1.9.2** Added Debian cracklib path
 - **1.9.1** Fixed typo in example
-- **1.9.0** Improvements to interactive mode
 
 
 License
