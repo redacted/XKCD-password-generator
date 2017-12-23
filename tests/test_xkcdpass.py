@@ -1,7 +1,10 @@
-import unittest
-import subprocess
 import re
+import sys
+import subprocess
+import unittest
+
 from xkcdpass import xkcd_password
+
 
 WORDFILE = 'xkcdpass/static/legacy'
 
@@ -31,9 +34,11 @@ class XkcdPasswordTests(unittest.TestCase):
 
     def test_commandlineCount(self):
         count = 5
-        result = subprocess.check_output(
-            ["python", "xkcdpass/xkcd_password.py", "-w", WORDFILE,
-             "-c", str(count)])
+        result = subprocess.check_output([
+            sys.executable, "xkcdpass/xkcd_password.py",
+            "-w", WORDFILE,
+            "-c", str(count),
+        ])
         self.assertTrue(result.count(b"\n"), count)
 
     def test_delim(self):
