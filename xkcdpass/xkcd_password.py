@@ -235,14 +235,17 @@ def generate_xkcdpassword(wordlist,
     if acrostic:
         worddict = wordlist_to_worddict(wordlist)
 
+    def gen_passwd():
+        if not acrostic:
+            words = choose_words(wordlist, numwords)
+        else:
+            words = find_acrostic(acrostic, worddict)
+        
+        return delimiter.join(words)
+
     # useful if driving the logic from other code
     if not interactive:
-        if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
-
-        return passwd
+        return gen_passwd()
 
     # else, interactive session
     # define input validators
@@ -277,10 +280,7 @@ def generate_xkcdpassword(wordlist,
     accepted = False
 
     while not accepted:
-        if not acrostic:
-            passwd = delimiter.join(choose_words(wordlist, numwords))
-        else:
-            passwd = delimiter.join(find_acrostic(acrostic, worddict))
+        passwd = gen_passwd()
         print("Generated: " + passwd)
         accepted = try_input("Accept? [yN] ", accepted_validator)
 
