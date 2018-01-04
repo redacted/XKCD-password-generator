@@ -71,36 +71,45 @@ which returns
 A concise overview of the available ``xkcdpass`` options can be accessed via::
 
     xkcdpass --help
-
-    Usage: xkcdpass [options]
-
-    Options:
-        -h, --help
-                                    show this help message and exit
-        -w WORDFILE, --wordfile=WORDFILE
-                                    Specify that the file WORDFILE contains the list of
-                                    valid words from which to generate passphrases.
-                                    Provided wordfiles: eff-long (default), eff-short,
-                                    eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
-                                    ita-wiki (Italian)
-        --min=MIN_LENGTH
-                                    Minimum length of words to make password
-        --max=MAX_LENGTH
-                                    Maximum length of words to make password
-        -n NUMWORDS, --numwords=NUMWORDS
-                                    Number of words to make password
-        -i, --interactive
-                                    Interactively select a password
-        -v VALID_CHARS, --valid-chars=VALID_CHARS
-                                    Valid chars, using regexp style (e.g. '[a-z]')
-        -V, --verbose
-                                    Report various metrics for given options, including word list entropy
-        -a ACROSTIC, --acrostic=ACROSTIC
-                                    Acrostic to constrain word choices
-        -c COUNT, --count=COUNT
-                                    number of passwords to generate
-        -d DELIM, --delimiter=DELIM
-                                    separator character between words
+    
+    usage: xkcdpass [-h] [-w WORDFILE] [--min MIN_LENGTH] [--max MAX_LENGTH]
+                    [-n NUM_WORDS] [-i] [-v VALID_CHARS] [-V] [-a ACROSTIC]
+                    [-c COUNT] [-d DELIM] [-C CASE] [--allow-weak-rng]
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -w WORDFILE, --wordfile WORDFILE
+                            Specify that the file WORDFILE contains the list of
+                            valid words from which to generate passphrases.
+                            Provided wordfiles: eff-long (default), eff-short,
+                            eff-special, legacy, spa-mich (Spanish), fin-kotus
+                            (Finnish)
+      --min MIN_LENGTH      Generate passphrases containing at least MIN_LENGTH
+                            words.
+      --max MAX_LENGTH      Generate passphrases containing at most MAX_LENGTH
+                            words.
+      -n NUM_WORDS, --numwords NUM_WORDS
+                            Generate passphrases containing exactly NUM_WORDS
+                            words.
+      -i, --interactive     Generate and output a passphrase, query the user to
+                            accept it, and loop until one is accepted.
+      -v VALID_CHARS, --valid-chars VALID_CHARS
+                            Limit passphrases to only include words matching the
+                            regex pattern VALID_CHARS (e.g. '[a-z]').
+      -V, --verbose         Report various metrics for given options.
+      -a ACROSTIC, --acrostic ACROSTIC
+                            Generate passphrases with an acrostic matching
+                            ACROSTIC.
+      -c COUNT, --count COUNT
+                            Generate COUNT passphrases.
+      -d DELIM, --delimiter DELIM
+                            Separate words within a passphrase with DELIM.
+      -C CASE, --case CASE  Choose the method for setting the case of each word in
+                            the passphrase. Choices: ['alternating', 'upper',
+                            'lower', 'random'] (default: 'lower').
+      --allow-weak-rng      Allow fallback to weak RNG if the system does not
+                            support cryptographically secure RNG. Only use this if
+                            you know what you are doing.
 
 Word lists
 ==========
