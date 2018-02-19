@@ -101,6 +101,8 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     number of passwords to generate
         -d DELIM, --delimiter=DELIM
                                     separator character between words
+        -s SEP, --separator SEP
+                                    Separate generated passphrases with SEP.
 
 Word lists
 ==========
@@ -169,6 +171,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.15.0** Added `--seperator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
 - **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 - **1.14.2** Improve unit test discovery, remove deprecation warnings
 - **1.14.1** Fix wordlist order in `locate_wordfile`
