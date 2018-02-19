@@ -121,9 +121,12 @@ Note that the generator can be used with any word file of the correct format: a 
 Additional languages
 ~~~~~~~~~~~~~~~~~~~~
 
-Spanish list of words used is a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80k words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
+- Spanish: a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80k words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
+- Finnish: a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
+- Italian: generated from dumps of the Italian-language Wikipedia, which is released under the Creative Commons Attribution-Share-Alike 3.0 licence.
+- German: based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top1000de.txt>`_. Single and double character words have been removed.
 
-Finnish word list is a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
+Additional language word lists are always welcome!
 
 Using xkcdpass as an imported module
 ====================================
@@ -171,6 +174,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.15.1** Added more information about supported languages
 - **1.15.0** Added `--seperator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
 - **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 - **1.14.2** Improve unit test discovery, remove deprecation warnings
@@ -184,9 +188,6 @@ Changelog
 - **1.9.5** Fix broken test
 - **1.9.4** Improve office-safe wordlist contents
 - **1.9.3** Link EFF wordlist information, fix typos, update copyright
-- **1.9.2** Added Debian cracklib path
-- **1.9.1** Fixed typo in example
-
 
 License
 =======
