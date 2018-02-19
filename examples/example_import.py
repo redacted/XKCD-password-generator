@@ -1,5 +1,6 @@
-import xkcdpass.xkcd_password as xp
 import random
+
+import xkcdpass.xkcd_password as xp
 
 
 def random_capitalisation(s, chance):

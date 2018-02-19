@@ -1,4 +1,5 @@
 from xkcdpass import xkcd_password as xp
+
 from django.http import JsonResponse
 
 

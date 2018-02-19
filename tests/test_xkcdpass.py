@@ -1,10 +1,9 @@
 import re
-import sys
 import subprocess
+import sys
 import unittest
 
 from xkcdpass import xkcd_password
-
 
 WORDFILE = 'xkcdpass/static/legacy'
 
@@ -47,6 +46,24 @@ class XkcdPasswordTests(unittest.TestCase):
             self.wordlist_small,
             delimiter=tdelim)
         self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
+
+    def test_separator(self):
+        count = 3
+        result = subprocess.check_output(
+            ["python", "xkcdpass/xkcd_password.py",
+             "--count", str(count),
+             "--delimiter", "|",
+             "--separator", " "])
+        self.assertEqual(result.count(b" "), 3)
+
+    def test_separator_no_end(self):
+        "Pipe output to other program. e.g. `xkcdpass -c 1 -s "" | xsel -b`"
+        count = 1
+        result = subprocess.check_output(
+            ["python", "xkcdpass/xkcd_password.py",
+             "--count", str(count),
+             "--separator", ""])
+        self.assertEqual(result.find(b"\n"), -1)
 
 
 if __name__ == '__main__':

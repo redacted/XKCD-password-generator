@@ -1,6 +1,5 @@
 from setuptools import setup
 
-
 setup(
     name='xkcdpass',
     version='1.14.3',
