@@ -32,7 +32,7 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertEqual("".join(map(lambda x: x[0], result.split())), word)
 
     def test_commandlineCount(self):
-        count = 5
+        count = 6
         result = subprocess.check_output([
             sys.executable, "xkcdpass/xkcd_password.py",
             "-w", WORDFILE,
@@ -64,6 +64,41 @@ class XkcdPasswordTests(unittest.TestCase):
              "--count", str(count),
              "--separator", ""])
         self.assertEqual(result.find(b"\n"), -1)
+
+    def test_set_case(self):
+        words = "this is only a test".lower().split()
+        words_before = set(words)
+
+        results = {}
+
+        results["lower"] = xkcd_password.set_case(words, method="lower")
+        results["upper"] = xkcd_password.set_case(words, method="upper")
+        results["alternating"] = xkcd_password.set_case(words, method="alternating")
+        results["random"] = xkcd_password.set_case(words, method="random", testing=True)
+
+        words_after = set([word.lower() for group in list(results.values()) for word in group])
+
+        # Test that no words have been fundamentally mutated by any of the methods
+        self.assertTrue(words_before == words_after)
+
+        # Test that the words have been uppered or lowered respectively.
+        self.assertTrue(all([word.islower() for word in results["lower"]]))
+        self.assertTrue(all([word.isupper() for word in results["upper"]]))
+
+        # Test that the words have been correctly uppered randomly.
+        expected_random_result_1 = ['THIS', 'IS', 'ONLY', 'a', 'test']
+        expected_random_result_2 = ['THIS', 'IS', 'a', 'test', 'ALSO']
+
+        words_extra = "this is a test also".lower().split()
+        observed_random_result_1 = results["random"]
+        observed_random_result_2 = xkcd_password.set_case(
+            words_extra, 
+            method="random",
+            testing=True
+        )
+
+        self.assertTrue(expected_random_result_1 == observed_random_result_1)
+        self.assertTrue(expected_random_result_2 == observed_random_result_2)
 
 
 if __name__ == '__main__':

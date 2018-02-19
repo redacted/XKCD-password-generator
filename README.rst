@@ -103,6 +103,15 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     separator character between words
         -s SEP, --separator SEP
                                     Separate generated passphrases with SEP.
+        -C CASE, --case CASE  
+                                    Choose the method for setting the case of each word in
+                                    the passphrase. Choices: ['alternating', 'upper',
+                                    'lower', 'random'] (default: 'lower').
+        --allow-weak-rng     
+                                     Allow fallback to weak RNG if the system does not
+                                    support cryptographically secure RNG. Only use this if
+                                    you know what you are doing.
+
 
 Word lists
 ==========
