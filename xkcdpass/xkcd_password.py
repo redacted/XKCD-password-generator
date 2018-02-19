@@ -126,7 +126,7 @@ def generate_wordlist(wordfile=None,
                                                   min_length,
                                                   max_length))
     # read words from file into wordlist
-    with open(wordfile) as wlf:
+    with open(wordfile, encoding='utf-8') as wlf:
         for line in wlf:
             thisword = line.strip()
             if regexp.match(thisword) is not None:
