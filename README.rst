@@ -183,6 +183,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.16.1** Fix encoding issue on Windows
 - **1.16.0** Case of words in passphrase can now be set using `--case`
 - **1.15.1** Added more information about supported languages
 - **1.15.0** Added `--seperator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
