@@ -122,7 +122,7 @@ def generate_wordlist(wordfile=None,
         max_length = min_length
     wordfile = locate_wordfile(wordfile)
 
-    words = []
+    words = set()
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
@@ -132,9 +132,9 @@ def generate_wordlist(wordfile=None,
         for line in wlf:
             thisword = line.strip()
             if regexp.match(thisword) is not None:
-                words.append(thisword)
+                words.add(thisword)
 
-    return list(set(words))  # deduplicate, just in case
+    return list(words)  # deduplicate, just in case
 
 
 def wordlist_to_worddict(wordlist):
