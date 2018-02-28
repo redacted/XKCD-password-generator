@@ -147,7 +147,7 @@ def wordlist_to_worddict(wordlist):
 
     # Maybe should be a defaultdict, but this reduces dependencies
     for word in wordlist:
-        if word[0] not in worddict:
+        if word[0] not in worddict:              # replaced try-catch with if statement
             worddict[word[0]] = []
         worddict[word[0]].append(word)
         
@@ -205,9 +205,9 @@ def choose_words(wordlist, numwords):
     assert len(wordlist) > 0
    
     if len(wordlist) >= numwords:
-        return rng().sample(wordlist, numwords)  # ensures no duplicates
+        return random.sample(wordlist, numwords)  # ensures no duplicates
     else:
-      return rng().choices(wordlist, numwords)  # allows duplicates if wordlist is small
+      return random.choices(wordlist, numwords)  # allows duplicates if wordlist is small
 
 
 def try_input(prompt, validate):
