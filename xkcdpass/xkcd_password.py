@@ -134,7 +134,7 @@ def generate_wordlist(wordfile=None,
             if regexp.match(thisword) is not None:
                 words.add(thisword)
 
-    return list(words)
+    return list(words)  # deduplicate, just in case
 
 
 def wordlist_to_worddict(wordlist):
@@ -147,10 +147,11 @@ def wordlist_to_worddict(wordlist):
 
     # Maybe should be a defaultdict, but this reduces dependencies
     for word in wordlist:
-        if word[0] not in worddict:              # replaced try-catch with if statement
-            worddict[word[0]] = []
-        worddict[word[0]].append(word)
-        
+        try:
+            worddict[word[0]].append(word)
+        except KeyError:
+            worddict[word[0]] = [word, ]
+
     return worddict
 
 
@@ -190,9 +191,9 @@ def find_acrostic(acrostic, worddict):
     words = []
 
     for letter in acrostic:
-        if letter in worddict:                        #  better than try catch blocks
+        try:
             words.append(rng().choice(worddict[letter]))
-        else:
+        except KeyError:
             sys.stderr.write("No words found starting with " + letter + "\n")
             sys.exit(1)
     return words
@@ -202,12 +203,8 @@ def choose_words(wordlist, numwords):
     """
     Choose numwords randomly from wordlist
     """
-    assert len(wordlist) > 0
-   
-    if len(wordlist) >= numwords:
-        return random.sample(wordlist, numwords)  # ensures no duplicates
-    else:
-      return random.choices(wordlist, numwords)  # allows duplicates if wordlist is small
+
+    return [rng().choice(wordlist) for i in xrange(numwords)]
 
 
 def try_input(prompt, validate):
