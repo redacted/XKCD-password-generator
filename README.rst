@@ -82,7 +82,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     valid words from which to generate passphrases.
                                     Provided wordfiles: eff-long (default), eff-short,
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
-                                    ita-wiki (Italian)
+                                    ita-wiki (Italian), ger-anlx (German)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -133,7 +133,7 @@ Additional languages
 - Spanish: a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80k words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
 - Finnish: a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
 - Italian: generated from dumps of the Italian-language Wikipedia, which is released under the Creative Commons Attribution-Share-Alike 3.0 licence.
-- German: based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top1000de.txt>`_. Single and double character words have been removed.
+- German: based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top10000de.txt>`_. Single and double character words have been removed.
 
 Additional language word lists are always welcome!
 
@@ -183,6 +183,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.16.3** Correct links for German worldist, updated docs to include the list
 - **1.16.2** Fix exception on UTF8 open with python 2.x
 - **1.16.1** Fix encoding issue on Windows
 - **1.16.0** Case of words in passphrase can now be set using `--case`
@@ -197,9 +198,7 @@ Changelog
 - **1.11.1** Fix bug in entropy calc
 - **1.11.0** Rewrite verbose report to take acrostics etc into account
 - **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
-- **1.9.5** Fix broken test
-- **1.9.4** Improve office-safe wordlist contents
-- **1.9.3** Link EFF wordlist information, fix typos, update copyright
+
 
 License
 =======

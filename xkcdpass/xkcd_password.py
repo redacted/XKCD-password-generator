@@ -396,8 +396,8 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Specify that the file WORDFILE contains the list"
                 " of valid words from which to generate passphrases."
                 " Provided wordfiles: eff-long (default), eff-short,"
-                " eff-special, legacy, spa-mich (Spanish),"
-                " fin-kotus (Finnish)"))
+                " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)"
+                " ita-wiki (Italian), ger-anlx (German)"))
         self.add_argument(
             "--min",
             dest="min_length", type=int, default=5, metavar="MIN_LENGTH",
