@@ -3,7 +3,6 @@
 import argparse
 import io
 import re
-import subprocess
 import sys
 import unittest
 import unittest.mock
@@ -37,39 +36,12 @@ class XkcdPasswordTests(unittest.TestCase):
             acrostic=word)
         self.assertEqual("".join(map(lambda x: x[0], result.split())), word)
 
-    def test_commandlineCount(self):
-        count = 6
-        result = subprocess.check_output([
-            sys.executable, "xkcdpass/xkcd_password.py",
-            "-w", WORDFILE,
-            "-c", str(count),
-        ])
-        self.assertTrue(result.count(b"\n"), count)
-
     def test_delim(self):
         tdelim = "_"
         result = xkcd_password.generate_xkcdpassword(
             self.wordlist_small,
             delimiter=tdelim)
         self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
-
-    def test_separator(self):
-        count = 3
-        result = subprocess.check_output(
-            ["python", "xkcdpass/xkcd_password.py",
-             "--count", str(count),
-             "--delimiter", "|",
-             "--separator", " "])
-        self.assertEqual(result.count(b" "), 3)
-
-    def test_separator_no_end(self):
-        "Pipe output to other program. e.g. `xkcdpass -c 1 -s "" | xsel -b`"
-        count = 1
-        result = subprocess.check_output(
-            ["python", "xkcdpass/xkcd_password.py",
-             "--count", str(count),
-             "--separator", ""])
-        self.assertEqual(result.find(b"\n"), -1)
 
     def test_set_case(self):
         words = "this is only a test".lower().split()
