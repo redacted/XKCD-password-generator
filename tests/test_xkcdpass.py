@@ -1,9 +1,15 @@
+""" Unit test for `xkcd_password` module. """
+
+import argparse
+import io
 import re
 import subprocess
 import sys
 import unittest
+import unittest.mock
 
 from xkcdpass import xkcd_password
+
 
 WORDFILE = 'xkcdpass/static/legacy'
 
@@ -98,6 +104,68 @@ class XkcdPasswordTests(unittest.TestCase):
 
         self.assertTrue(expected_random_result_1 == observed_random_result_1)
         self.assertTrue(expected_random_result_2 == observed_random_result_2)
+
+
+class emit_passwords_TestCase(unittest.TestCase):
+    """ Test cases for function `emit_passwords`. """
+
+    def setUp(self):
+        """ Set up fixtures for this test case. """
+        self.wordlist_small = xkcd_password.generate_wordlist(
+            wordfile='tests/test_list.txt',
+            valid_chars='[a-z]')
+
+        self.options = argparse.Namespace(
+            interactive=False,
+            numwords=6,
+            count=1,
+            acrostic=False,
+            delimiter=" ",
+            separator="\n",
+            case='lower',
+        )
+
+        self.stdout_patcher = unittest.mock.patch.object(
+            sys, 'stdout', new_callable=io.StringIO)
+
+    def test_emits_specified_count_of_passwords(self):
+        """ Should emit passwords numbering specified `count`. """
+        self.options.count = 6
+        with self.stdout_patcher as mock_stdout:
+            xkcd_password.emit_passwords(
+                wordlist=self.wordlist_small,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        expected_separator = self.options.separator
+        expected_separator_count = self.options.count
+        self.assertEqual(
+            output.count(expected_separator), expected_separator_count)
+
+    def test_emits_specified_separator_between_passwords(self):
+        """ Should emit specified separator text between each password. """
+        self.options.count = 3
+        self.options.separator = "!@#$%"
+        with self.stdout_patcher as mock_stdout:
+            xkcd_password.emit_passwords(
+                wordlist=self.wordlist_small,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        expected_separator = self.options.separator
+        expected_separator_count = self.options.count
+        self.assertEqual(
+            output.count(expected_separator), expected_separator_count)
+
+    def test_emits_no_separator_when_specified_separator_empty(self):
+        """ Should emit no separator when empty separator specified. """
+        self.options.count = 1
+        self.options.separator = ""
+        with self.stdout_patcher as mock_stdout:
+            xkcd_password.emit_passwords(
+                wordlist=self.wordlist_small,
+                options=self.options)
+        output = mock_stdout.getvalue()
+        unwanted_separator = "\n"
+        self.assertEqual(output.find(unwanted_separator), -1)
 
 
 if __name__ == '__main__':
