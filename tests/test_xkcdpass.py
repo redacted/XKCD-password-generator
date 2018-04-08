@@ -5,7 +5,11 @@ import io
 import re
 import sys
 import unittest
-import unittest.mock
+try:
+    import unittest.mock as mock
+except ImportError:
+    # python2.7 support via external lib
+    import mock
 
 from xkcdpass import xkcd_password
 
@@ -63,8 +67,10 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertTrue(all(word.islower() for word in results["lower"]))
         self.assertTrue(all(word.isupper() for word in results["upper"]))
         # Test that the words have been correctly uppered randomly.
-        expected_random_result_1 = ['THIS', 'IS', 'ONLY', 'a', 'test']
-        expected_random_result_2 = ['THIS', 'IS', 'a', 'test', 'ALSO']
+        expected_random_result_1_py3 = ['THIS', 'IS', 'ONLY', 'a', 'test']
+        expected_random_result_2_py3 = ['THIS', 'IS', 'a', 'test', 'ALSO']
+        expected_random_result_1_py2 = ['this', 'is', 'only', 'a', 'TEST']
+        expected_random_result_2_py2 = ['this', 'is', 'a', 'TEST', 'also']
 
         words_extra = "this is a test also".lower().split()
         observed_random_result_1 = results["random"]
@@ -73,9 +79,14 @@ class XkcdPasswordTests(unittest.TestCase):
             method="random",
             testing=True
         )
+        print(observed_random_result_1, observed_random_result_2)
 
-        self.assertTrue(expected_random_result_1 == observed_random_result_1)
-        self.assertTrue(expected_random_result_2 == observed_random_result_2)
+        self.assertTrue(
+            observed_random_result_1 in (
+                expected_random_result_1_py2, expected_random_result_1_py3))
+        self.assertTrue(
+            observed_random_result_2 in (
+                expected_random_result_2_py2, expected_random_result_2_py3))
 
 
 class emit_passwords_TestCase(unittest.TestCase):
@@ -93,11 +104,11 @@ class emit_passwords_TestCase(unittest.TestCase):
             count=1,
             acrostic=False,
             delimiter=" ",
-            separator="\n",
+            separator=u"\n",
             case='lower',
         )
 
-        self.stdout_patcher = unittest.mock.patch.object(
+        self.stdout_patcher = mock.patch.object(
             sys, 'stdout', new_callable=io.StringIO)
 
     def test_emits_specified_count_of_passwords(self):
@@ -116,7 +127,7 @@ class emit_passwords_TestCase(unittest.TestCase):
     def test_emits_specified_separator_between_passwords(self):
         """ Should emit specified separator text between each password. """
         self.options.count = 3
-        self.options.separator = "!@#$%"
+        self.options.separator = u"!@#$%"
         with self.stdout_patcher as mock_stdout:
             xkcd_password.emit_passwords(
                 wordlist=self.wordlist_small,
@@ -130,7 +141,7 @@ class emit_passwords_TestCase(unittest.TestCase):
     def test_emits_no_separator_when_specified_separator_empty(self):
         """ Should emit no separator when empty separator specified. """
         self.options.count = 1
-        self.options.separator = ""
+        self.options.separator = u""
         with self.stdout_patcher as mock_stdout:
             xkcd_password.emit_passwords(
                 wordlist=self.wordlist_small,
