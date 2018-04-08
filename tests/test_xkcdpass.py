@@ -79,7 +79,6 @@ class XkcdPasswordTests(unittest.TestCase):
             method="random",
             testing=True
         )
-        print(observed_random_result_1, observed_random_result_2)
 
         self.assertTrue(
             observed_random_result_1 in (

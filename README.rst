@@ -38,7 +38,7 @@ Contributions welcome and gratefully appreciated!
 Requirements
 ============
 
-Python 2 (version 2.7 or later), or Python 3 (version 3.2 or later).
+Python 2 (version 2.7 or later), or Python 3 (version 3.2 or later). Running module unit tests on Python 2 requires ``mock`` to be installed.
 
 
 
@@ -183,12 +183,13 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.16.4** Improve unit tests, fixes broken test on python 2
 - **1.16.3** Correct links for German worldist, updated docs to include the list
 - **1.16.2** Fix exception on UTF8 open with python 2.x
 - **1.16.1** Fix encoding issue on Windows
 - **1.16.0** Case of words in passphrase can now be set using `--case`
 - **1.15.1** Added more information about supported languages
-- **1.15.0** Added `--seperator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
+- **1.15.0** Added `--separator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
 - **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 - **1.14.2** Improve unit test discovery, remove deprecation warnings
 - **1.14.1** Fix wordlist order in `locate_wordfile`
