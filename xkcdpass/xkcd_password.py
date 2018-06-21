@@ -11,6 +11,8 @@ import random
 import re
 import sys
 
+from io import open
+
 __LICENSE__ = """
 Copyright (c) 2011 - 2018, Steven Tobin and Contributors.
 All rights reserved.
@@ -120,7 +122,7 @@ def generate_wordlist(wordfile=None,
         max_length = min_length
     wordfile = locate_wordfile(wordfile)
 
-    words = []
+    words = set()
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
@@ -130,9 +132,9 @@ def generate_wordlist(wordfile=None,
         for line in wlf:
             thisword = line.strip()
             if regexp.match(thisword) is not None:
-                words.append(thisword)
+                words.add(thisword)
 
-    return list(set(words))  # deduplicate, just in case
+    return list(words)  # deduplicate, just in case
 
 
 def wordlist_to_worddict(wordlist):
@@ -238,6 +240,11 @@ def upper_case(words):
     """
     return [w.upper() for w in words]
 
+def first_upper_case(words):
+    """
+    Set First character of each word to UPPER case.
+    """
+    return [w.capitalize() for w in words]
 
 def lower_case(words):
     """
@@ -274,6 +281,7 @@ CASE_METHODS = {"alternating": alternating_case,
                 "lower": lower_case,
                 "random": random_case,
                 "capitalize":capitalize_case}
+
 
 
 def set_case(words, method="lower", testing=False):
@@ -401,8 +409,8 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Specify that the file WORDFILE contains the list"
                 " of valid words from which to generate passphrases."
                 " Provided wordfiles: eff-long (default), eff-short,"
-                " eff-special, legacy, spa-mich (Spanish),"
-                " fin-kotus (Finnish)"))
+                " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)"
+                " ita-wiki (Italian), ger-anlx (German)"))
         self.add_argument(
             "--min",
             dest="min_length", type=int, default=5, metavar="MIN_LENGTH",
