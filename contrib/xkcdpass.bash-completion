@@ -28,6 +28,7 @@ _xkcdpass_completion () {
             COMPREPLY+=("legacy")
             COMPREPLY+=("spa-mich")
             COMPREPLY+=("fin-kotus")
+            COMPREPLY+=("nor-nb")
             ;;
 
         *)
