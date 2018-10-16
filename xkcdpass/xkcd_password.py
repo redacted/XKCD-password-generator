@@ -396,6 +396,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
 
     def _add_arguments(self):
         """ Add the arguments needed for this program. """
+        exclusive_group = self.add_mutually_exclusive_group()
         self.add_argument(
             "-w", "--wordfile",
             dest="wordfile", default=None, metavar="WORDFILE",
@@ -413,10 +414,14 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "--max",
             dest="max_length", type=int, default=9, metavar="MAX_LENGTH",
             help="Generate passphrases containing at most MAX_LENGTH words.")
-        self.add_argument(
+        exclusive_group.add_argument(
             "-n", "--numwords",
             dest="numwords", type=int, default=6, metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.")
+        exclusive_group.add_argument(
+            "-a", "--acrostic",
+            dest="acrostic", default=False,
+            help="Generate passphrases with an acrostic matching ACROSTIC.")
         self.add_argument(
             "-i", "--interactive",
             action="store_true", dest="interactive", default=False,
@@ -433,10 +438,6 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             "-V", "--verbose",
             action="store_true", dest="verbose", default=False,
             help="Report various metrics for given options.")
-        self.add_argument(
-            "-a", "--acrostic",
-            dest="acrostic", default=False,
-            help="Generate passphrases with an acrostic matching ACROSTIC.")
         self.add_argument(
             "-c", "--count",
             dest="count", type=int, default=1, metavar="COUNT",
