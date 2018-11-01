@@ -328,45 +328,46 @@ def generate_xkcdpassword(wordlist,
     # useful if driving the logic from other code
     if not interactive:
         return gen_passwd()
-
+        
     # else, interactive session
-    # define input validators
-    def n_words_validator(answer):
-        """
-        Validate custom number of words input
-        """
-
-        if isinstance(answer, str) and len(answer) == 0:
-            return numwords
-        try:
-            number = int(answer)
-            if number < 1:
-                raise ValueError
-            return number
-        except ValueError:
-            sys.stderr.write("Please enter a positive integer\n")
-            sys.exit(1)
-
-    def accepted_validator(answer):
-        return answer.lower().strip() in ["y", "yes"]
-
-    if not acrostic:
-        n_words_prompt = ("Enter number of words (default {0}):"
-                          " ".format(numwords))
-
-        numwords = try_input(n_words_prompt, n_words_validator)
     else:
-        numwords = len(acrostic)
+        # define input validators
+        def accepted_validator(answer):
+            return answer.lower().strip() in ["y", "yes"]
 
-    # generate passwords until the user accepts
-    accepted = False
+        # generate passwords until the user accepts
+        accepted = False
+        
+        while not accepted:
+            passwd = gen_passwd()
+            print("Generated: " + passwd)
+            accepted = try_input("Accept? [yN] ", accepted_validator)
+            print('accepted', accepted)
+        return passwd
+        
 
-    while not accepted:
-        passwd = gen_passwd()
-        print("Generated: " + passwd)
-        accepted = try_input("Accept? [yN] ", accepted_validator)
+def initialize_interactive_run(options):
+    def n_words_validator(answer):
+            """
+            Validate custom number of words input
+            """
+            
+            if isinstance(answer, str) and len(answer) == 0:
+                return options.numwords
+            try:
+                number = int(answer)
+                if number < 1:
+                    raise ValueError
+                return number
+            except ValueError:
+                sys.stderr.write("Please enter a positive integer\n")
+                sys.exit(1)
 
-    return passwd
+    if not options.acrostic:
+        n_words_prompt = ("Enter number of words (default {0}):\n".format(options.numwords))
+        options.numwords = try_input(n_words_prompt, n_words_validator)
+    else:
+        options.numwords = len(options.acrostic)
 
 
 def emit_passwords(wordlist, options):
@@ -489,6 +490,9 @@ def main(argv=None):
             max_length=options.max_length,
             valid_chars=options.valid_chars)
 
+        if options.interactive:
+            initialize_interactive_run(options)
+        
         if options.verbose:
             verbose_reports(my_wordlist, options)
 

@@ -1,6 +1,6 @@
 """ Unit test for `xkcd_password` module. """
 
-import subprocess
+from subprocess import PIPE, Popen
 import argparse
 import io
 import re
@@ -83,12 +83,8 @@ class XkcdPasswordTests(unittest.TestCase):
             testing=True
         )
 
-        self.assertTrue(
-            observed_random_result_1 in (
-                expected_random_result_1_py2, expected_random_result_1_py3))
-        self.assertTrue(
-            observed_random_result_2 in (
-                expected_random_result_2_py2, expected_random_result_2_py3))
+        self.assertIn(observed_random_result_1, (expected_random_result_1_py2, expected_random_result_1_py3))
+        self.assertIn(observed_random_result_2, (expected_random_result_2_py2, expected_random_result_2_py3))
 
 
 class TestEmitPasswords(unittest.TestCase):
@@ -157,18 +153,16 @@ class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
 
     @staticmethod
-    def run_xkcdpass_process():
-        test = subprocess.Popen(
-            ["xkcdpass", "-V", "-i"], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-        return test.communicate()[0]
+    def run_xkcdpass_process(*args):
+        process = Popen(["xkcdpass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+        return process.communicate('\n'.join(args))[0]
 
-    @mock.patch('__builtin__.input', side_effect=['4', 'y'])
-    def test_entropy_printout_valid_input(self, mock):
-        values = self.run_xkcdpass_process()
-        self.assertIn(
-            'A 4 word password from this list will have roughly 51', values)
+    def test_entropy_printout_valid_input(self):
+        values = self.run_xkcdpass_process('4', 'y')
+        self.assertIn('A 4 word password from this list will have roughly 51', values)
 
 
 if __name__ == '__main__':
-    suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in [XkcdPasswordTests, TestEmitPasswords, TestEntropyInformation]]
+    test_cases = [XkcdPasswordTests, TestEmitPasswords, TestEntropyInformation]
+    suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))
