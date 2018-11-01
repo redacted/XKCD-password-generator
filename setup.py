@@ -1,4 +1,5 @@
 from setuptools import setup
+import sys
 
 setup(
     name='xkcdpass',
@@ -17,6 +18,8 @@ setup(
             'xkcdpass = xkcdpass.xkcd_password:main',
         ],
     },
+    tests_require=['mock'] if sys.version_info[0] == 2 else None,
+    test_suite = 'tests',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2',
