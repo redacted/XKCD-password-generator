@@ -1,5 +1,6 @@
 """ Unit test for `xkcd_password` module. """
 
+import subprocess
 import argparse
 import io
 import re
@@ -77,7 +78,7 @@ class XkcdPasswordTests(unittest.TestCase):
         words_extra = "this is a test also".lower().split()
         observed_random_result_1 = results["random"]
         observed_random_result_2 = xkcd_password.set_case(
-            words_extra, 
+            words_extra,
             method="random",
             testing=True
         )
@@ -90,7 +91,7 @@ class XkcdPasswordTests(unittest.TestCase):
                 expected_random_result_2_py2, expected_random_result_2_py3))
 
 
-class emit_passwords_TestCase(unittest.TestCase):
+class TestEmitPasswords(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
 
     def setUp(self):
@@ -152,6 +153,22 @@ class emit_passwords_TestCase(unittest.TestCase):
         self.assertEqual(output.find(unwanted_separator), -1)
 
 
+class TestEntropyInformation(unittest.TestCase):
+    """ Test cases for function `emit_passwords`. """
+
+    @staticmethod
+    def run_xkcdpass_process():
+        test = subprocess.Popen(
+            ["xkcdpass", "-V", "-i"], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        return test.communicate()[0]
+
+    @mock.patch('__builtin__.input', side_effect=['4', 'y'])
+    def test_entropy_printout_valid_input(self, mock):
+        values = self.run_xkcdpass_process()
+        self.assertIn(
+            'A 4 word password from this list will have roughly 51', values)
+
+
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(XkcdPasswordTests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in [XkcdPasswordTests, TestEmitPasswords, TestEntropyInformation]]
+    unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))
