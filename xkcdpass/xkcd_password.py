@@ -252,6 +252,12 @@ def lower_case(words):
     """
     return [w.lower() for w in words]
 
+def capitalize_case(words):
+    """
+    Set first letter of each words to UPPER case aka Capitalize.
+    """
+    return [w.capitalize() for w in words]
+
 
 def random_case(words, testing=False):
     """
@@ -274,8 +280,8 @@ CASE_METHODS = {"alternating": alternating_case,
                 "upper": upper_case,
                 "lower": lower_case,
                 "random": random_case,
-                "first": first_upper_case,
-                }
+                "capitalize":capitalize_case}
+
 
 
 def set_case(words, method="lower", testing=False):

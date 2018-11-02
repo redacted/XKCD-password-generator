@@ -106,7 +106,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -C CASE, --case CASE  
                                     Choose the method for setting the case of each word in
                                     the passphrase. Choices: ['alternating', 'upper',
-                                    'lower', 'random', 'first'] (default: 'lower').
+                                    'lower', 'random', 'capitalize'] (default: 'lower').
         --allow-weak-rng     
                                      Allow fallback to weak RNG if the system does not
                                     support cryptographically secure RNG. Only use this if
