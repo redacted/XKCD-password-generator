@@ -82,7 +82,8 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     valid words from which to generate passphrases.
                                     Provided wordfiles: eff-long (default), eff-short,
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
-                                    ita-wiki (Italian), ger-anlx (German), nor-nb (Norwegian)
+                                    ita-wiki (Italian), ger-anlx (German), nor-nb (Norwegian),
+                                    fr-freelang (French), pt-ipublicis / pt-l33t-ipublicis (Portuguese)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -135,6 +136,8 @@ Additional languages
 - Italian: generated from dumps of the Italian-language Wikipedia, which is released under the Creative Commons Attribution-Share-Alike 3.0 licence.
 - German: based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top10000de.txt>`_. Single and double character words have been removed.
 - Norwegian: a modified version of `Norsk Ordbank in Norwegian Bokmål 2005 <https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-5&lang=en>`_, 2018-06-28 update, which is released under the `CC-BY 4.0 license <https://creativecommons.org/licenses/by/4.0/>`_. Regex has been used to alter the list for cleanup and removal of words with impractical characters. The resulting list contains ~137k words.
+- French: Cleaned version of `this list <https://packetstormsecurity.com/files/download/32007/french.gz>`_. Public domain.
+- Portuguese: Converted variant of the LibreOffice / Firefox poturguese dictionary (from `this link <https://raw.githubusercontent.com/titoBouzout/Dictionaries/master/Portuguese%20(European).dic>`_. GPL and BSD licenced.
 
 Additional language word lists are always welcome!
 
@@ -184,6 +187,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
 - **1.16.5** Adds title case option for `--case`
 - **1.16.4** Improve unit tests, fixes broken test on python 2
 - **1.16.3** Correct links for German worldist, updated docs to include the list
@@ -200,7 +204,6 @@ Changelog
 - **1.12.0** Handle maximum word length < minimum case by setting max = min
 - **1.11.1** Fix bug in entropy calc
 - **1.11.0** Rewrite verbose report to take acrostics etc into account
-- **1.10.0** Switch to EFF wordlist as default (note: decrease in entropy of default length passwords to 77 bits, still at EFF recommendations)
 
 
 License

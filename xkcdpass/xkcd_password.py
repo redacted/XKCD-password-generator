@@ -280,6 +280,7 @@ CASE_METHODS = {"alternating": alternating_case,
                 "upper": upper_case,
                 "lower": lower_case,
                 "random": random_case,
+                "first": first_upper_case,
                 "capitalize":capitalize_case}
 
 

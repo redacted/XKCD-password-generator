@@ -153,10 +153,11 @@ class TestEntropyInformation(unittest.TestCase):
     """ Test cases for function `emit_passwords`. """
 
     @staticmethod
-    def run_xkcdpass_process(*args):
-        process = Popen(["xkcdpass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
-        return process.communicate('\n'.join(args))[0]
+    # def run_xkcdpass_process(*args):
+    #     process = Popen(["xkcdpass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+    #     return process.communicate('\n'.join(args))[0]
 
+    @staticmethod
     def test_entropy_printout_valid_input(self):
         values = self.run_xkcdpass_process('4', 'y')
         self.assertIn('A 4 word password from this list will have roughly 51', values)
