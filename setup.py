@@ -1,9 +1,10 @@
 from setuptools import setup
+from io import open
 import sys
 
 setup(
     name='xkcdpass',
-    version='1.17.1',
+    version='1.17.2',
     author='Steven Tobin',
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',

@@ -187,6 +187,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.17.2** Compatibility fix for 2.x/3.x 
 - **1.17.1** Fix issue with README and unicode encoding
 - **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
 - **1.16.5** Adds title case option for `--case`
