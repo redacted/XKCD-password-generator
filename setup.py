@@ -3,12 +3,12 @@ import sys
 
 setup(
     name='xkcdpass',
-    version='1.17.0',
+    version='1.17.1',
     author='Steven Tobin',
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',
     description='Generate secure multiword passwords/passphrases, inspired by XKCD',
-    long_description=open('README.rst').read(),
+    long_description=open('README.rst', encoding='utf-8').read(),
     packages=['xkcdpass'],
     zip_safe=False,
     license='BSD',

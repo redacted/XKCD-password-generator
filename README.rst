@@ -187,6 +187,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.17.1** Fix issue with README and unicode encoding
 - **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
 - **1.16.5** Adds title case option for `--case`
 - **1.16.4** Improve unit tests, fixes broken test on python 2
@@ -203,7 +204,6 @@ Changelog
 - **1.13.0** Added Spanish language wordfile (thanks to Javier Meija)
 - **1.12.0** Handle maximum word length < minimum case by setting max = min
 - **1.11.1** Fix bug in entropy calc
-- **1.11.0** Rewrite verbose report to take acrostics etc into account
 
 
 License
