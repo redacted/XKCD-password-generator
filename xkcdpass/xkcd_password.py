@@ -313,12 +313,18 @@ def generate_xkcdpassword(wordlist,
                           interactive=False,
                           acrostic=False,
                           delimiter=" ",
-                          case="lower"):
+                          case="lower",
+                          numeric_separator=False):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
 
     passwd = None
+
+    # Use 2 digit number as delimiter
+    if numeric_separator:
+        rand_num = random.randint(10,99)
+        delimiter = str(rand_num)
 
     # generate the worddict if we are looking for acrostics
     if acrostic:
@@ -389,6 +395,7 @@ def emit_passwords(wordlist, options):
                 acrostic=options.acrostic,
                 delimiter=options.delimiter,
                 case=options.case,
+                numeric_separator=options.numeric_separator
             ),
             end=options.separator)
         count -= 1
@@ -475,6 +482,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Allow fallback to weak RNG if the "
                 "system does not support cryptographically secure RNG. "
                 "Only use this if you know what you are doing."))
+        self.add_argument(
+            "-ns", "--numeric_separator",
+            action="store_true", dest="numeric_separator", default=False,
+            help=(
+                "Use a random number as separator."
+                "Example: some11text11here"
+                "THIS OVERRIDES THE DELIMITER PARAMETER"))
 
 
 def main(argv=None):
