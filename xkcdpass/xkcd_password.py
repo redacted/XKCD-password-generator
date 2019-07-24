@@ -313,7 +313,8 @@ def generate_xkcdpassword(wordlist,
                           interactive=False,
                           acrostic=False,
                           delimiter=" ",
-                          case="lower"):
+                          case="lower",
+                          prefix_count=None):
     """
     Generate an XKCD-style password from the words in wordlist.
     """
@@ -330,7 +331,7 @@ def generate_xkcdpassword(wordlist,
         else:
             words = find_acrostic(acrostic, worddict)
 
-        return delimiter.join(set_case(words, method=case))
+        return delimiter.join(word[:prefix_count] for word in set_case(words, method=case))
 
     # useful if driving the logic from other code
     if not interactive:
@@ -389,6 +390,7 @@ def emit_passwords(wordlist, options):
                 acrostic=options.acrostic,
                 delimiter=options.delimiter,
                 case=options.case,
+                prefix_count=options.prefix_count
             ),
             end=options.separator)
         count -= 1
@@ -475,6 +477,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 "Allow fallback to weak RNG if the "
                 "system does not support cryptographically secure RNG. "
                 "Only use this if you know what you are doing."))
+        self.add_argument(
+            "--prefix-count",
+            dest="prefix_count", default=None, metavar="NUM", type=int,
+            help=(
+                "Keep only the first NUM characters of each word (for use with the EFF special wordlist)"
+            )
+        )
 
 
 def main(argv=None):
