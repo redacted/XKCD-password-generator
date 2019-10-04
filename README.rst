@@ -82,7 +82,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     valid words from which to generate passphrases.
                                     Provided wordfiles: eff-long (default), eff-short,
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
-                                    ita-wiki (Italian), ger-anlx (German), nor-nb (Norwegian),
+                                    ita-wiki (Italian), ger-anlx / eff_large_de.wordlist (German), nor-nb (Norwegian),
                                     fr-freelang (French), pt-ipublicis / pt-l33t-ipublicis (Portuguese)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
@@ -134,7 +134,8 @@ Additional languages
 - Spanish: a modifed version of archive.umich.edu in the `/linguistics` directory. It includes ~80k words. Less than 5 char. and latin-like words were deleted using regex. This list is public domain, see `here <http://www.umich.edu/~archive/linguistics/00readme.txt>`_.
 - Finnish: a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
 - Italian: generated from dumps of the Italian-language Wikipedia, which is released under the Creative Commons Attribution-Share-Alike 3.0 licence.
-- German: based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top10000de.txt>`_. Single and double character words have been removed.
+- German (ger-anlx): based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top10000de.txt>`_. Single and double character words have been removed.
+- German (eff_large_de.wordlist): based on 'this public domain dictionary <https://sourceforge.net/projects/germandict/>'_. Converted to UTF-8. 
 - Norwegian: a modified version of `Norsk Ordbank in Norwegian Bokmål 2005 <https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-5&lang=en>`_, 2018-06-28 update, which is released under the `CC-BY 4.0 license <https://creativecommons.org/licenses/by/4.0/>`_. Regex has been used to alter the list for cleanup and removal of words with impractical characters. The resulting list contains ~137k words.
 - French: Cleaned version of `this list <https://packetstormsecurity.com/files/download/32007/french.gz>`_. Public domain.
 - Portuguese: Converted variant of the LibreOffice / Firefox poturguese dictionary (from `this link <https://raw.githubusercontent.com/titoBouzout/Dictionaries/master/Portuguese%20(European).dic>`_. GPL and BSD licenced.
