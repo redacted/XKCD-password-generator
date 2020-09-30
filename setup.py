@@ -3,8 +3,8 @@ from io import open
 import sys
 
 setup(
-    name='xkcdpass',
-    version='1.17.3',
+    name='xkcdpass password generator',
+    version='v.1.17.3',
     author='Steven Tobin',
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',
