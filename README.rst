@@ -187,6 +187,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.17.4** Improvements to French dictionary
 - **1.17.3** Updated license and supported versions
 - **1.17.2** Compatibility fix for 2.x/3.x 
 - **1.17.1** Fix issue with README and unicode encoding
@@ -204,7 +205,6 @@ Changelog
 - **1.14.1** Fix wordlist order in `locate_wordfile`
 - **1.14.0** Added Finnish and Italian language support (thanks to Jussi Tiira and Lorenzo Mureu respectively)
 - **1.13.0** Added Spanish language wordfile (thanks to Javier Meija)
-- **1.12.0** Handle maximum word length < minimum case by setting max = min
 
 
 License
