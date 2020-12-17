@@ -29,6 +29,7 @@ _xkcdpass_completion () {
             COMPREPLY+=("spa-mich")
             COMPREPLY+=("fin-kotus")
             COMPREPLY+=("nor-nb")
+            COMPREPLY+=("eff_large_de.wordlist")
             ;;
 
         *)
