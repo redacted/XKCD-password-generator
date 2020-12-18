@@ -188,6 +188,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.17.5** Bugfixes
 - **1.17.4** Improvements to French dictionary
 - **1.17.3** Updated license and supported versions
 - **1.17.2** Compatibility fix for 2.x/3.x 
@@ -204,8 +205,6 @@ Changelog
 - **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 - **1.14.2** Improve unit test discovery, remove deprecation warnings
 - **1.14.1** Fix wordlist order in `locate_wordfile`
-- **1.14.0** Added Finnish and Italian language support (thanks to Jussi Tiira and Lorenzo Mureu respectively)
-- **1.13.0** Added Spanish language wordfile (thanks to Javier Meija)
 
 
 License
