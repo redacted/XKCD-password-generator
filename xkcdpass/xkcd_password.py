@@ -62,6 +62,8 @@ if sys.version_info[0] >= 3:
 
 
 DEFAULT_WORDFILE = "eff-long"
+DEFAULT_DELIMITERS = ["", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
+                      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
 def validate_options(parser, options):
@@ -313,6 +315,8 @@ def generate_xkcdpassword(wordlist,
                           interactive=False,
                           acrostic=False,
                           delimiter=" ",
+                          random_delimiters=False,
+                          valid_delimiters=DEFAULT_DELIMITERS,
                           case="lower"):
     """
     Generate an XKCD-style password from the words in wordlist.
@@ -330,12 +334,14 @@ def generate_xkcdpassword(wordlist,
         else:
             words = find_acrostic(acrostic, worddict)
 
-        return delimiter.join(set_case(words, method=case))
+        if not random_delimiters:
+            return delimiter.join(set_case(words, method=case))
+        return randomized_delimiter_join(set_case(words, method=case), valid_delimiters)
 
     # useful if driving the logic from other code
     if not interactive:
         return gen_passwd()
-        
+
     # else, interactive session
     else:
         # define input validators
@@ -344,21 +350,37 @@ def generate_xkcdpassword(wordlist,
 
         # generate passwords until the user accepts
         accepted = False
-        
+
         while not accepted:
             passwd = gen_passwd()
             print("Generated: " + passwd)
             accepted = try_input("Accept? [yN] ", accepted_validator)
             print('accepted', accepted)
         return passwd
-        
+
+def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
+    """
+    Join the words into a password with random delimiters between each word
+    """
+
+    final_passwd = ''
+    for word in words:
+        final_passwd += choose_delimiter(delimiters) + word
+
+    return final_passwd + choose_delimiter(delimiters)
+
+def choose_delimiter(delimiters):
+    """
+    Choose a random delimiter from the list
+    """
+    return rng().choice(delimiters)
 
 def initialize_interactive_run(options):
     def n_words_validator(answer):
             """
             Validate custom number of words input
             """
-            
+
             if isinstance(answer, str) and len(answer) == 0:
                 return options.numwords
             try:
@@ -380,6 +402,10 @@ def initialize_interactive_run(options):
 def emit_passwords(wordlist, options):
     """ Generate the specified number of passwords and output them. """
     count = options.count
+    if options.valid_delimiters:
+        valid_delimiters = list(options.valid_delimiters) + [""]
+    else:
+        valid_delimiters = DEFAULT_DELIMITERS
     while count > 0:
         print(
             generate_xkcdpassword(
@@ -388,6 +414,8 @@ def emit_passwords(wordlist, options):
                 numwords=options.numwords,
                 acrostic=options.acrostic,
                 delimiter=options.delimiter,
+                random_delimiters=options.random_delimiters,
+                valid_delimiters=valid_delimiters,
                 case=options.case,
             ),
             end=options.separator)
@@ -456,6 +484,15 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             dest="delimiter", default=" ", metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
         self.add_argument(
+            "-R", "--random-delimiters",
+            action="store_true", dest="random_delimiters", default=False,
+            help="Use randomized delimiters between words. --delimiter will be ignored")
+        self.add_argument(
+            "-D", "--valid-delimiters",
+            dest="valid_delimiters", default="", metavar="VALID_DELIMATERS",
+            help=("A string with all valid delimiter charcters."
+                  " For example, '^&*' would use ^, &, or *"))
+        self.add_argument(
             "-s", "--separator",
             dest="separator", default="\n", metavar="SEP",
             help="Separate generated passphrases with SEP.")
@@ -501,7 +538,7 @@ def main(argv=None):
 
         if options.interactive:
             initialize_interactive_run(options)
-        
+
         if options.verbose:
             verbose_reports(my_wordlist, options)
 

@@ -103,6 +103,8 @@ class TestEmitPasswords(unittest.TestCase):
             acrostic=False,
             delimiter=" ",
             separator=u"\n",
+            valid_delimiters="",
+            random_delimiters=False,
             case='lower',
         )
 
