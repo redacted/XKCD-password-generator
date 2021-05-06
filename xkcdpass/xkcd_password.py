@@ -489,7 +489,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
             help="Use randomized delimiters between words. --delimiter will be ignored")
         self.add_argument(
             "-D", "--valid-delimiters",
-            dest="valid_delimiters", default="", metavar="VALID_DELIMATERS",
+            dest="valid_delimiters", default="", metavar="VALID_DELIMITERS",
             help=("A string with all valid delimiter charcters."
                   " For example, '^&*' would use ^, &, or *"))
         self.add_argument(

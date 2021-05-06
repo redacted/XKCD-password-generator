@@ -188,7 +188,8 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
-- **1,18.0** Added randomised delimiters
+- **1.18.1** fixes for README
+- **1.18.0** Added randomised delimiters
 - **1.17.6** Bugfixes
 - **1.17.5** Bugfixes
 - **1.17.4** Improvements to French dictionary
