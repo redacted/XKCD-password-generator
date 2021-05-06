@@ -102,6 +102,10 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     number of passwords to generate
         -d DELIM, --delimiter=DELIM
                                     separator character between words
+        -R, --random-delimiters
+                                    use randomised delimiters
+        -D DELIMITERS, --valid-delimiters=DELIMETERS
+                                    delimeters to choose from, used with -
         -s SEP, --separator SEP
                                     Separate generated passphrases with SEP.
         -C CASE, --case CASE  
@@ -188,7 +192,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
-- **1.18.1** fixes for README
+- **1.18.2** fixes for README
 - **1.18.0** Added randomised delimiters
 - **1.17.6** Bugfixes
 - **1.17.5** Bugfixes
