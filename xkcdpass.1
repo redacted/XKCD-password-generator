@@ -1,40 +1,14 @@
-.SH xkcdpass
-.SS generate memorable, secure multiword passphrases
-.TP
-.B Author
-|authorname| |authoremail|
-.RS
-.RE
-.TP
-.B Date
-2015\-01\-17
-.RS
-.RE
-.TP
-.B Copyright
-BSD license, attribution and disclaimer required, no endorsement
-allowed.
-.RS
-.RE
-.TP
-.B Manual section
-1
-.RS
-.RE
-.TP
-.B Manual group
-Admin
-.RS
-.RE
-.SS SYNOPSIS
+.TH xkcdpass 1
+.SH NAME
+xkcdpass - generate memorable, secure multiword passphrases
+.SH SYNOPSIS
 .PP
-\f[B]xkcdpass\f[] [ option ...
-]
-.PD 0
-.P
-.PD
-\f[B]xkcdpass\f[] \f[B]\-\-help\f[]
-.SS DESCRIPTION
+.B xkcdpass
+[ options ]
+.br
+.B xkcdpass
+--help
+.SH DESCRIPTION
 .PP
 A flexible and scriptable password generator which generates strong
 passphrases, inspired by XKCD 936:
@@ -45,7 +19,7 @@ $\ xkcdpass
 >\ correct\ horse\ battery\ staple
 \f[]
 .fi
-.SS OPTIONS
+.SH OPTIONS
 .PP
 \f[B]\-\-help\f[]
 .RS
@@ -57,8 +31,7 @@ Describe how to use this command.
 .RS
 .PP
 Specify that the file WORDFILE contains the list of valid words from
-which to generate passphrases. Provided wordfiles: eff-long (default),
-eff-short, eff-special, legacy
+which to generate passphrases. 
 .RE
 .PP
 \f[B]\-\-min\f[] MIN_LENGTH
@@ -122,6 +95,12 @@ Generate COUNT passphrases.
 Separate words within a passphrase with DELIM.
 (Default: \[aq] \[aq])
 .RE
+.PP
+\f[B]\-\-separator\f[] SEP, \f[B]\-s\f[] SEP
+.RS
+.PP
+Separate generated passphrases with SEP.
+(Default: \[aq] \[aq])
 .SS EXAMPLES
 .IP \[bu] 2
 \f[B]xkcdpass\f[]
@@ -143,7 +122,7 @@ pinball\ previous\ deprive\ militancy\ bereaved\ numeric
 .RS 2
 .PP
 Generates 5 passphrases, all from lower\-case words and meeting the
-acrostic “chaos”, delimited by the “|” character.
+acrostic "chaos", delimited by the "|" character.
 Example output:
 .IP
 .nf
@@ -156,22 +135,11 @@ cradle|helot|axial|ordure|shale
 \f[]
 .fi
 .RE
-.SS HISTORY
+.SH HISTORY
 .PP
 The \f[B]xkcdpass\f[] command invokes the Python program
 \f[C]xkcd_password.py\f[].
 .PP
-The inspiration for the program\[aq]s purpose is the XKCD 936_ “Password
-Strength” cartoon.
+The inspiration for the program\[aq]s purpose is the XKCD 936 "Password
+Strength" cartoon.
 .PP
-The application is maintained by Steven Tobin <<steven@steventob.in>>.
-.PP
-This manual page was written by |authorname| |authoremail|.
-.SS 
-.RS
-.PP
-Local variables: mode: rst coding: utf\-8 time\-stamp\-format:
-"%:y\-%02m\-%02d" time\-stamp\-start: "^:Date:[ ]+" time\-stamp\-end:
-"$" time\-stamp\-line\-limit: 20 End: vim: filetype=rst
-fileencoding=utf\-8 :
-.RE
