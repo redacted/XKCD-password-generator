@@ -79,7 +79,8 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     show this help message and exit
         -w WORDFILE, --wordfile=WORDFILE
                                     Specify that the file WORDFILE contains the list of
-                                    valid words from which to generate passphrases.
+                                    valid words from which to generate passphrases. Multiple 
+                                    wordfiles can be provided, separated by commas.
                                     Provided wordfiles: eff-long (default), eff-short,
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
                                     ita-wiki (Italian), ger-anlx / eff_large_de.wordlist (German), nor-nb (Norwegian),
@@ -192,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.0** Initial support for multiple wordfiles
 - **1.18.2** fixes for README
 - **1.18.0** Added randomised delimiters
 - **1.17.6** Bugfixes
@@ -208,8 +210,6 @@ Changelog
 - **1.16.1** Fix encoding issue on Windows
 - **1.16.0** Case of words in passphrase can now be set using `--case`
 - **1.15.1** Added more information about supported languages
-- **1.15.0** Added `--separator` argument, German wordlist (GPL 3.0, thanks to @anlx-sw)
-- **1.14.3** Refactor password generator, fixes for hardcoded python version in test
 
 
 License

@@ -440,6 +440,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
              help=(
                 "Specify that the file WORDFILE contains the list"
                 " of valid words from which to generate passphrases."
+                " Multiple wordfiles can be provided, separated by commas."
                 " Provided wordfiles: eff-long (default), eff-short,"
                 " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish),"
                 " fr-freelang (French), fr-corrected.txt (French), pt-ipublicis (Portuguese),"
