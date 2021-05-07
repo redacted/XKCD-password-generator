@@ -128,6 +128,8 @@ def generate_wordlist(wordfile=None,
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
                                                   max_length))
+    if wordfile is None:
+        wordfile = DEFAULT_WORDFILE
     for wf in wordfile.split(','):
         wf = locate_wordfile(wf)
         # read words from file into wordlist
