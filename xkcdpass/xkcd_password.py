@@ -110,7 +110,7 @@ def locate_wordfile(wordfile=None):
             return wfile
 
 
-def generate_wordlist(wordfile=None,
+def generate_wordlist(wordfiles=None,
                       min_length=5,
                       max_length=9,
                       valid_chars='.'):
@@ -122,19 +122,20 @@ def generate_wordlist(wordfile=None,
     # deal with inconsistent min and max, erring toward security
     if min_length > max_length:
         max_length = min_length
-    wordfile = locate_wordfile(wordfile)
 
     words = set()
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
                                                   min_length,
                                                   max_length))
-    # read words from file into wordlist
-    with open(wordfile, encoding='utf-8') as wlf:
-        for line in wlf:
-            thisword = line.strip()
-            if regexp.match(thisword) is not None:
-                words.add(thisword)
+    for wordfile in wordfiles.split(','):
+        wordfile = locate_wordfile(wordfile)
+        # read words from file into wordlist
+        with open(wordfile, encoding='utf-8') as wlf:
+            for line in wlf:
+                thisword = line.strip()
+                if regexp.match(thisword) is not None:
+                    words.add(thisword)
 
     return list(words)  # deduplicate, just in case
 
@@ -531,7 +532,7 @@ def main(argv=None):
         validate_options(parser, options)
 
         my_wordlist = generate_wordlist(
-            wordfile=options.wordfile,
+            wordfiles=options.wordfile,
             min_length=options.min_length,
             max_length=options.max_length,
             valid_chars=options.valid_chars)
