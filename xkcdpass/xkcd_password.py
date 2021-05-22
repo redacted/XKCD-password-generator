@@ -138,8 +138,10 @@ def generate_wordlist(wordfile=None,
                 thisword = line.strip()
                 if regexp.match(thisword) is not None:
                     words.add(thisword)
-
-    return list(words)  # deduplicate, just in case
+    if len(words):
+        return list(words)  # deduplicate, just in case
+    else:
+        raise SystemExit("Error: provided arguments result in zero-length wordlist, exiting.")
 
 
 def wordlist_to_worddict(wordlist):

@@ -193,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.1** Improvements to help text, handle rare case where arguments lead to empty wordlist
 - **1.19.0** Initial support for multiple wordfiles
 - **1.18.2** fixes for README
 - **1.18.0** Added randomised delimiters
@@ -209,7 +210,6 @@ Changelog
 - **1.16.2** Fix exception on UTF8 open with python 2.x
 - **1.16.1** Fix encoding issue on Windows
 - **1.16.0** Case of words in passphrase can now be set using `--case`
-- **1.15.1** Added more information about supported languages
 
 
 License
