@@ -4,7 +4,7 @@ import sys
 
 setup(
     name='xkcdpass',
-    version='1.19.2',
+    version='1.19.3',
     author='Steven Tobin',
     author_email='steventtobin@gmail.com',
     url='https://github.com/redacted/XKCD-password-generator',

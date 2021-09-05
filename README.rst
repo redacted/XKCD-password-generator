@@ -193,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.3** Restore a randomly sampled version of eff_large_de wordlist 
 - **1.19.2** Reduction in install size
 - **1.19.1** Improvements to help text, handle rare case where arguments lead to empty wordlist
 - **1.19.0** Initial support for multiple wordfiles
