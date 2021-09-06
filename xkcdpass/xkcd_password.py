@@ -172,7 +172,14 @@ def verbose_reports(wordlist, options):
         numwords = len(options.acrostic)
         length = 0
         for char in options.acrostic:
-            length += len(worddict.get(char, []))
+            try:
+                if char not in worddict: 
+                    raise ValueError
+                else:
+                    length += len(worddict.get(char, []))
+            except ValueError:
+                sys.stderr.write("Error: No words found starting with " + char + ". Exiting...\n")
+                sys.exit(1)
     else:
         length = len(wordlist)
         numwords = options.numwords
@@ -201,7 +208,7 @@ def find_acrostic(acrostic, worddict):
         try:
             words.append(rng().choice(worddict[letter]))
         except KeyError:
-            sys.stderr.write("No words found starting with " + letter + "\n")
+            sys.stderr.write("Error: No words found starting with " + letter + ". Exiting...\n")
             sys.exit(1)
     return words
 
