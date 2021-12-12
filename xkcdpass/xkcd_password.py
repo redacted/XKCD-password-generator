@@ -54,16 +54,16 @@ except AttributeError as ex:
     else:
         raise ex
 
-
 # Python 3 compatibility
 if sys.version_info[0] >= 3:
     raw_input = input
     xrange = range
 
-
 DEFAULT_WORDFILE = "eff-long"
-DEFAULT_DELIMITERS = ["", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
-                      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+DEFAULT_DELIMITERS = [
+    "", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "0", "1", "2", "3",
+    "4", "5", "6", "7", "8", "9"
+]
 
 
 def validate_options(parser, options):
@@ -89,9 +89,8 @@ def locate_wordfile(wordfile=None):
     either from static directory, the provided path or use a default.
     """
     common_word_files = []
-    static_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        'static')
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              'static')
 
     if wordfile is not None:
         # wordfile can be in static dir or provided as a complete path
@@ -100,10 +99,9 @@ def locate_wordfile(wordfile=None):
 
     common_word_files.extend([
         os.path.join(static_dir, DEFAULT_WORDFILE),
-        "/usr/share/cracklib/cracklib-small",
-        "/usr/share/dict/cracklib-small",
-        "/usr/dict/words",
-        "/usr/share/dict/words"])
+        "/usr/share/cracklib/cracklib-small", "/usr/share/dict/cracklib-small",
+        "/usr/dict/words", "/usr/share/dict/words"
+    ])
 
     for wfile in common_word_files:
         if os.path.isfile(wfile):
@@ -123,10 +121,9 @@ def generate_wordlist(wordfile=None,
     if min_length > max_length:
         max_length = min_length
 
-    words = set()
+    words = {}
 
-    regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
-                                                  min_length,
+    regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars, min_length,
                                                   max_length))
     if wordfile is None:
         wordfile = DEFAULT_WORDFILE
@@ -135,13 +132,20 @@ def generate_wordlist(wordfile=None,
         # read words from file into wordlist
         with open(wf, encoding='utf-8') as wlf:
             for line in wlf:
-                thisword = line.strip()
+                thisline = line.strip()
+                try:
+                    thisword, thistranslate = thisline.split()
+                except:
+                    thisword = thisline
+                    thistranslate = ""
                 if regexp.match(thisword) is not None:
-                    words.add(thisword)
+                    words[thisword] = thistranslate
     if len(words):
-        return list(words)  # deduplicate, just in case
+        return words  # deduplicate, just in case
     else:
-        raise SystemExit("Error: provided arguments result in zero-length wordlist, exiting.")
+        raise SystemExit(
+            "Error: provided arguments result in zero-length wordlist, exiting."
+        )
 
 
 def wordlist_to_worddict(wordlist):
@@ -157,7 +161,9 @@ def wordlist_to_worddict(wordlist):
         try:
             worddict[word[0]].append(word)
         except KeyError:
-            worddict[word[0]] = [word, ]
+            worddict[word[0]] = [
+                word,
+            ]
 
     return worddict
 
@@ -179,8 +185,9 @@ def verbose_reports(wordlist, options):
 
     bits = math.log(length, 2)
 
-    print("With the current options, your word list contains {0} words."
-          .format(length))
+    print(
+        "With the current options, your word list contains {0} words.".format(
+            length))
 
     print("A {0} word password from this list will have roughly "
           "{1} ({2:.2f} * {3}) bits of entropy,"
@@ -235,10 +242,10 @@ def alternating_case(words):
     """
     Set EVERY OTHER word to UPPER case.
     """
-    return [word.upper()
-            if i % 2 == 0
-            else word
-            for i, word in enumerate(lower_case(words))]
+    return [
+        word.upper() if i % 2 == 0 else word
+        for i, word in enumerate(lower_case(words))
+    ]
 
 
 def upper_case(words):
@@ -247,17 +254,20 @@ def upper_case(words):
     """
     return [w.upper() for w in words]
 
+
 def first_upper_case(words):
     """
     Set First character of each word to UPPER case.
     """
     return [w.capitalize() for w in words]
 
+
 def lower_case(words):
     """
     Set ALL words to LOWER case.
     """
     return [w.lower() for w in words]
+
 
 def capitalize_case(words):
     """
@@ -283,13 +293,14 @@ def random_case(words, testing=False):
     return [make_upper(word) for word in lower_case(words)]
 
 
-CASE_METHODS = {"alternating": alternating_case,
-                "upper": upper_case,
-                "lower": lower_case,
-                "random": random_case,
-                "first": first_upper_case,
-                "capitalize":capitalize_case}
-
+CASE_METHODS = {
+    "alternating": alternating_case,
+    "upper": upper_case,
+    "lower": lower_case,
+    "random": random_case,
+    "first": first_upper_case,
+    "capitalize": capitalize_case
+}
 
 
 def set_case(words, method="lower", testing=False):
@@ -317,6 +328,7 @@ def set_case(words, method="lower", testing=False):
 
 def generate_xkcdpassword(wordlist,
                           numwords=6,
+                          translate=False,
                           interactive=False,
                           acrostic=False,
                           delimiter=" ",
@@ -340,8 +352,16 @@ def generate_xkcdpassword(wordlist,
             words = find_acrostic(acrostic, worddict)
 
         if not random_delimiters:
-            return delimiter.join(set_case(words, method=case))
-        return randomized_delimiter_join(set_case(words, method=case), valid_delimiters)
+            translatewords = ""
+            if translate:
+                trWords = []
+                for word in words:
+                    trWords.append(wordlist[word])
+                translatewords = "\t\t【" + delimiter.join(trWords) + "】"
+            return delimiter.join(set_case(words,
+                                           method=case)) + translatewords
+        return randomized_delimiter_join(set_case(words, method=case),
+                                         valid_delimiters)
 
     # useful if driving the logic from other code
     if not interactive:
@@ -363,6 +383,7 @@ def generate_xkcdpassword(wordlist,
             print('accepted', accepted)
         return passwd
 
+
 def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
     """
     Join the words into a password with random delimiters between each word
@@ -374,31 +395,34 @@ def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
 
     return final_passwd + choose_delimiter(delimiters)
 
+
 def choose_delimiter(delimiters):
     """
     Choose a random delimiter from the list
     """
     return rng().choice(delimiters)
 
+
 def initialize_interactive_run(options):
     def n_words_validator(answer):
-            """
+        """
             Validate custom number of words input
             """
 
-            if isinstance(answer, str) and len(answer) == 0:
-                return options.numwords
-            try:
-                number = int(answer)
-                if number < 1:
-                    raise ValueError
-                return number
-            except ValueError:
-                sys.stderr.write("Please enter a positive integer\n")
-                sys.exit(1)
+        if isinstance(answer, str) and len(answer) == 0:
+            return options.numwords
+        try:
+            number = int(answer)
+            if number < 1:
+                raise ValueError
+            return number
+        except ValueError:
+            sys.stderr.write("Please enter a positive integer\n")
+            sys.exit(1)
 
     if not options.acrostic:
-        n_words_prompt = ("Enter number of words (default {0}):\n".format(options.numwords))
+        n_words_prompt = ("Enter number of words (default {0}):\n".format(
+            options.numwords))
         options.numwords = try_input(n_words_prompt, n_words_validator)
     else:
         options.numwords = len(options.acrostic)
@@ -412,24 +436,23 @@ def emit_passwords(wordlist, options):
     else:
         valid_delimiters = DEFAULT_DELIMITERS
     while count > 0:
-        print(
-            generate_xkcdpassword(
-                wordlist,
-                interactive=options.interactive,
-                numwords=options.numwords,
-                acrostic=options.acrostic,
-                delimiter=options.delimiter,
-                random_delimiters=options.random_delimiters,
-                valid_delimiters=valid_delimiters,
-                case=options.case,
-            ),
-            end=options.separator)
+        print(generate_xkcdpassword(
+            wordlist,
+            interactive=options.interactive,
+            numwords=options.numwords,
+            translate=options.translate,
+            acrostic=options.acrostic,
+            delimiter=options.delimiter,
+            random_delimiters=options.random_delimiters,
+            valid_delimiters=valid_delimiters,
+            case=options.case,
+        ),
+              end=options.separator)
         count -= 1
 
 
 class XkcdPassArgumentParser(argparse.ArgumentParser):
     """ Command-line argument parser for this program. """
-
     def __init__(self, *args, **kwargs):
         super(XkcdPassArgumentParser, self).__init__(*args, **kwargs)
 
@@ -439,86 +462,139 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
         """ Add the arguments needed for this program. """
         exclusive_group = self.add_mutually_exclusive_group()
         self.add_argument(
-            "-w", "--wordfile",
-            dest="wordfile", default=None, metavar="WORDFILE",
-             help=(
-                "Specify that the file WORDFILE contains the list"
-                " of valid words from which to generate passphrases."
-                " Multiple wordfiles can be provided, separated by commas."
-                " Provided wordfiles: eff-long (default), eff-short,"
-                " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish),"
-                " fr-freelang (French), fr-corrected.txt (French), pt-ipublicis (Portuguese),"
-                " ita-wiki (Italian), ger-anlx (German), eff_large_de_sample.wordlist (German), nor-nb (Norwegian)"))
+            "-w",
+            "--wordfile",
+            dest="wordfile",
+            default=None,
+            metavar="WORDFILE",
+            help=
+            ("Specify that the file WORDFILE contains the list"
+             " of valid words from which to generate passphrases."
+             " Multiple wordfiles can be provided, separated by commas."
+             " Provided wordfiles: eff-long (default), eff-short,"
+             " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish),"
+             " fr-freelang (French), fr-corrected.txt (French), pt-ipublicis (Portuguese),"
+             " ita-wiki (Italian), ger-anlx (German), eff_large_de_sample.wordlist (German), nor-nb (Norwegian)"
+             ))
+        self.add_argument(
+            "-t",
+            "--translate",
+            action="store_true",
+            dest="translate",
+            default=False,
+            help=
+            "Generate passphrases with translation assisted memory TRANSLATION."
+        )
         self.add_argument(
             "--min",
-            dest="min_length", type=int, default=5, metavar="MIN_LENGTH",
-            help="Generate passphrases containing words with at least MIN_LENGTH characters.")
+            dest="min_length",
+            type=int,
+            default=5,
+            metavar="MIN_LENGTH",
+            help=
+            "Generate passphrases containing words with at least MIN_LENGTH characters."
+        )
         self.add_argument(
             "--max",
-            dest="max_length", type=int, default=9, metavar="MAX_LENGTH",
-            help="Generate passphrases containing words with at most MAX_LENGTH characters.")
+            dest="max_length",
+            type=int,
+            default=9,
+            metavar="MAX_LENGTH",
+            help=
+            "Generate passphrases containing words with at most MAX_LENGTH characters."
+        )
         exclusive_group.add_argument(
-            "-n", "--numwords",
-            dest="numwords", type=int, default=6, metavar="NUM_WORDS",
+            "-n",
+            "--numwords",
+            dest="numwords",
+            type=int,
+            default=6,
+            metavar="NUM_WORDS",
             help="Generate passphrases containing exactly NUM_WORDS words.")
         exclusive_group.add_argument(
-            "-a", "--acrostic",
-            dest="acrostic", default=False,
+            "-a",
+            "--acrostic",
+            dest="acrostic",
+            default=False,
             help="Generate passphrases with an acrostic matching ACROSTIC.")
         self.add_argument(
-            "-i", "--interactive",
-            action="store_true", dest="interactive", default=False,
-            help=(
-                "Generate and output a passphrase, query the user to"
-                " accept it, and loop until one is accepted."))
+            "-i",
+            "--interactive",
+            action="store_true",
+            dest="interactive",
+            default=False,
+            help=("Generate and output a passphrase, query the user to"
+                  " accept it, and loop until one is accepted."))
         self.add_argument(
-            "-v", "--valid-chars",
-            dest="valid_chars", default=".", metavar="VALID_CHARS",
-            help=(
-                "Limit passphrases to only include words matching the regex"
-                " pattern VALID_CHARS (e.g. '[a-z]')."))
+            "-v",
+            "--valid-chars",
+            dest="valid_chars",
+            default=".",
+            metavar="VALID_CHARS",
+            help=("Limit passphrases to only include words matching the regex"
+                  " pattern VALID_CHARS (e.g. '[a-z]')."))
+        self.add_argument("-V",
+                          "--verbose",
+                          action="store_true",
+                          dest="verbose",
+                          default=False,
+                          help="Report various metrics for given options.")
+        self.add_argument("-c",
+                          "--count",
+                          dest="count",
+                          type=int,
+                          default=1,
+                          metavar="COUNT",
+                          help="Generate COUNT passphrases.")
         self.add_argument(
-            "-V", "--verbose",
-            action="store_true", dest="verbose", default=False,
-            help="Report various metrics for given options.")
-        self.add_argument(
-            "-c", "--count",
-            dest="count", type=int, default=1, metavar="COUNT",
-            help="Generate COUNT passphrases.")
-        self.add_argument(
-            "-d", "--delimiter",
-            dest="delimiter", default=" ", metavar="DELIM",
+            "-d",
+            "--delimiter",
+            dest="delimiter",
+            default=" ",
+            metavar="DELIM",
             help="Separate words within a passphrase with DELIM.")
         self.add_argument(
-            "-R", "--random-delimiters",
-            action="store_true", dest="random_delimiters", default=False,
-            help="Use randomized delimiters between words. --delimiter will be ignored")
+            "-R",
+            "--random-delimiters",
+            action="store_true",
+            dest="random_delimiters",
+            default=False,
+            help=
+            "Use randomized delimiters between words. --delimiter will be ignored"
+        )
+        self.add_argument("-D",
+                          "--valid-delimiters",
+                          dest="valid_delimiters",
+                          default="",
+                          metavar="VALID_DELIMITERS",
+                          help=("A string with all valid delimiter charcters."
+                                " For example, '^&*' would use ^, &, or *"))
+        self.add_argument("-s",
+                          "--separator",
+                          dest="separator",
+                          default="\n",
+                          metavar="SEP",
+                          help="Separate generated passphrases with SEP.")
         self.add_argument(
-            "-D", "--valid-delimiters",
-            dest="valid_delimiters", default="", metavar="VALID_DELIMITERS",
-            help=("A string with all valid delimiter charcters."
-                  " For example, '^&*' would use ^, &, or *"))
-        self.add_argument(
-            "-s", "--separator",
-            dest="separator", default="\n", metavar="SEP",
-            help="Separate generated passphrases with SEP.")
-        self.add_argument(
-            "-C", "--case",
-            dest="case", type=str, metavar="CASE",
-            choices=list(CASE_METHODS.keys()), default="lower",
-            help=(
-                "Choose the method for setting the case of each word "
-                "in the passphrase. "
-                "Choices: {cap_meths} (default: 'lower').".format(
-                    cap_meths=list(CASE_METHODS.keys())
-                )))
+            "-C",
+            "--case",
+            dest="case",
+            type=str,
+            metavar="CASE",
+            choices=list(CASE_METHODS.keys()),
+            default="lower",
+            help=("Choose the method for setting the case of each word "
+                  "in the passphrase. "
+                  "Choices: {cap_meths} (default: 'lower').".format(
+                      cap_meths=list(CASE_METHODS.keys()))))
         self.add_argument(
             "--allow-weak-rng",
-            action="store_true", dest="allow_weak_rng", default=False,
-            help=(
-                "Allow fallback to weak RNG if the "
-                "system does not support cryptographically secure RNG. "
-                "Only use this if you know what you are doing."))
+            action="store_true",
+            dest="allow_weak_rng",
+            default=False,
+            help=("Allow fallback to weak RNG if the "
+                  "system does not support cryptographically secure RNG. "
+                  "Only use this if you know what you are doing."))
 
 
 def main(argv=None):
@@ -536,11 +612,10 @@ def main(argv=None):
         options = parser.parse_args(argv[1:])
         validate_options(parser, options)
 
-        my_wordlist = generate_wordlist(
-            wordfile=options.wordfile,
-            min_length=options.min_length,
-            max_length=options.max_length,
-            valid_chars=options.valid_chars)
+        my_wordlist = generate_wordlist(wordfile=options.wordfile,
+                                        min_length=options.min_length,
+                                        max_length=options.max_length,
+                                        valid_chars=options.valid_chars)
 
         if options.interactive:
             initialize_interactive_run(options)
