@@ -357,7 +357,7 @@ def generate_xkcdpassword(wordlist,
                 trWords = []
                 for word in words:
                     trWords.append(wordlist[word])
-                translatewords = "\t\t【" + delimiter.join(trWords) + "】"
+                translatewords = "\t\t[" + delimiter.join(trWords) + "]"
             return delimiter.join(set_case(words,
                                            method=case)) + translatewords
         return randomized_delimiter_join(set_case(words, method=case),
