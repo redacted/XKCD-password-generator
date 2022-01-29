@@ -237,6 +237,7 @@ def as_is_case(words):
     """
     return words
 
+
 def alternating_case(words):
     """
     Set EVERY OTHER word to UPPER case.
@@ -246,11 +247,13 @@ def alternating_case(words):
             else word
             for i, word in enumerate(lower_case(words))]
 
+
 def upper_case(words):
     """
     Set ALL words to UPPER case.
     """
     return [w.upper() for w in words]
+
 
 def lower_case(words):
     """
@@ -258,11 +261,13 @@ def lower_case(words):
     """
     return [w.lower() for w in words]
 
+
 def first_upper_case(words):
     """
     Set First character of each word to UPPER case.
     """
     return capitalize_case(words)
+
 
 def capitalize_case(words):
     """
@@ -297,6 +302,7 @@ CASE_METHODS = {
     "alternating": alternating_case,
     "random": random_case
 }
+
 
 def set_case(words, method="lower", testing=False):
     """
@@ -369,6 +375,7 @@ def generate_xkcdpassword(wordlist,
             print('accepted', accepted)
         return passwd
 
+
 def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
     """
     Join the words into a password with random delimiters between each word
@@ -380,11 +387,13 @@ def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
 
     return final_passwd + choose_delimiter(delimiters)
 
+
 def choose_delimiter(delimiters):
     """
     Choose a random delimiter from the list
     """
     return rng().choice(delimiters)
+
 
 def initialize_interactive_run(options):
     def n_words_validator(answer):
