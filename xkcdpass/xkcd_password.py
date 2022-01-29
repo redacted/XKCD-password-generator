@@ -388,20 +388,20 @@ def choose_delimiter(delimiters):
 
 def initialize_interactive_run(options):
     def n_words_validator(answer):
-            """
-            Validate custom number of words input
-            """
+        """
+        Validate custom number of words input
+        """
 
-            if isinstance(answer, str) and len(answer) == 0:
-                return options.numwords
-            try:
-                number = int(answer)
-                if number < 1:
-                    raise ValueError
-                return number
-            except ValueError:
-                sys.stderr.write("Please enter a positive integer\n")
-                sys.exit(1)
+        if isinstance(answer, str) and len(answer) == 0:
+            return options.numwords
+        try:
+            number = int(answer)
+            if number < 1:
+                raise ValueError
+            return number
+        except ValueError:
+            sys.stderr.write("Please enter a positive integer\n")
+            sys.exit(1)
 
     if not options.acrostic:
         n_words_prompt = ("Enter number of words (default {0}):\n".format(options.numwords))
