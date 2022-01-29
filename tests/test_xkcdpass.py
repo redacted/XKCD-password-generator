@@ -58,6 +58,7 @@ class XkcdPasswordTests(unittest.TestCase):
         results["lower"] = xkcd_password.set_case(words, method="lower")
         results["upper"] = xkcd_password.set_case(words, method="upper")
         results["first"] = xkcd_password.set_case(words, method="first")
+        results["capitalize"] = xkcd_password.set_case(words, method="capitalize")
         results["alternating"] = xkcd_password.set_case(words, method="alternating")
         results["random"] = xkcd_password.set_case(words, method="random", testing=True)
 
@@ -73,6 +74,7 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertTrue(all(word.islower() for word in results["lower"]))
         self.assertTrue(all(word.isupper() for word in results["upper"]))
         self.assertTrue(all(word.istitle() for word in results["first"]))
+        self.assertTrue(all(word.istitle() for word in results["capitalize"]))
         # Test that the words have been correctly uppered randomly.
         expected_random_result_1_py3 = ['THIS', 'IS', 'ONLY', 'a', 'GREAT', 'test']
         expected_random_result_2_py3 = ['THIS', 'IS', 'a', 'test', 'ALSO', 'GREAT']

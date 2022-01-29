@@ -252,17 +252,17 @@ def upper_case(words):
     """
     return [w.upper() for w in words]
 
-def first_upper_case(words):
-    """
-    Set First character of each word to UPPER case.
-    """
-    return [w.capitalize() for w in words]
-
 def lower_case(words):
     """
     Set ALL words to LOWER case.
     """
     return [w.lower() for w in words]
+
+def first_upper_case(words):
+    """
+    Set First character of each word to UPPER case.
+    """
+    return capitalize_case(words)
 
 def capitalize_case(words):
     """
