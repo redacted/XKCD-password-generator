@@ -78,13 +78,14 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -h, --help
                                     show this help message and exit
         -w WORDFILE, --wordfile=WORDFILE
-                                    Specify that the file WORDFILE contains the list of
-                                    valid words from which to generate passphrases. Multiple 
-                                    wordfiles can be provided, separated by commas.
+                                    Specify that the file WORDFILE contains the list
+                                    of valid words from which to generate passphrases.
+                                    Multiple wordfiles can be provided, separated by commas.
                                     Provided wordfiles: eff-long (default), eff-short,
-                                    eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
-                                    ita-wiki (Italian), ger-anlx (German), nor-nb (Norwegian),
-                                    fr-freelang (French), pt-ipublicis / pt-l33t-ipublicis (Portuguese)
+                                    eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish),
+                                    fr-freelang (French), fr-corrected.txt (French), pt-ipublicis (Portuguese),
+                                    ita-wiki (Italian), ger-anlx, ger-long, ger-short,
+                                    eff_large_de_sample.wordlist (German), nor-nb (Norwegian)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -140,6 +141,7 @@ Additional languages
 - Finnish: a modified version of the Institute for the Languages of Finland `XML word list <http://kaino.kotus.fi/sanat/nykysuomi/>`_. Profanities and expressions containing spaces were removed using regex. The resulting list contains ~93k words. The list is published under GNU LGPL, EUPL 1.1 and CC-BY 3.0 licenses.
 - Italian: generated from dumps of the Italian-language Wikipedia, which is released under the Creative Commons Attribution-Share-Alike 3.0 licence.
 - German (ger-anlx): based on `this GPL v3 list <https://github.com/dassencio/langcmp/blob/master/wordlists/top10000de.txt>`_. Single and double character words have been removed.
+- German (ger-long, ger-short): imported from `this Unlicense'd repository <https://github.com/dys2p/wordlists-de>`_.
 - German (eff_large_de_sample.wordlist): based on `this public domain dictionary <https://sourceforge.net/projects/germandict/>`_. Converted to UTF-8 and randomly sampled to reduce file size. 
 - Norwegian: a modified version of `Norsk Ordbank in Norwegian Bokmål 2005 <https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-5&lang=en>`_, 2018-06-28 update, which is released under the `CC-BY 4.0 license <https://creativecommons.org/licenses/by/4.0/>`_. Regex has been used to alter the list for cleanup and removal of words with impractical characters. The resulting list contains ~137k words.
 - French: One cleaned version of `this list <https://packetstormsecurity.com/files/download/32007/french.gz>`_ (public domain), and one filtered to remove potentially offensive words.
