@@ -368,11 +368,7 @@ def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
     Join the words into a password with random delimiters between each word
     """
 
-    final_passwd = ''
-    for word in words:
-        final_passwd += choose_delimiter(delimiters) + word
-
-    return final_passwd + choose_delimiter(delimiters)
+    return ''.join(map(lambda w: w + choose_delimiter(delimiters), words))[:-1]
 
 def choose_delimiter(delimiters):
     """
@@ -496,7 +492,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
         self.add_argument(
             "-D", "--valid-delimiters",
             dest="valid_delimiters", default="", metavar="VALID_DELIMITERS",
-            help=("A string with all valid delimiter charcters."
+            help=("A string with all valid delimiter characters."
                   " For example, '^&*' would use ^, &, or *"))
         self.add_argument(
             "-s", "--separator",

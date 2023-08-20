@@ -43,3 +43,5 @@ nosetests.xml
 
 # mypy
 .mypy_cache
+
+.idea/
