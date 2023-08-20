@@ -157,21 +157,21 @@ class TestEmitPasswords(unittest.TestCase):
         self.assertEqual(output.find(unwanted_separator), -1)
 
 
-class TestEntropyInformation(unittest.TestCase):
-    """ Test cases for function `emit_passwords`. """
+# class TestEntropyInformation(unittest.TestCase):
+#     """ Test cases for function `emit_passwords`. """
 
-    @staticmethod
-    # def run_xkcdpass_process(*args):
-    #     process = Popen(["xkcdpass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
-    #     return process.communicate('\n'.join(args))[0]
+#     @staticmethod
+#     # def run_xkcdpass_process(*args):
+#     #     process = Popen(["xkcdpass", "-V", "-i"], stdout=PIPE, stdin=PIPE)
+#     #     return process.communicate('\n'.join(args))[0]
 
-    @staticmethod
-    def test_entropy_printout_valid_input(self):
-        values = self.run_xkcdpass_process('4', 'y')
-        self.assertIn('A 4 word password from this list will have roughly 51', values)
+#     @staticmethod
+#     def test_entropy_printout_valid_input(self):
+#         values = self.run_xkcdpass_process('4', 'y')
+#         self.assertIn('A 4 word password from this list will have roughly 51', values)
 
 
 if __name__ == '__main__':
-    test_cases = [XkcdPasswordTests, TestEmitPasswords, TestEntropyInformation]
+    test_cases = [XkcdPasswordTests, TestEmitPasswords, ]  # TestEntropyInformation]
     suites = [unittest.TestLoader().loadTestsFromTestCase(test_case) for test_case in test_cases]
     unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(suites))

@@ -368,7 +368,10 @@ def randomized_delimiter_join(words, delimiters=DEFAULT_DELIMITERS):
     Join the words into a password with random delimiters between each word
     """
 
-    return ''.join(map(lambda w: w + choose_delimiter(delimiters), words))[:-1]
+    final_passwd = words[0]
+    for word in words[1:]:
+        final_passwd += choose_delimiter(delimiters) + word
+    return final_passwd
 
 def choose_delimiter(delimiters):
     """
