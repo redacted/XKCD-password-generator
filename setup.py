@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 from io import open
 import sys
 
@@ -10,7 +10,8 @@ setup(
     url='https://github.com/redacted/XKCD-password-generator',
     description='Generate secure multiword passwords/passphrases, inspired by XKCD',
     long_description=open('README.rst', encoding='utf-8').read(),
-    packages=['xkcdpass'],
+    #packages=['xkcdpass'],
+    packages=find_namespace_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     zip_safe=False,
     license='BSD',
     include_package_data=True,
