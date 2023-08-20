@@ -193,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.4** Makes randomised delimiters behavior consistent with fixed delimeters
 - **1.19.3** Restore a randomly sampled version of eff_large_de wordlist 
 - **1.19.2** Reduction in install size
 - **1.19.1** Improvements to help text, handle rare case where arguments lead to empty wordlist
@@ -210,8 +211,6 @@ Changelog
 - **1.16.4** Improve unit tests, fixes broken test on python 2
 - **1.16.3** Correct links for German worldist, updated docs to include the list
 - **1.16.2** Fix exception on UTF8 open with python 2.x
-- **1.16.1** Fix encoding issue on Windows
-
 
 License
 =======
