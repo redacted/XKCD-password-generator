@@ -43,5 +43,7 @@ nosetests.xml
 
 # mypy
 .mypy_cache
-
 .idea/
+
+#OS X
+.DS_Store
