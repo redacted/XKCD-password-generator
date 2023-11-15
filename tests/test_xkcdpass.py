@@ -55,33 +55,40 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertEqual(11, len(result))
 
     def test_set_case(self):
-        words = "this is only a test".lower().split()
+        words = "this is only a GREAT Test".lower().split()
         words_before = set(words)
 
         results = {}
 
+        results["as-is"] = xkcd_password.set_case(words, method="as-is")
         results["lower"] = xkcd_password.set_case(words, method="lower")
         results["upper"] = xkcd_password.set_case(words, method="upper")
+        results["first"] = xkcd_password.set_case(words, method="first")
+        results["capitalize"] = xkcd_password.set_case(words, method="capitalize")
         results["alternating"] = xkcd_password.set_case(words, method="alternating")
         results["random"] = xkcd_password.set_case(words, method="random", testing=True)
-        results["first"] = xkcd_password.set_case(words, method="first")
 
         words_after = set(word.lower() for group in list(results.values()) for word in group)
 
         # Test that no words have been fundamentally mutated by any of the methods
         self.assertTrue(words_before == words_after)
 
+        # Test that no words have been uppered or lowered for method "as-is"
+        self.assertEqual(results["as-is"], words)
+
         # Test that the words have been uppered or lowered respectively.
         self.assertTrue(all(word.islower() for word in results["lower"]))
         self.assertTrue(all(word.isupper() for word in results["upper"]))
         self.assertTrue(all(word.istitle() for word in results["first"]))
+        self.assertTrue(all(word.istitle() for word in results["capitalize"]))
+        self.assertEqual(results["alternating"], ["THIS", "is", "ONLY", "a", "GREAT", "test"])
         # Test that the words have been correctly uppered randomly.
-        expected_random_result_1_py3 = ['THIS', 'IS', 'ONLY', 'a', 'test']
-        expected_random_result_2_py3 = ['THIS', 'IS', 'a', 'test', 'ALSO']
-        expected_random_result_1_py2 = ['this', 'is', 'only', 'a', 'TEST']
-        expected_random_result_2_py2 = ['this', 'is', 'a', 'TEST', 'also']
+        expected_random_result_1_py3 = ['THIS', 'IS', 'ONLY', 'a', 'GREAT', 'test']
+        expected_random_result_2_py3 = ['THIS', 'IS', 'a', 'test', 'ALSO', 'GREAT']
+        expected_random_result_1_py2 = ['this', 'is', 'only', 'a', 'GREAT', 'TEST']
+        expected_random_result_2_py2 = ['this', 'is', 'a', 'TEST', 'also', 'GREAT']
 
-        words_extra = "this is a test also".lower().split()
+        words_extra = "this is a test also great".lower().split()
         observed_random_result_1 = results["random"]
         observed_random_result_2 = xkcd_password.set_case(
             words_extra,

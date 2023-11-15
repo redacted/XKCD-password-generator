@@ -112,7 +112,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
         -C CASE, --case CASE  
                                     Choose the method for setting the case of each word in
                                     the passphrase. Choices: ['alternating', 'upper',
-                                    'lower', 'random', 'capitalize'] (default: 'lower').
+                                    'lower', 'random', 'capitalize', 'as-is'] (default: 'lower').
         --allow-weak-rng     
                                      Allow fallback to weak RNG if the system does not
                                     support cryptographically secure RNG. Only use this if
@@ -193,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.5** Adds "as-is" option for case
 - **1.19.4** Makes randomised delimiters behavior consistent with fixed delimeters
 - **1.19.3** Restore a randomly sampled version of eff_large_de wordlist 
 - **1.19.2** Reduction in install size
