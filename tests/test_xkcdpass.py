@@ -52,7 +52,7 @@ class XkcdPasswordTests(unittest.TestCase):
         wordlist = xkcd_password.generate_wordlist(WORDFILE, min_length=3, max_length=3)
         result = xkcd_password.generate_xkcdpassword(wordlist, numwords=3, random_delimiters=True)
         # result can be length 9, 10, or 11 depending on which random delimiters are chose
-        self.assertTrue(len(result) in [9, 10, 11])
+        self.assertTrue(len(result) in {9, 10, 11})
 
     def test_set_case(self):
         words = "this is only a GREAT Test".lower().split()
