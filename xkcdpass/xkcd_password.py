@@ -14,7 +14,7 @@ import sys
 from io import open
 
 __LICENSE__ = """
-Copyright (c) 2011 - 2018, Steven Tobin and Contributors.
+Copyright (c) 2011 - 2023, Steven Tobin and Contributors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

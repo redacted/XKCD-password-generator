@@ -193,6 +193,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.6** Fixes randomly failing unit test
 - **1.19.5** Adds "as-is" option for case
 - **1.19.4** Makes randomised delimiters behavior consistent with fixed delimeters
 - **1.19.3** Restore a randomly sampled version of eff_large_de wordlist 
@@ -211,7 +212,6 @@ Changelog
 - **1.16.5** Adds title case option for `--case`
 - **1.16.4** Improve unit tests, fixes broken test on python 2
 - **1.16.3** Correct links for German worldist, updated docs to include the list
-- **1.16.2** Fix exception on UTF8 open with python 2.x
 
 License
 =======
