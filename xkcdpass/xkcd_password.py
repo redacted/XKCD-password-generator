@@ -14,7 +14,7 @@ import sys
 from io import open
 
 __LICENSE__ = """
-Copyright (c) 2011 - 2018, Steven Tobin and Contributors.
+Copyright (c) 2011 - 2023, Steven Tobin and Contributors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@ if sys.version_info[0] >= 3:
 
 
 DEFAULT_WORDFILE = "eff-long"
-DEFAULT_DELIMITERS = ["", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
+DEFAULT_DELIMITERS = [" ", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
                       "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 

@@ -49,10 +49,21 @@ class XkcdPasswordTests(unittest.TestCase):
         self.assertIsNotNone(re.match('([a-z]+(_|$))+', result))
 
     def test_random_delimiter(self):
-        wordlist = xkcd_password.generate_wordlist(WORDFILE, min_length=3, max_length=3)
-        result = xkcd_password.generate_xkcdpassword(wordlist, numwords=3, random_delimiters=True)
-
-        self.assertEqual(11, len(result))
+        wordlength = 4
+        numwords = 3
+        wordlist = xkcd_password.generate_wordlist(
+            WORDFILE, min_length=wordlength, max_length=wordlength
+        )
+        result = xkcd_password.generate_xkcdpassword(
+            wordlist, numwords=numwords, random_delimiters=True
+        )
+        # check that the result is the right length
+        self.assertEquals(len(result), numwords * wordlength + (numwords - 1))
+        # check we have the right number of delimiters
+        self.assertEqual(
+            len([x for x in result if x in set(xkcd_password.DEFAULT_DELIMITERS)]),
+            numwords - 1
+        )
 
     def test_set_case(self):
         words = "this is only a GREAT Test".lower().split()
