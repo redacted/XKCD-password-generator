@@ -195,6 +195,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.8** Enables `python -m xkcdpass` usage
 - **1.19.7** Adds Swedish wordlist, improvements to test suite, improvements to setup.py (excludes examples from install) 
 - **1.19.6** Fixes randomly failing unit test
 - **1.19.5** Adds "as-is" option for case
@@ -213,7 +214,6 @@ Changelog
 - **1.17.1** Fix issue with README and unicode encoding
 - **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
 - **1.16.5** Adds title case option for `--case`
-- **1.16.4** Improve unit tests, fixes broken test on python 2
 
 License
 =======
