@@ -85,6 +85,7 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish)
                                     ita-wiki (Italian), ger-anlx (German), nor-nb (Norwegian),
                                     fr-freelang (French), pt-ipublicis / pt-l33t-ipublicis (Portuguese)
+                                    swe-short (Swedish)
         --min=MIN_LENGTH
                                     Minimum length of words to make password
         --max=MAX_LENGTH
@@ -143,7 +144,8 @@ Additional languages
 - German (eff_large_de_sample.wordlist): based on `this public domain dictionary <https://sourceforge.net/projects/germandict/>`_. Converted to UTF-8 and randomly sampled to reduce file size. 
 - Norwegian: a modified version of `Norsk Ordbank in Norwegian Bokmål 2005 <https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-5&lang=en>`_, 2018-06-28 update, which is released under the `CC-BY 4.0 license <https://creativecommons.org/licenses/by/4.0/>`_. Regex has been used to alter the list for cleanup and removal of words with impractical characters. The resulting list contains ~137k words.
 - French: One cleaned version of `this list <https://packetstormsecurity.com/files/download/32007/french.gz>`_ (public domain), and one filtered to remove potentially offensive words.
-- Portuguese: Converted variant of the LibreOffice / Firefox poturguese dictionary (from `this link <https://raw.githubusercontent.com/titoBouzout/Dictionaries/master/Portuguese%20(European).dic>`_. GPL and BSD licenced.
+- Portuguese: Converted variant of the LibreOffice / Firefox Portuguese dictionary (from `this link <https://raw.githubusercontent.com/titoBouzout/Dictionaries/master/Portuguese%20(European).dic>`_. GPL and BSD licenced.
+- Swedish: a modified version of `Martin Lindhe's Swedish word list <https://github.com/martinlindhe/wordlist_swedish>` (MIT license). Modifications also released under MIT license.
 
 Additional language word lists are always welcome!
 
@@ -193,6 +195,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.19.7** Adds Swedish wordlist, improvements to test suite, improvements to setup.py (excludes examples from install) 
 - **1.19.6** Fixes randomly failing unit test
 - **1.19.5** Adds "as-is" option for case
 - **1.19.4** Makes randomised delimiters behavior consistent with fixed delimeters
@@ -211,7 +214,6 @@ Changelog
 - **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
 - **1.16.5** Adds title case option for `--case`
 - **1.16.4** Improve unit tests, fixes broken test on python 2
-- **1.16.3** Correct links for German worldist, updated docs to include the list
 
 License
 =======
