@@ -145,7 +145,7 @@ Additional languages
 - Norwegian: a modified version of `Norsk Ordbank in Norwegian Bokmål 2005 <https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-5&lang=en>`_, 2018-06-28 update, which is released under the `CC-BY 4.0 license <https://creativecommons.org/licenses/by/4.0/>`_. Regex has been used to alter the list for cleanup and removal of words with impractical characters. The resulting list contains ~137k words.
 - French: One cleaned version of `this list <https://packetstormsecurity.com/files/download/32007/french.gz>`_ (public domain), and one filtered to remove potentially offensive words.
 - Portuguese: Converted variant of the LibreOffice / Firefox Portuguese dictionary (from `this link <https://raw.githubusercontent.com/titoBouzout/Dictionaries/master/Portuguese%20(European).dic>`_. GPL and BSD licenced.
-- Swedish: a modified version of `Martin Lindhe's Swedish word list <https://github.com/martinlindhe/wordlist_swedish>` (MIT license). Modifications also released under MIT license.
+- Swedish: a modified version of `Martin Lindhe's Swedish word list <https://github.com/martinlindhe/wordlist_swedish>`_ (MIT license). Modifications also released under MIT license.
 
 Additional language word lists are always welcome!
 
