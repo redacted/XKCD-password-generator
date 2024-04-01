@@ -7,7 +7,7 @@ name = "xkcdpass"
 version = "1.19.9"
 description = "Generate secure multiword passwords/passphrases, inspired by XKCD"
 readme = "README.rst"
-license = "BSD"
+license-files = { paths = ["LICENSE.BSD"] }
 authors = [
     { name = "Steven Tobin", email = "steventtobin@gmail.com" },
 ]
