@@ -58,7 +58,7 @@ class XkcdPasswordTests(unittest.TestCase):
             wordlist, numwords=numwords, random_delimiters=True
         )
         # check that the result is the right length
-        self.assertEquals(len(result), numwords * wordlength + (numwords - 1))
+        self.assertEqual(len(result), numwords * wordlength + (numwords - 1))
         # check we have the right number of delimiters
         self.assertEqual(
             len([x for x in result if x in set(xkcd_password.DEFAULT_DELIMITERS)]),
