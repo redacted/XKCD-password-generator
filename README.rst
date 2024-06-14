@@ -87,9 +87,9 @@ A concise overview of the available ``xkcdpass`` options can be accessed via::
                                     fr-freelang (French), pt-ipublicis / pt-l33t-ipublicis (Portuguese)
                                     swe-short (Swedish)
         --min=MIN_LENGTH
-                                    Minimum length of words to make password
+                                    Minimum number of letters required in words used to make password
         --max=MAX_LENGTH
-                                    Maximum length of words to make password
+                                    Maximum number of letters allowed in words used to make password
         -n NUMWORDS, --numwords=NUMWORDS
                                     Number of words to make password
         -i, --interactive
