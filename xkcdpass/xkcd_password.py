@@ -422,7 +422,7 @@ def emit_passwords(wordlist, options):
     """ Generate the specified number of passwords and output them. """
     count = options.count
     if options.valid_delimiters:
-        valid_delimiters = list(options.valid_delimiters) + [""]
+        valid_delimiters = list(options.valid_delimiters)
     else:
         valid_delimiters = DEFAULT_DELIMITERS
     while count > 0:
