@@ -192,8 +192,7 @@ def find_acrostic(acrostic, worddict):
         try:
             words.append(rng().choice(worddict[letter]))
         except KeyError:
-            sys.stderr.write("No words found starting with " + letter + "\n")
-            sys.exit(1)
+            raise SystemExit("No words found starting with " + letter + "\n")
     return words
 
 
@@ -218,7 +217,6 @@ def try_input(prompt, validate):
         print("")
         sys.exit(0)
 
-    # validate input
     return validate(answer)
 
 
@@ -337,14 +335,15 @@ def generate_xkcdpassword(wordlist,
         worddict = wordlist_to_worddict(wordlist)
 
     def gen_passwd():
-        if not acrostic:
-            words = choose_words(wordlist, numwords)
-        else:
+        if acrostic:
             words = find_acrostic(acrostic, worddict)
+        else:
+            words = choose_words(wordlist, numwords)
 
-        if not random_delimiters:
+        if random_delimiters:
+            return randomized_delimiter_join(set_case(words, method=case), valid_delimiters)
+        else:
             return delimiter.join(set_case(words, method=case))
-        return randomized_delimiter_join(set_case(words, method=case), valid_delimiters)
 
     # useful if driving the logic from other code
     if not interactive:
@@ -399,8 +398,7 @@ def initialize_interactive_run(options):
                 raise ValueError
             return number
         except ValueError:
-            sys.stderr.write("Please enter a positive integer\n")
-            sys.exit(1)
+            raise SystemExit("Please enter a positive integer\n")
 
     if not options.acrostic:
         n_words_prompt = ("Enter number of words (default {0}):\n".format(options.numwords))
@@ -410,26 +408,19 @@ def initialize_interactive_run(options):
 
 
 def emit_passwords(wordlist, options):
-    """ Generate the specified number of passwords and output them. """
-    count = options.count
-    if options.valid_delimiters:
-        valid_delimiters = list(options.valid_delimiters) + [""]
-    else:
-        valid_delimiters = DEFAULT_DELIMITERS
-    while count > 0:
-        print(
-            generate_xkcdpassword(
+    """ Generate the specified number of passwords and output them to stdout. """
+
+    for _ in range(options.count):
+        print(generate_xkcdpassword(
                 wordlist,
                 interactive=options.interactive,
                 numwords=options.numwords,
                 acrostic=options.acrostic,
                 delimiter=options.delimiter,
                 random_delimiters=options.random_delimiters,
-                valid_delimiters=valid_delimiters,
-                case=options.case,
-            ),
-            end=options.separator)
-        count -= 1
+                valid_delimiters=list(options.valid_delimiters) if options.valid_delimiters else DEFAULT_DELIMITERS,
+                case=options.case),
+              end=options.separator)
 
 
 class XkcdPassArgumentParser(argparse.ArgumentParser):
@@ -501,12 +492,13 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
         self.add_argument(
             "-D", "--valid-delimiters",
             dest="valid_delimiters", default="", metavar="VALID_DELIMITERS",
-            help=("A string with all valid delimiter characters."
-                  " For example, '^&*' would use ^, &, or *"))
+            help=("When --random-delimiters is specified, use ANY of these characters to separate words."
+                  " For example, --random-delimiters='^&*' would use ^, &, or * as separators."
+                  " This option has no effect if --random-delimiters is not supplied."))
         self.add_argument(
             "-s", "--separator",
             dest="separator", default="\n", metavar="SEP",
-            help="Separate generated passphrases with SEP.")
+            help="Separate generated passphrases with SEP. (default: newline)")
         self.add_argument(
             "-C", "--case",
             dest="case", type=str, metavar="CASE",
@@ -562,5 +554,5 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
-    exit_status = main(sys.argv)
+    raise SystemExit(main(sys.argv))
     sys.exit(exit_status)
