@@ -72,15 +72,10 @@ def validate_options(parser, options):
     """
 
     if options.max_length < options.min_length:
-        sys.stderr.write("Warning: maximum word length less than minimum. "
-                         "Setting maximum equal to minimum.\n")
-        # sys.exit(1)
+        raise SystemExit("Error: Maximum word length can't be less than minimum word length.\n")
 
-    wordfile = locate_wordfile(options.wordfile)
-    if not wordfile:
-        sys.stderr.write("Could not find a word file, or word file does "
-                         "not exist.\n")
-        sys.exit(1)
+    if not locate_wordfile(options.wordfile):
+        raise SystemExit("Wordfile not found. Is the path correct?\n")
 
 
 def locate_wordfile(wordfile=None):
@@ -119,10 +114,6 @@ def generate_wordlist(wordfile=None,
     valid_chars is a regular expression match condition (default - all chars)
     """
 
-    # deal with inconsistent min and max, erring toward security
-    if min_length > max_length:
-        max_length = min_length
-
     words = set()
 
     regexp = re.compile("^{0}{{{1},{2}}}$".format(valid_chars,
@@ -141,7 +132,7 @@ def generate_wordlist(wordfile=None,
     if len(words):
         return list(words)  # deduplicate, just in case
     else:
-        raise SystemExit("Error: provided arguments result in zero-length wordlist, exiting.")
+        raise SystemExit("Error: Provided arguments result in emtpy wordlist. (Probably because there aren't any words that match your --min and --max options) Exiting.")
 
 
 def wordlist_to_worddict(wordlist):
