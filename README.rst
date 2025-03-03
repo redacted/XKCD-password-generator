@@ -196,6 +196,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.20.0** Improved German wordlists, addressed bugs in delimeter and word length checks
 - **1.19.9** Remove usage of deprecated `assertEquals` in tests
 - **1.19.8** Enables `python -m xkcdpass` usage
 - **1.19.7** Adds Swedish wordlist, improvements to test suite, improvements to setup.py (excludes examples from install) 
@@ -208,13 +209,7 @@ Changelog
 - **1.19.0** Initial support for multiple wordfiles
 - **1.18.2** fixes for README
 - **1.18.0** Added randomised delimiters
-- **1.17.6** Bugfixes
-- **1.17.5** Bugfixes
-- **1.17.4** Improvements to French dictionary
-- **1.17.3** Updated license and supported versions
-- **1.17.2** Compatibility fix for 2.x/3.x 
-- **1.17.1** Fix issue with README and unicode encoding
-- **1.17.0** Add French, Norwegian, and Portuguese dictionaries. Bugfixes and improvements to tests (WIP).
+
 
 License
 =======
