@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xkcdpass"
+version = "1.20.0"
+description = "Generate secure multiword passwords/passphrases, inspired by XKCD"
+readme = "README.rst"
+authors = [{ name = "Steven Tobin", email = "steventtobin@gmail.com" }]
+license = "BSD-3-Clause"
+license-files = ["LICENSE.BSD"]
+requires-python = ">=3.6"
+
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    "Environment :: Console",
+    'Operating System :: OS Independent',
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/redacted/XKCD-password-generator"
+Repository = "https://github.com/redacted/XKCD-password-generator.git"
+Issues = "https://github.com/redacted/XKCD-password-generator/issues"
+
+[project.scripts]
+xkcdpass = "xkcdpass.xkcd_password:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["xkcdpass*"]
+exclude = ["examples", "*.tests", "*.tests.*", "tests.*", "tests"]
