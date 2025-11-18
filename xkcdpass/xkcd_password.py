@@ -453,6 +453,7 @@ class XkcdPassArgumentParser(argparse.ArgumentParser):
                 " Provided wordfiles: eff-long (default), eff-short,"
                 " eff-special, legacy, spa-mich (Spanish), fin-kotus (Finnish),"
                 " fr-freelang (French), fr-corrected.txt (French), pt-ipublicis (Portuguese),"
+                " ptbr-aosp-10k (Portuguese (Brazil)),"
                 " ita-wiki (Italian), ger-anlx (German), eff_large_de_sample.wordlist (German), nor-nb (Norwegian)"))
         self.add_argument(
             "--min",
