@@ -29,7 +29,7 @@ class XkcdPasswordTests(unittest.TestCase):
             valid_chars='[a-z]')
 
     def test_loadwordfile(self):
-        self.assertEqual(len(self.wordlist_full), 29611)
+        self.assertEqual(len(self.wordlist_full), 65353)
 
     def test_regex(self):
         self.assertNotIn("__$$$__", self.wordlist_small)
