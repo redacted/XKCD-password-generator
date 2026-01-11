@@ -197,6 +197,7 @@ or setting the appropriate environment variable::
 
 Changelog
 =========
+- **1.21.0** Improved README, added PT-BR wordlist
 - **1.20.0** Improved German wordlists, addressed bugs in delimeter and word length checks
 - **1.19.9** Remove usage of deprecated `assertEquals` in tests
 - **1.19.8** Enables `python -m xkcdpass` usage
