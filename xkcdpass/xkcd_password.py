@@ -168,7 +168,12 @@ def verbose_reports(wordlist, options):
         length = len(wordlist)
         numwords = options.numwords
 
-    bits = math.log(length, 2)
+    if length > 0:
+        bits = math.log(length, 2)
+    else:
+        # No candidate words (e.g. an acrostic with unmatched letters):
+        # report zero entropy instead of raising a math domain error.
+        bits = 0
 
     print("With the current options, your word list contains {0} words."
           .format(length))

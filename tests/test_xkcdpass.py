@@ -41,6 +41,12 @@ class XkcdPasswordTests(unittest.TestCase):
             acrostic=word)
         self.assertEqual("".join(map(lambda x: x[0], result.split())), word)
 
+    def test_verbose_reports_unmatched_acrostic(self):
+        # No word in the list starts with "1": must report cleanly
+        # instead of raising ValueError (math domain error on log(0)).
+        options = argparse.Namespace(acrostic="111", numwords=3)
+        xkcd_password.verbose_reports(self.wordlist_small, options)
+
     def test_delim(self):
         tdelim = "_"
         result = xkcd_password.generate_xkcdpassword(
